@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6989947d-97b3-4cf3-a9a7-75c80b9f4007" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.The Quiet Village/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.The Quiet Village/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Quiet Village/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/extensions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/InputSystem_Actions.inputactions.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug/Fusion.Common.dll.debug" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug/Fusion.Common.dll.debug.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug/Fusion.Log.dll.debug" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug/Fusion.Log.dll.debug.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug/Fusion.Realtime.dll.debug" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug/Fusion.Realtime.dll.debug.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug/Fusion.Runtime.dll.debug" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug/Fusion.Runtime.dll.debug.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug/Fusion.Sockets.dll.debug" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Debug/Fusion.Sockets.dll.debug.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Common.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Common.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Common.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Common.xml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Log.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Log.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Log.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Log.xml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Realtime.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Realtime.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Realtime.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Realtime.xml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Runtime.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Runtime.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Runtime.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Runtime.xml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Sockets.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Sockets.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Sockets.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Fusion.Sockets.xml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release/Fusion.Common.dll.release" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release/Fusion.Common.dll.release.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release/Fusion.Log.dll.release" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release/Fusion.Log.dll.release.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release/Fusion.Realtime.dll.release" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release/Fusion.Realtime.dll.release.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release/Fusion.Runtime.dll.release" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release/Fusion.Runtime.dll.release.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release/Fusion.Sockets.dll.release" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Assemblies/Release/Fusion.Sockets.dll.release.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/CodeGen.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/CodeGen/Fusion.CodeGen.Trigger.fusionweavertrigger" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/CodeGen/Fusion.CodeGen.Trigger.fusionweavertrigger.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/CodeGen/Fusion.CodeGen.User.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/CodeGen/Fusion.CodeGen.User.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/CodeGen/Fusion.CodeGen.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/CodeGen/Fusion.CodeGen.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/CodeGen/Fusion.CodeGen.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/CodeGen/Fusion.CodeGen.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fonts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fonts/OFL.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fonts/OFL.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fonts/Oswald-Header.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fonts/Oswald-Header.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-dark-help-button-off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-dark-help-button-off.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-dark-help-button-on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-dark-help-button-on.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-inline-box-2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-inline-box-2x.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-inline-box-no-vertical-borders.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-inline-box-no-vertical-borders.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-inline-box.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-inline-box.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-inline-help-box.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-inline-help-box.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-inline-selector.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-inline-selector.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-light-help-button-off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-light-help-button-off.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-light-help-button-on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-light-help-button-on.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-logo-2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-logo-2x.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-logo.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-outline-box.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-outline-box.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-script-header-2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-script-header-2x.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-script-header.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion-script-header.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion.Unity.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/Fusion.Unity.xml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionEditorSkin.guiskin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionEditorSkin.guiskin.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-community.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-community.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-correct-icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-correct-icon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-documentation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-documentation.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-icon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-information.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-information.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-logo.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-photon-cloud-32-dark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-photon-cloud-32-dark.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-samples.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-samples.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-box.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-box.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-button-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-button-active.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-button-hover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-button-hover.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-button.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-sand.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-sand.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-steel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-steel.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-window.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-skin-window.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-tanknarok-logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/Fusion-hub-tanknarok-logo.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/FusionHubSkin.guiskin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/EditorResources/FusionHub/FusionHubSkin.guiskin.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/Fusion.Unity.Editor.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/Fusion.Unity.Editor.AssemblyAttributes.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/Fusion.Unity.Editor.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/Fusion.Unity.Editor.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/Fusion.Unity.Editor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/Fusion.Unity.Editor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/FusionEditorConfigImporter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/FusionEditorConfigImporter.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/FusionEditorSkin.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/FusionEditorSkin.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/FusionHubWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/FusionHubWindow.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/FusionRunnerVisibilityControlsWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/FusionRunnerVisibilityControlsWindow.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/FusionWeaverTriggerImporter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/FusionWeaverTriggerImporter.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/NetworkPrefabsInspector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/NetworkPrefabsInspector.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/NetworkProjectConfigImporter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/NetworkProjectConfigImporter.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/NetworkProjectConfigImporterEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Editor/NetworkProjectConfigImporterEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/arm64-v8a.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/arm64-v8a/libnanosockets.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/arm64-v8a/libnanosockets.so.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/armeabi-v7a.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/armeabi-v7a/libnanosockets.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/armeabi-v7a/libnanosockets.so.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/x86.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/x86/libnanosockets.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/x86/libnanosockets.so.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/x86_64.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/x86_64/libnanosockets.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Android/x86_64/libnanosockets.so.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Linux.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Linux/libnanosockets.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Linux/libnanosockets.so.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/ARM.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/ARM/libnanosockets.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/ARM/libnanosockets.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/ARM64.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/ARM64/libnanosockets.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/ARM64/libnanosockets.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/NanoSockets.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/NanoSockets.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/x64.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/x64/libnanosockets.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/x64/libnanosockets.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/x86.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/x86/libnanosockets.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Metro/x86/libnanosockets.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/NanoSockets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/NanoSockets/Dynamic.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/NanoSockets/Dynamic/NanoSockets.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/NanoSockets/Dynamic/NanoSockets.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/NanoSockets/Static.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/NanoSockets/Static/NanoSockets.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/NanoSockets/Static/NanoSockets.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/WebGL.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/WebGL/NanoSockets.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/WebGL/NanoSockets.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Windows.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Windows/nanosockets.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/Windows/nanosockets.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/iOS.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/iOS/libnanosockets.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/iOS/libnanosockets.a.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/libnanosockets_LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/libnanosockets_LICENSE.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/macOS.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/macOS/libnanosockets.dylib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/macOS/libnanosockets.dylib.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/tvOS.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/tvOS/libnanosockets.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/tvOS/libnanosockets.a.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/visionOS.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/visionOS/libnanosockets.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Plugins/NanoSockets/visionOS/libnanosockets.a.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources/NetworkProjectConfig.fusion" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources/NetworkProjectConfig.fusion.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources/PhotonAppSettings.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Resources/PhotonAppSettings.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Fusion.Unity.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Fusion.Unity.AssemblyAttributes.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Fusion.Unity.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Fusion.Unity.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Fusion.Unity.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Fusion.Unity.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionAddressablePrefabsPreloader.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionAddressablePrefabsPreloader.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBasicBillboard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBasicBillboard.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrap.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrap.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUI.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUI.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUISkin.guiskin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUISkin.guiskin.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUIStartButton.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUIStartButton.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUIStartButtonDown.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUIStartButtonDown.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUIStartButtonOver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUIStartButtonOver.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUIStartWindow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/FusionBootstrapDebugGUIStartWindow.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/NetworkCharacterController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/NetworkCharacterController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/NetworkObjectProviderDefault.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/NetworkObjectProviderDefault.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/NetworkSceneManagerDefault.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/NetworkSceneManagerDefault.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/RuntimeAssets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/RuntimeAssets/JetBrainsMono OFL.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/RuntimeAssets/JetBrainsMono OFL.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/RuntimeAssets/JetBrainsMono-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/RuntimeAssets/JetBrainsMono-Regular.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/RuntimeAssets/Roboto-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/RuntimeAssets/Roboto-Regular.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionNetworkObjectStatistics.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionNetworkObjectStatistics.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionNetworkObjectStatsGraph.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionNetworkObjectStatsGraph.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionNetworkObjectStatsGraphCombine.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionNetworkObjectStatsGraphCombine.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatistics.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatistics.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsCanvas.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsCanvas.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsConfig.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsConfig.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsGraphDefault.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsGraphDefault.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsGraphMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsGraphMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsGraphShader.shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsGraphShader.shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsPanelHeader.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsPanelHeader.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsWorldAnchor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/FusionStatsWorldAnchor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Prefabs/FusionStatsSimpleButton.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Prefabs/FusionStatsSimpleButton.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Prefabs/NOStatGraph.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Prefabs/NOStatGraph.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Prefabs/SingleStatistics.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Prefabs/SingleStatistics.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Prefabs/StatisticsRenderGraph.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Prefabs/StatisticsRenderGraph.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Resources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Resources/FusionStatsResources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Resources/FusionStatsResources/FusionStatsRenderPanel.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Resources/FusionStatsResources/FusionStatsRenderPanel.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Resources/FusionStatsResources/NetworkObjectStatistics.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/Resources/FusionStatsResources/NetworkObjectStatistics.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/StatsIcons.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/StatsIcons/FusionStatsCancelIcon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/StatsIcons/FusionStatsCancelIcon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/StatsIcons/FusionStatsGearIcon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/StatsIcons/FusionStatsGearIcon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/StatsIcons/FusionStatsResetIcon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/StatsIcons/FusionStatsResetIcon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/StatsIcons/FusionStatsToggleArrowIcon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Statistics/StatsIcons/FusionStatsToggleArrowIcon.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/EnableOnSingleRunner.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/EnableOnSingleRunner.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/RunnerAOIGizmos.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/RunnerAOIGizmos.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/RunnerEnableVisibility.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/RunnerEnableVisibility.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/RunnerLagCompensationGizmos.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/RunnerLagCompensationGizmos.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/RunnerVisibilityLink.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/RunnerVisibilityLink.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/RunnerVisibilityLinksRoot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/Runtime/Utilities/RunnerVisibility/RunnerVisibilityLinksRoot.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/build_info.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/build_info.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/package.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/release_history.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/Fusion/release_history.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionDemos.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Editor/Fusion.Menu.Editor.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Editor/Fusion.Menu.Editor.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Editor/FusionMenuEditor.Common.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Editor/FusionMenuEditor.Common.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Editor/FusionMenuEditor.Sdk.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Editor/FusionMenuEditor.Sdk.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Editor/FusionMenuMachineIdImporter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Editor/FusionMenuMachineIdImporter.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/Fusion.Menu.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/Fusion.Menu.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenu.Common.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenu.Common.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenu.Sdk.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenu.Sdk.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuConfig.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuConfig.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuFpsAvgCounter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuFpsAvgCounter.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuImageFitter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuImageFitter.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuMachineId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuMachineId.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuPartyCodeGenerator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuPartyCodeGenerator.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuScreenPlugin.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuScreenPlugin.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuScreenPluginPing.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuScreenPluginPing.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuScreenPluginTooltip.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuScreenPluginTooltip.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuScreenPluginVersion.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuScreenPluginVersion.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIGameplay.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIGameplay.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUILoading.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUILoading.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIMain.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIMain.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIParty.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIParty.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIPopup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIPopup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIScenes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUIScenes.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUISettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/FusionMenuUISettings.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/Resources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/Resources/FusionMenuMachineGuid.id" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/Resources/FusionMenuMachineGuid.id.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/Resources/FusionMenuPartyCodeGenerator.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/Resources/FusionMenuPartyCodeGenerator.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuBackgroundScreen.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuBackgroundScreen.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuBackgroundWindow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuBackgroundWindow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonDropdown.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonDropdown.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonIcon.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonIcon.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonInputField.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonInputField.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonPrimary.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonPrimary.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonPrimary.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonPrimary.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonSecondary.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonSecondary.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonSecondary.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonSecondary.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonText.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonText.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonText.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonText.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonToggle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuButtonToggle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuFieldDropdown.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuFieldDropdown.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuFieldInput.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuFieldInput.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuFieldToggle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuFieldToggle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconArrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconArrow.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconBackArrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconBackArrow.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconCancel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconCancel.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconCheckmark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconCheckmark.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconCopy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconCopy.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconEdit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconEdit.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconLoading.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconLoading.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconQuestionmark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconQuestionmark.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconSettings.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuIconSettings.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuLoadingIcon.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuLoadingIcon.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuLoadingIcon.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuLoadingIcon.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuLogo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuLogo.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuLogoCorona.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuLogoCorona.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuLogoCoronaSmall.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuLogoCoronaSmall.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuMenuCard.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuMenuCard.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuMenuHeader.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuMenuHeader.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuSpriteBackground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuSpriteBackground.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuSpriteSquare.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuSpriteSquare.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuSpriteSquareRounded1px.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuSpriteSquareRounded1px.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuSpriteSquareRounded1pxShadow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuSpriteSquareRounded1pxShadow.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewGameplay.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewGameplay.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewGameplay.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewGameplay.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewGameplayOverlay.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewGameplayOverlay.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewLoading.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewLoading.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewLoading.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewLoading.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewMainMenu.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewMainMenu.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewMainMenu.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewMainMenu.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewNameChange.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewNameChange.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewNameChange.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewNameChange.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewNameInput.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewNameInput.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewPartyMenu.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewPartyMenu.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewPartyMenu.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewPartyMenu.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewPopUp.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewPopUp.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewPopUp.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewPopUp.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewScenes.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewScenes.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewScenes.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewScenes.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewSettings.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewSettings.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewSettings.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/FusionMenuViewSettings.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/Roboto-Medium SDF.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/Roboto-Medium SDF.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/Roboto-Medium.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/Roboto-Medium.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/Roboto-Regular SDF.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/Roboto-Regular SDF.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/Roboto-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/Roboto-Regular.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/RobotoCondensed-Regular SDF.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/RobotoCondensed-Regular SDF.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/RobotoCondensed-Regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/FusionMenu/Runtime/RuntimeAssets/RobotoCondensed-Regular.ttf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/PhotonWebSocket.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/PhotonWebSocket.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/SocketWebTcp.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/SocketWebTcp.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/WebSocket.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/WebSocket.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/WebSocket.jslib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/WebSocket.jslib.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.README.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/changes-library.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/changes-library.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/netstandard2.0.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.dll.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonLibs/netstandard2.0/Photon3Unity3D.xml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RV.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RV/Modules.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RV/Modules/Agents.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RV/Modules/Agents/Runtime.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RV/Modules/Agents/Runtime/Agent.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RV/Modules/Agents/Runtime/Agent.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RV/Modules/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RV/Modules/Prefabs/Runner.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RV/Modules/Prefabs/Runner.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/DefaultVolumeProfile.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/DefaultVolumeProfile.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/DefaultVolumeProfile.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/DefaultVolumeProfile.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/Mobile_RPAsset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/Mobile_RPAsset.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/Mobile_RPAsset.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/Mobile_RPAsset.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/Mobile_Renderer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/Mobile_Renderer.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/Mobile_Renderer.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/Mobile_Renderer.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/PC_RPAsset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/PC_RPAsset.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/PC_RPAsset.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/PC_RPAsset.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/PC_Renderer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/PC_Renderer.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/PC_Renderer.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/PC_Renderer.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SampleSceneProfile.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/SampleSceneProfile.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SampleSceneProfile.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/SampleSceneProfile.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRenderPipelineGlobalSettings.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SharedAssets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ClusterInputManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ClusterInputManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/DynamicsManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/MemorySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/MemorySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/MultiplayerManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/MultiplayerManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/NavMeshAreas.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/NavMeshAreas.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.multiplayer.tools/CustomColorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.multiplayer.tools/CustomColorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.services.vivox/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.services.vivox/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PresetManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PresetManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/SceneTemplateSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/SceneTemplateSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TimeManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TimeManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/VFXManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/VersionControlSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/VersionControlSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/XRSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/XRSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Search.index" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Search.index" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Search.settings" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Search.settings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "RomanVitolo"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/RomanVitolo/RV-Nightfall.git",
+    "accountId": "9e7ad2e1-cfcb-456c-bb32-a2aad460021f"
+  }
+}]]></component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.multiplayer.center.quickstart@1fcc41c23ee5/Runtime/NetcodeForGameObjectsExample/ClientAuthoritativeMovement.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="33w1XTv7kM1TVA3s4sXXPN8BXKa" />
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.2.6f2\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-projectPath &quot;C:\UnityProjects\VyR\RV-NightFall\The Quiet Village&quot; -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="C:\UnityProjects\VyR\RV-NightFall\The Quiet Village" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="ENV_FILE_PATHS" value="" />
+      <option name="REDIRECT_INPUT_PATH" value="" />
+      <option name="PTY_MODE" value="Auto" />
+      <option name="MIXED_MODE_DEBUG" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.2.6f2\Editor\Unity.exe" />
+      <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath &quot;C:\UnityProjects\VyR\RV-NightFall\The Quiet Village&quot; -testResults Logs/results.xml -logFile Logs/Editor.log -testPlatform EditMode -debugCodeOptimization" />
+      <option name="WORKING_DIRECTORY" value="C:\UnityProjects\VyR\RV-NightFall\The Quiet Village" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="ENV_FILE_PATHS" value="" />
+      <option name="REDIRECT_INPUT_PATH" value="" />
+      <option name="PTY_MODE" value="Auto" />
+      <option name="MIXED_MODE_DEBUG" value="0" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="useMixedMode" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <option name="useMixedMode" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Device" type="UnityDevicePlayer" factoryName="UnityAttachToDevicePlayer">
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6989947d-97b3-4cf3-a9a7-75c80b9f4007" name="Changes" comment="" />
+      <created>1760213360977</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1760213360977</updated>
+      <workItem from="1760213364545" duration="1045000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityProjectDiscoverer">
+    <option name="hasUnityReference" value="true" />
+    <option name="unityProject" value="true" />
+    <option name="unityProjectFolder" value="true" />
+  </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
