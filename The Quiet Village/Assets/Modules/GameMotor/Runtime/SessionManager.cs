@@ -22,6 +22,7 @@ namespace Modules.GameMotor.Runtime
             }
         }
 
+        string sessionName = "MySession";
         const string playerNamePropertyKey = "playerName";
 
         async void Start()
@@ -32,8 +33,13 @@ namespace Modules.GameMotor.Runtime
                 await AuthenticationService.Instance.SignInAnonymouslyAsync(); // Anonymously authenticate the player
                 Debug.Log($"Sign in anonymously succeeded! PlayerID: {AuthenticationService.Instance.PlayerId}");
 
-                // Start a new session as a host
-                StartSessionAsHost();
+                var options = new SessionOptions()
+                {
+                    Name = sessionName,
+                    MaxPlayers = 4
+                }.WithDistributedAuthorityNetwork();
+                
+                ActiveSession = await MultiplayerService.Instance.CreateOrJoinSessionAsync(sessionName, options);
             }
             catch (Exception e)
             {

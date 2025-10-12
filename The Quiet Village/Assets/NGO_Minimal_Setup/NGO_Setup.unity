@@ -1367,7 +1367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &816011765
 Transform:
   m_ObjectHideFlags: 0
@@ -4721,6 +4721,7 @@ GameObject:
   - component: {fileID: 1570343104}
   - component: {fileID: 1570343103}
   - component: {fileID: 1570343102}
+  - component: {fileID: 1570343105}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -4792,7 +4793,7 @@ MonoBehaviour:
     LoadSceneTimeOut: 120
     SpawnTimeout: 10
     EnableNetworkLogs: 1
-    NetworkTopology: 0
+    NetworkTopology: 1
     UseCMBService: 0
     AutoSpawnPlayerPrefabClientSide: 1
     NetworkMessageMetrics: 1
@@ -4815,6 +4816,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1570343105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570343101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f85ff6f05ef4b07be6dff251698da9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Modules.GameMotor.Runtime.SessionManager
 --- !u!1 &1592555342
 GameObject:
   m_ObjectHideFlags: 0
@@ -7198,7 +7211,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!1 &3779580039722409591
 GameObject:
   m_ObjectHideFlags: 0
