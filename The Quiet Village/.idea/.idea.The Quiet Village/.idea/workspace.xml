@@ -11,42 +11,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ff04d06-34b8-4941-91d0-80a1ed079c99" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.The Quiet Village/.idea/indexLayout.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.The Quiet Village/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Quiet Village/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/AgentMover.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/AgentMover.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/AnimationEvents.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/AnimationEvents.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/BasePickable.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/BasePickable.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/BillboardUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/BillboardUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/EntityController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/EntityController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/EntityInput.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/EntityInput.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/EntityPickableTool.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/EntityPickableTool.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/GameMotor.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/GameMotor.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/IInteractable.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/IInteractable.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/InteractionDetector.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/InteractionDetector.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/MultiplayerUI.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/MultiplayerUI.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/ObjectType.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/ObjectType.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/PickableTool.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/PickableTool.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/SelectionOutline.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/SelectionOutline.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/AgentMover.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/AgentMover.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/AnimationEvents.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/AnimationEvents.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/BasePickable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/BasePickable.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/BillboardUI.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/BillboardUI.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/EntityController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/EntityController.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/EntityInput.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/EntityInput.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/EntityPickableTool.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/EntityPickableTool.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/GameMotor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/GameMotor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/IInteractable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/IInteractable.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/InteractionDetector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/InteractionDetector.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/MultiplayerUI.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/MultiplayerUI.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/ObjectType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/ObjectType.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/PickableTool.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/PickableTool.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/SelectionOutline.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/SelectionOutline.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Mathematics/MathematicsDrawers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Sirenix/Odin Inspector/Modules/Unity.Mathematics/MathematicsDrawers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TutorialInfo/Scripts/Readme.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TutorialInfo/Scripts/Readme.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TutorialInfo/Scripts/Readme.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TutorialInfo/Scripts/Readme.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Search.settings" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Search.settings" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp-Editor.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp-Editor.csproj.AssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
     </list>
@@ -71,23 +79,13 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/AgentMover.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/AnimationEvents.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/BasePickable.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/BillboardUI.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/EntityController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/EntityInput.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/EntityPickableTool.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/GameMotor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/IInteractable.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/InteractionDetector.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/MultiplayerUI.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/ObjectType.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/PickableTool.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/_Scripts/Premade Sctips/SelectionOutline.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.netcode.gameobjects@60c1d83693e8/Runtime/Components/Helpers/ComponentController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Modules/Core/Runtime/Scripts/Entities/AgentMovement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.services.vivox@d706006248ef/Editor/VivoxApiClient.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -119,7 +117,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -185,6 +183,32 @@
       <workItem from="1777770069381" duration="3201000" />
       <workItem from="1777824061357" duration="1973000" />
       <workItem from="1777841373136" duration="594000" />
+      <workItem from="1778011517952" duration="1326000" />
+      <workItem from="1778023735015" duration="1855000" />
+      <workItem from="1778100810211" duration="1520000" />
+      <workItem from="1778367406030" duration="594000" />
+      <workItem from="1778618319509" duration="1259000" />
+      <workItem from="1779569271457" duration="1942000" />
+      <workItem from="1779590431400" duration="1220000" />
+      <workItem from="1779661505324" duration="1191000" />
+      <workItem from="1779669975621" duration="744000" />
+      <workItem from="1779680653170" duration="593000" />
+      <workItem from="1779729151856" duration="1821000" />
+      <workItem from="1779741843529" duration="530000" />
+      <workItem from="1779742527532" duration="410000" />
+      <workItem from="1779742952459" duration="2103000" />
+      <workItem from="1779834828601" duration="595000" />
+      <workItem from="1779913499988" duration="593000" />
+      <workItem from="1780795690425" duration="1407000" />
+      <workItem from="1780869876373" duration="593000" />
+      <workItem from="1781036059344" duration="753000" />
+      <workItem from="1781362095285" duration="1798000" />
+      <workItem from="1781465032849" duration="599000" />
+      <workItem from="1781539424679" duration="599000" />
+      <workItem from="1781642925111" duration="1312000" />
+      <workItem from="1782015989040" duration="596000" />
+      <workItem from="1782145343677" duration="1189000" />
+      <workItem from="1782153487595" duration="1257000" />
     </task>
     <servers />
   </component>

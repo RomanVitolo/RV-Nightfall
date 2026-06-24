@@ -1,0 +1,21 @@
+{
+    "name": "Modules.Core.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:1491147abca9d7d4bb7105af628b223e",
+        "GUID:4fc462806a32aa245a7b28367381bf24",
+        "GUID:3450dc9e228065a499e6e09dee931704",
+        "GUID:34a15b638e80a4c69a6d15b59ff294a6",
+        "GUID:fe25561d224ed4743af4c60938a59d0b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
