@@ -142,7 +142,6 @@ namespace PluginMaster
 
                         UnityEditor.EditorGUI.LabelField(cellRect, new GUIContent(shortcut.name));
 
-                        ////////////////
                         columnRect = _multiColumnHeader.GetColumnRect(1);
                         columnRect.y = rowRect.y;
 
@@ -264,7 +263,6 @@ namespace PluginMaster
                         cellRect.x += minX;
                         UnityEditor.EditorGUI.LabelField(cellRect, new GUIContent(shortcut.name));
 
-                        ////////////////
                         columnRect = _multiColumnHeader.GetColumnRect(1);
                         columnRect.y = rowRect.y;
 

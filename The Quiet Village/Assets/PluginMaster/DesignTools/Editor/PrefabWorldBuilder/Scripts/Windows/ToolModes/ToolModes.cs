@@ -62,6 +62,10 @@ namespace PluginMaster
                 _mainScrollPosition = scrollView.scrollPosition;
                 if (ToolController.current == ToolController.Tool.BLOCK)
                     BlockModesGUI();
+#if PWB_FLOOR_TOOL_MODES
+                else if (ToolController.current == ToolController.Tool.FLOOR)
+                    FloorModesGUI();
+#endif
             }
             if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
             {

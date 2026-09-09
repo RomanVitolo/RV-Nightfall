@@ -20,18 +20,20 @@ namespace PluginMaster
     [UnityEditor.InitializeOnLoad]
     public static partial class PWBIO
     {
-
         #region CONSTANTS
         private const float TAU = Mathf.PI * 2;
         #endregion
-        #region HANDLERS AND EVENTS
+
+        #region SCENE STATE
         private static int _controlId;
         private static ToolController.Tool tool => ToolController.current;
 
         private static Camera _sceneViewCamera = null;
 
         public static bool repaint { get; set; }
+        #endregion
 
+        #region HANDLERS AND EVENTS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
         static PWBIO()
         {
@@ -76,34 +78,6 @@ namespace PluginMaster
             UnityEditor.Selection.selectionChanged -= OnSelectionChangedForTrackerMonitor;
             UnityEditor.Selection.selectionChanged += OnSelectionChangedForTrackerMonitor;
         }
-
-        private static double _lastSelectionChangeTime = -1;
-        private static bool _pendingTrackerCheck = false;
-
-        private static void OnSelectionChangedForTrackerMonitor()
-        {
-            _lastSelectionChangeTime = UnityEditor.EditorApplication.timeSinceStartup;
-            if (_pendingTrackerCheck) return;
-            _pendingTrackerCheck = true;
-            UnityEditor.EditorApplication.update -= CheckTrackerAfterSelectionChange;
-            UnityEditor.EditorApplication.update += CheckTrackerAfterSelectionChange;
-        }
-
-        private static void CheckTrackerAfterSelectionChange()
-        {
-            if (UnityEditor.EditorApplication.timeSinceStartup - _lastSelectionChangeTime < 0.15) return;
-
-            UnityEditor.EditorApplication.update -= CheckTrackerAfterSelectionChange;
-            _pendingTrackerCheck = false;
-
-            var tracker = UnityEditor.ActiveEditorTracker.sharedTracker;
-            if (!tracker.isDirty && UnityEditor.Selection.activeObject != null)
-            {
-                tracker.ForceRebuild();
-                UnityEditor.EditorUtility.SetDirty(UnityEditor.Selection.activeObject);
-            }
-        }
-
         private static void OnPaletteChanged()
         {
             ApplySelectionFilters();
@@ -381,51 +355,6 @@ namespace PluginMaster
             }
             GridDuringSceneGui(sceneView);
             sceneView.autoRepaintOnSceneChange = true;
-        }
-        #endregion
-
-        #region INSPECTOR RECOVERY
-        private static bool _inspectorRecoveryActive = false;
-        private static double _inspectorRecoveryTimeout = 0;
-        private const double INSPECTOR_RECOVERY_INTERVAL = 0.1;
-        private static double _lastInspectorRecoveryTime = 0;
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Domain reload", "UDR0004:Domain Reload Analyzer")]
-        public static void BeginInspectorRecovery()
-        {
-            _inspectorRecoveryTimeout = UnityEditor.EditorApplication.timeSinceStartup + 10.0;
-            _lastInspectorRecoveryTime = 0;
-            if (_inspectorRecoveryActive) return;
-            _inspectorRecoveryActive = true;
-            UnityEditor.EditorApplication.update -= InspectorRecoveryUpdate;
-            UnityEditor.EditorApplication.update += InspectorRecoveryUpdate;
-        }
-
-        private static void InspectorRecoveryUpdate()
-        {
-            var now = UnityEditor.EditorApplication.timeSinceStartup;
-
-            if (now > _inspectorRecoveryTimeout)
-            {
-                UnityEditor.EditorApplication.update -= InspectorRecoveryUpdate;
-                _inspectorRecoveryActive = false;
-                return;
-            }
-
-            var tracker = UnityEditor.ActiveEditorTracker.sharedTracker;
-
-            if (tracker.isDirty)
-            {
-                UnityEditor.EditorApplication.update -= InspectorRecoveryUpdate;
-                _inspectorRecoveryActive = false;
-                return;
-            }
-
-            if (now - _lastInspectorRecoveryTime < INSPECTOR_RECOVERY_INTERVAL) return;
-            _lastInspectorRecoveryTime = now;
-
-            tracker.ForceRebuild();
-            UnityEditorInternal.InternalEditorUtility.RepaintAllViews();
         }
         #endregion
 

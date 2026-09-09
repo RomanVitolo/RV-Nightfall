@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 41ffb185e0b6a9644bdedf40cd5fdccf
+timeCreated: 1530265923
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/CyberHunter/Prefab/CyberHunter.prefab
+  uploadId: 648087

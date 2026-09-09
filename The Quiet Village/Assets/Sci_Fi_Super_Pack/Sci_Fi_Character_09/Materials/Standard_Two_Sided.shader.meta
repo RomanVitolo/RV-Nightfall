@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 217890b5d39771e4e80e82c309ba9266
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/Sci_Fi_Character_09/Materials/Standard_Two_Sided.shader
+  uploadId: 648087

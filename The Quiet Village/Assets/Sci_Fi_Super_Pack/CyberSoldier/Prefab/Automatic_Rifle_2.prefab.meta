@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: ef0b61f364dfde749a007d3416e27246
+timeCreated: 1575396204
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/CyberSoldier/Prefab/Automatic_Rifle_2.prefab
+  uploadId: 648087

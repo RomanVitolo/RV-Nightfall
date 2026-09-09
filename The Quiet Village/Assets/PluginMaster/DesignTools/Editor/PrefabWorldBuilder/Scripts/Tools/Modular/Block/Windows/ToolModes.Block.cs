@@ -237,7 +237,7 @@ namespace PluginMaster
                 if (ImageToggleButton("BlockResetMirror",
                     "Reset mirror modes", false))
                 {
-                    BlockToolModes.ResetMirrorModes();
+                    ModularToolModes.ResetMirrorModes();
                     UnityEditor.SceneView.RepaintAll();
                 }
                 if (ImageToggleButton("BlockX", "Mirror on X axis",
@@ -246,11 +246,15 @@ namespace PluginMaster
                     ModularToolModes.mirrorX = !ModularToolModes.mirrorX;
                     UnityEditor.SceneView.RepaintAll();
                 }
-                if (ImageToggleButton("BlockY", "Mirror on Y axis",
-                    ModularToolModes.mirrorY))
+                using (new UnityEditor.EditorGUI.DisabledGroupScope(
+                    ToolController.current == ToolController.Tool.FLOOR))
                 {
-                    ModularToolModes.mirrorY = !ModularToolModes.mirrorY;
-                    UnityEditor.SceneView.RepaintAll();
+                    if (ImageToggleButton("BlockY", "Mirror on Y axis",
+                        ModularToolModes.mirrorY))
+                    {
+                        ModularToolModes.mirrorY = !ModularToolModes.mirrorY;
+                        UnityEditor.SceneView.RepaintAll();
+                    }
                 }
                 if (ImageToggleButton("BlockZ", "Mirror on Z axis",
                     ModularToolModes.mirrorZ))
@@ -270,7 +274,7 @@ namespace PluginMaster
                 if (UnityEditor.EditorGUI.EndChangeCheck())
                     UnityEditor.SceneView.RepaintAll();
 
-                if (ModularToolModes.reflectRotation)
+                if (ModularToolModes.reflectRotation && ToolController.current == ToolController.Tool.BLOCK)
                 {
                     UnityEditor.EditorGUI.BeginChangeCheck();
                     ModularToolModes.autoReflectRotation = UnityEditor.EditorGUILayout.ToggleLeft(

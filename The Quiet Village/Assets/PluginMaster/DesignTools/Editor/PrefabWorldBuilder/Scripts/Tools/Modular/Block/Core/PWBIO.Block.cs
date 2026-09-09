@@ -77,6 +77,7 @@ namespace PluginMaster
             = new System.Collections.Generic.List<GameObject>();
         public static void OnBlockEnabled()
         {
+            ModularToolModes.ResetEditMode();
             UpdateOctree();
             GridManager.settings.radialGridEnabled = false;
             GridManager.settings.gridOnY = true;
@@ -116,7 +117,7 @@ namespace PluginMaster
         {
             mousePos3D = Vector3.zero;
             localMousePos3D = Vector3.zero;
-            if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.ATTACH)
+            if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.ATTACH)
             {
                 if (PaletteManager.selectedBrush == null) return;
                 if (BlockToolModes.selectedDrawMode == BlockToolModes.DrawMode.BLOCK_BY_BLOCK)
@@ -138,7 +139,7 @@ namespace PluginMaster
                 else if (BlockToolModes.selectedDrawMode == BlockToolModes.DrawMode.BOX)
                     PreviewBlockBox(camera, out mousePos3D, out localMousePos3D);
             }
-            else if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.ERASE)
+            else if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.ERASE)
             {
                 if (BlockToolModes.selectedDrawMode == BlockToolModes.DrawMode.BLOCK_BY_BLOCK)
                     PreviewBlockByBlockDelete(camera, out localMousePos3D);
@@ -149,9 +150,9 @@ namespace PluginMaster
                 else if (BlockToolModes.selectedDrawMode == BlockToolModes.DrawMode.BOX)
                     PreviewBlockBoxDelete(camera, out mousePos3D, out localMousePos3D);
             }
-            else if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.MOVE)
+            else if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.MOVE)
                 PreviewBlockMove(camera, out mousePos3D, out localMousePos3D);
-            else if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.SELECT)
+            else if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.SELECT)
             {
                 if (BlockToolModes.selectMode == BlockToolModes.SelecMode.RECT)
                     PreviewBlockRectSelect(camera, out mousePos3D, out localMousePos3D);
@@ -169,14 +170,14 @@ namespace PluginMaster
                 else if (BlockToolModes.selectMode == BlockToolModes.SelecMode.REGION)
                     PreviewBlockRegionSelect(camera, out mousePos3D, out localMousePos3D);
             }
-            else if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.REPLACE)
+            else if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.REPLACE)
                 PreviewBlockReplace(camera, out mousePos3D, out localMousePos3D);
         }
         private static void BlockInput(Camera camera, Vector3 mousePos3D)
         {
             if (_modularDeleteMode)
                 BlockByBlockDeleteInput();
-            else if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.ATTACH)
+            else if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.ATTACH)
             {
                 if (BlockToolModes.selectedDrawMode == BlockToolModes.DrawMode.BLOCK_BY_BLOCK)
                     AttachBlockByBlockInput(mousePos3D);
@@ -187,7 +188,7 @@ namespace PluginMaster
                 else if (BlockToolModes.selectedDrawMode == BlockToolModes.DrawMode.BOX)
                     AttachBlockBoxInput(mousePos3D);
             }
-            else if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.ERASE)
+            else if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.ERASE)
             {
                 if (BlockToolModes.selectedDrawMode == BlockToolModes.DrawMode.BLOCK_BY_BLOCK)
                     BlockByBlockDeleteInput();
@@ -198,7 +199,7 @@ namespace PluginMaster
                 else if (BlockToolModes.selectedDrawMode == BlockToolModes.DrawMode.BOX)
                     DeleteBlockBoxInput(mousePos3D);
             }
-            else if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.SELECT)
+            else if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.SELECT)
             {
                 if (BlockToolModes.selectMode == BlockToolModes.SelecMode.RECT)
                     BlockRectSelectInput(camera, mousePos3D);
@@ -214,11 +215,11 @@ namespace PluginMaster
                 else if (BlockToolModes.selectMode == BlockToolModes.SelecMode.REGION)
                     BlockRegionSelectInput(mousePos3D);
             }
-            else if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.MOVE)
+            else if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.MOVE)
                 BlockMoveInput(mousePos3D);
-            else if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.REPLACE)
+            else if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.REPLACE)
                 BlockReplaceInput(mousePos3D);
-            else if (BlockToolModes.selectedEditMode == BlockToolModes.EditMode.PICK)
+            else if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.PICK)
                 BlockPickInput();
         }
         #endregion

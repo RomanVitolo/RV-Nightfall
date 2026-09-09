@@ -60,6 +60,7 @@ namespace PluginMaster
 
         public static void OnFloorEnabled()
         {
+            ModularToolModes.ResetEditMode();
             UpdateOctree();
             GridManager.settings.radialGridEnabled = false;
             GridManager.settings.gridOnY = true;
@@ -98,14 +99,17 @@ namespace PluginMaster
             else return;
             if (FloorInput(sceneView.camera, mousePos3D)) return;
 
-            switch (FloorManager.state)
+            if (ModularToolModes.selectedEditMode == ModularToolModes.EditMode.ATTACH)
             {
-                case FloorManager.ToolState.FIRST_CORNER:
-                    PreviewFloorSingleTile(sceneView.camera, mousePos3D);
-                    break;
-                case FloorManager.ToolState.SECOND_CORNER:
-                    PreviewFloorRectangle(sceneView.camera);
-                    break;
+                switch (FloorManager.state)
+                {
+                    case FloorManager.ToolState.FIRST_CORNER:
+                        PreviewFloorSingleTile(sceneView.camera, mousePos3D);
+                        break;
+                    case FloorManager.ToolState.SECOND_CORNER:
+                        PreviewFloorRectangle(sceneView.camera);
+                        break;
+                }
             }
             FloorInfoText(sceneView, localMousePos3D);
         }
@@ -181,7 +185,7 @@ namespace PluginMaster
                         }
                         else Paint(FloorManager.settings);
                         FloorManager.state = FloorManager.ToolState.FIRST_CORNER;
-                        if (paintStrokeCount == 1) BrushstrokeManager.UpdateFloorBrushstroke(setNextIdx: true);
+                        BrushstrokeManager.UpdateFloorBrushstroke(setNextIdx: paintStrokeCount == 1);
                         return true;
                     }
                 }
@@ -251,10 +255,14 @@ namespace PluginMaster
                 : Vector3.zero;
 
             var rotatedBrushOffset = brushOffset;
+            var quarterTurnsRotation = Quaternion.identity;
             if (FloorManager.quarterTurns > 0)
-                rotatedBrushOffset = Quaternion.AngleAxis(
+            {
+                quarterTurnsRotation = Quaternion.AngleAxis(
                     FloorManager.quarterTurns * 90,
-                    toolSettings.upwardAxis) * rotatedBrushOffset;
+                    toolSettings.upwardAxis);
+                rotatedBrushOffset = quarterTurnsRotation * rotatedBrushOffset;
+            }
 
             var pureCellCenter = baseCellCenter
                 + GridManager.settings.rotation * (rotatedBrushOffset * 0.5f);
@@ -265,9 +273,7 @@ namespace PluginMaster
             {
                 if (toolSettings.subtractBrushOffset)
                 {
-                    var r = GridManager.settings.rotation;
-                    if (FloorManager.quarterTurns > 0)
-                        r *= Quaternion.AngleAxis(FloorManager.quarterTurns * 90, toolSettings.upwardAxis);
+                    var r = GridManager.settings.rotation * quarterTurnsRotation;
                     cellCenter -= r * (brush.localPositionOffset * 0.5f);
                 }
 

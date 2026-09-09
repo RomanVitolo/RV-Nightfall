@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: c96cdb5cc20f73743bdf9cb875358cec
+timeCreated: 1575396231
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/CyberSoldier/Prefab/Cyber_Soldier_1.prefab
+  uploadId: 648087

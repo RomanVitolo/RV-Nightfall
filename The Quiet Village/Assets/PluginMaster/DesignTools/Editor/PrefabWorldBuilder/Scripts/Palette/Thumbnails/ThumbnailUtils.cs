@@ -134,9 +134,18 @@ namespace PluginMaster
         {
             if (texture == null || string.IsNullOrEmpty(thumbnailPath)) return;
             _savingImage = true;
+            var isNewFile = !System.IO.File.Exists(thumbnailPath);
             byte[] buffer = texture.EncodeToPNG();
-            System.IO.File.WriteAllBytes(thumbnailPath, buffer);
-            PWBCore.refreshDatabase = true;
+            UnityEditor.AssetDatabase.StartAssetEditing();
+            try
+            {
+                System.IO.File.WriteAllBytes(thumbnailPath, buffer);
+            }
+            finally
+            {
+                UnityEditor.AssetDatabase.StopAssetEditing();
+            }
+            if (isNewFile) PWBCore.refreshDatabase = true;
             _savingImage = false;
         }
 
@@ -238,9 +247,8 @@ namespace PluginMaster
                 {
                     var x = j * (SIZE + spacing);
                     var y = i * (SIZE + spacing);
-                    if (subThumbnails[subIdx] == null) continue;
-                    var subPixels = subThumbnails[subIdx].GetPixels32();
-                    texture.SetPixels32(x, y, SIZE, SIZE, subPixels);
+                    if (subThumbnails[subIdx] != null)
+                        texture.SetPixels32(x, y, SIZE, SIZE, subThumbnails[subIdx].GetPixels32());
                     ++subIdx;
                     if (subIdx == subThumbnails.Length) finished = true;
                 }

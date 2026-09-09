@@ -25,7 +25,7 @@ namespace PluginMaster
 
         private static bool _pickingSymmetryOrigin = false;
         private static Vector3 _pickingSymmetryOriginPreview = Vector3.zero;
-
+        private static bool _mirrorModesWereActive = false;
 
         private static void MoveSymmetryOriginToMousePosInput(UnityEditor.SceneView sceneView)
         {
@@ -79,6 +79,8 @@ namespace PluginMaster
         }
         private static void DrawSymmetryOriginPlanesAndHandle()
         {
+            UpdateSymmetryOriginOnMirrorActivation();
+
             bool showXPlane = ModularToolModes.mirrorX || BlockToolModes.axisX;
             bool showYPlane = ModularToolModes.mirrorY || BlockToolModes.axisY;
             bool showZPlane = ModularToolModes.mirrorZ || BlockToolModes.axisZ;
@@ -185,6 +187,43 @@ namespace PluginMaster
 
             UnityEditor.Handles.color = prevColor;
             UnityEditor.Handles.zTest = prevZTest;
+        }
+
+        private static void UpdateSymmetryOriginOnMirrorActivation()
+        {
+            var mirrorModesActive = ModularToolModes.mirrorX
+                || ModularToolModes.mirrorY
+                || ModularToolModes.mirrorZ;
+
+            if (mirrorModesActive && !_mirrorModesWereActive)
+            {
+                MoveSymmetryOriginToSceneViewCenter();
+            }
+
+            _mirrorModesWereActive = mirrorModesActive;
+        }
+
+        private static void MoveSymmetryOriginToSceneViewCenter()
+        {
+            var sceneView = UnityEditor.SceneView.currentDrawingSceneView
+                ?? UnityEditor.SceneView.lastActiveSceneView;
+
+            if (sceneView == null || sceneView.camera == null) return;
+
+            var centerRay = sceneView.camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+            if (!GridRaycast(centerRay, out RaycastHit gridHit)) return;
+
+            var snappedPoint = SnapPosition(
+                gridHit.point,
+                onGrid: true,
+                applySettings: false,
+                snapStepFactor: Vector3.one,
+                ignoreMidpoints: true);
+
+            ModularToolModes.symmetryOrigin = snappedPoint;
+            _symmetryOriginHandlePosition = snappedPoint;
+            _draggingSymmetryOriginHandle = false;
+            _editingSymmetryOriginHandle = false;
         }
     }
 }

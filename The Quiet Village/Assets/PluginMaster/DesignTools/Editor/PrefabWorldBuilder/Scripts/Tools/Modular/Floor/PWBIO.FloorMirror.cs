@@ -20,8 +20,7 @@ namespace PluginMaster
     public static partial class PWBIO
     {
         #region FLOOR MIRROR REFLECTION HELPERS
-        private static Quaternion GetFloorMirrorReflectionRotation(
-            Vector3 localCellCenter, bool isMirroredX, bool isMirroredZ)
+        private static Quaternion GetFloorMirrorReflectionRotation(bool isMirroredX, bool isMirroredZ)
         {
             if (!ModularToolModes.reflectRotation) return Quaternion.identity;
 
@@ -30,29 +29,12 @@ namespace PluginMaster
 
             if (isMirroredX && !isMirroredZ)
             {
-                if ((localCellCenter.x > 0f && localCellCenter.z > 0f)
-                    || (localCellCenter.x < 0f && localCellCenter.z < 0f))
-                {
-                    euler.y = -90f;
-                }
-                else
-                {
-                    euler.y = 90f;
-                }
+                euler.y = -90f;
             }
             else if (isMirroredZ && !isMirroredX)
             {
-                if ((localCellCenter.x > 0f && localCellCenter.z > 0f)
-                    || (localCellCenter.x < 0f && localCellCenter.z < 0f))
-                {
-                    euler.y = 90f;
-                }
-                else
-                {
-                    euler.y = -90f;
-                }
+                euler.y = 90f;
             }
-
             return Quaternion.Euler(euler);
         }
 
@@ -64,11 +46,6 @@ namespace PluginMaster
         #endregion
 
         #region FLOOR MIRRORED TRANSFORMS
-        private static List<MirroredTransform> GetFloorMirroredTransforms(Vector3 baseCellCenter)
-        {
-            return GetFloorMirroredTransforms(baseCellCenter, Vector3.zero);
-        }
-
         private static List<MirroredTransform> GetFloorMirroredTransforms(
             Vector3 baseCellCenter, Vector3 brushOffset)
         {
@@ -93,10 +70,15 @@ namespace PluginMaster
 
             if (mx)
             {
-                var rotOffset = GetFloorMirrorReflectionRotation(local, isMirroredX: true, isMirroredZ: false);
+                var rotOffset = GetFloorMirrorReflectionRotation(isMirroredX: true, isMirroredZ: false);
+
                 var mirroredOffset = toolSettings.subtractBrushOffset
-                    ? rotOffset * (localBrushOffset * 0.5f)
+                    ? (rotOffset) * (localBrushOffset * 0.5f)
                     : Vector3.zero;
+                if (ModularToolModes.reflectScale && localBrushOffset.x != 0)
+                {
+                    mirroredOffset.x = -mirroredOffset.x;
+                }
 
                 var mirroredCenter = new Vector3(-local.x, local.y, local.z);
                 result.Add(new MirroredTransform(
@@ -106,11 +88,14 @@ namespace PluginMaster
             }
             if (mz)
             {
-                var rotOffset = GetFloorMirrorReflectionRotation(local, isMirroredX: false, isMirroredZ: true);
+                var rotOffset = GetFloorMirrorReflectionRotation(isMirroredX: false, isMirroredZ: true);
                 var mirroredOffset = toolSettings.subtractBrushOffset
                     ? rotOffset * (localBrushOffset * 0.5f)
                     : Vector3.zero;
-
+                if (ModularToolModes.reflectScale && localBrushOffset.z != 0)
+                {
+                    mirroredOffset.z = -mirroredOffset.z;
+                }
                 var mirroredCenter = new Vector3(local.x, local.y, -local.z);
                 result.Add(new MirroredTransform(
                     rotation * (mirroredCenter + mirroredOffset) + origin,
@@ -119,10 +104,15 @@ namespace PluginMaster
             }
             if (mx && mz)
             {
-                var rotOffset = GetFloorMirrorReflectionRotation(local, isMirroredX: true, isMirroredZ: true);
+                var rotOffset = GetFloorMirrorReflectionRotation(isMirroredX: true, isMirroredZ: true);
                 var mirroredOffset = toolSettings.subtractBrushOffset
                     ? rotOffset * (localBrushOffset * 0.5f)
                     : Vector3.zero;
+                if (ModularToolModes.reflectScale)
+                {
+                    if (localBrushOffset.x != 0) mirroredOffset.x = -mirroredOffset.x;
+                    if (localBrushOffset.z != 0) mirroredOffset.z = -mirroredOffset.z;
+                }
 
                 var mirroredCenter = new Vector3(-local.x, local.y, -local.z);
                 result.Add(new MirroredTransform(
@@ -162,7 +152,7 @@ namespace PluginMaster
             BrushSettings brush,
             double halfStep)
         {
-            var mirroredItemRotation = mt.rotationOffset * itemRotation;
+            var mirroredItemRotation = mt.rotationOffset * Quaternion.Inverse(itemRotation);
             var cellCenter = toolSettings.subtractBrushOffset
                 ? mt.position
                 : mt.position + mirroredItemRotation * brush.localPositionOffset;
@@ -171,7 +161,7 @@ namespace PluginMaster
             if (IsFloorCellOccupied(cellCenter, halfCellSize, mirroredItemRotation, halfStep)) return;
 
             var mirroredScaleMult = Vector3.Scale(strokeItem.scaleMultiplier, mt.scaleMultiplier);
-            var itemPosition = GetFloorItemPosition(prefab, mirroredScaleMult,mirroredItemRotation,
+            var itemPosition = GetFloorItemPosition(prefab, mirroredScaleMult, mirroredItemRotation,
                 cellCenter, toolSettings.moduleSize);
             var previewRotation = mirroredItemRotation * Quaternion.Inverse(prefab.transform.rotation);
             var translateMatrix = Matrix4x4.Translate(-prefab.transform.position);

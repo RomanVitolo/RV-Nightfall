@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 639ab5cd43f0e6b4db9ddd57d5fcf277
+timeCreated: 1576177018
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/CybeHucker/Materials/Weapon_1.mat
+  uploadId: 648087

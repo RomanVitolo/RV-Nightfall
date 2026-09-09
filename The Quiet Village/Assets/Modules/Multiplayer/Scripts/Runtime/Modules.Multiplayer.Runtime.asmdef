@@ -7,8 +7,7 @@
         "Unity.Services.Authentication",
         "Unity.Services.Multiplayer",
         "Unity.InputSystem",
-        "Unity.Cinemachine",
-        "Unity.StarterAssets"
+        "Unity.Cinemachine"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

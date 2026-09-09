@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 61ed967c6af64414994be7159f353bf2
+timeCreated: 1577691979
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/CyberPrisoner/Prefab/Automatic_Rifle_Yellow.prefab
+  uploadId: 648087

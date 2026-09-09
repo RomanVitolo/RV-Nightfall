@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: df4c6203f4f4924459113176aa00865d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/Sci_Fi_Character_010/Animations/Animations_Controllers/Animations_Weapon.controller
+  uploadId: 648087

@@ -100,7 +100,14 @@ namespace UHFPS.Runtime
         /// </summary>
         public int Quantity
         {
-            get => !GUID.IsEmpty() ? LocalPlayerContext.Inventory.GetItemQuantity(GUID) : 0;
+            // MULTIPLAYER PATCH: matches the guarded style of Refresh/InInventory/GetItem above —
+            // the inventory lives on the player prefab and is null before this client spawns, and
+            // in edit mode where no player exists at all. Absent inventory means zero held.
+            get
+            {
+                Inventory inventory = LocalPlayerContext.Inventory;
+                return !GUID.IsEmpty() && inventory != null ? inventory.GetItemQuantity(GUID) : 0;
+            }
         }
 
         /// <summary>

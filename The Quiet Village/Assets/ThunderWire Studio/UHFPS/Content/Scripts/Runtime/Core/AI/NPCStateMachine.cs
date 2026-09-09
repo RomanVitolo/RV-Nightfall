@@ -29,13 +29,23 @@ namespace UHFPS.Runtime
             }
         }
 
+        // MULTIPLAYER PATCH: NPCs are scene-placed, so they Awake before NGO has spawned any
+        // player. These getters assumed LocalPlayerContext.Presence was already populated, and so
+        // threw a NullReferenceException on every NPC on every frame for the whole
+        // scene-load-to-spawn window. They now yield null until the local player exists and
+        // re-resolve on each access, so the AI picks the player up on the frame it appears
+        // instead of caching the "not yet" answer forever.
         private PlayerStateMachine m_Player;
         public PlayerStateMachine Player
         {
             get
             {
                 if (m_Player == null)
-                    m_Player = LocalPlayerContext.Presence.Player.GetComponent<PlayerStateMachine>();
+                {
+                    PlayerPresenceManager presence = LocalPlayerContext.Presence;
+                    GameObject player = presence != null ? presence.Player : null;
+                    if (player != null) m_Player = player.GetComponent<PlayerStateMachine>();
+                }
 
                 return m_Player;
             }
@@ -47,7 +57,10 @@ namespace UHFPS.Runtime
             get
             {
                 if (m_PlayerHealth == null)
-                    m_PlayerHealth = Player.GetComponent<PlayerHealth>();
+                {
+                    PlayerStateMachine player = Player;
+                    if (player != null) m_PlayerHealth = player.GetComponent<PlayerHealth>();
+                }
 
                 return m_PlayerHealth;
             }
@@ -59,7 +72,10 @@ namespace UHFPS.Runtime
             get
             {
                 if (m_PlayerManager == null)
-                    m_PlayerManager = Player.GetComponent<PlayerManager>();
+                {
+                    PlayerStateMachine player = Player;
+                    if (player != null) m_PlayerManager = player.GetComponent<PlayerManager>();
+                }
 
                 return m_PlayerManager;
             }
@@ -138,6 +154,17 @@ namespace UHFPS.Runtime
 
         private void Update()
         {
+            // MULTIPLAYER PATCH: every AI state body and transition predicate in UHFPS reads the
+            // player — sight checks, distance checks, hide-state queries — and the player is null
+            // between scene load and this client's spawn. Single-player UHFPS could assume a
+            // scene-placed player that existed before any NPC awoke; NGO inverts that. Holding the
+            // machine still until a player exists fixes every one of those call sites at once,
+            // rather than null-guarding each predicate separately, and is the correct behaviour:
+            // there is nothing for player-driven AI to do when there is no player.
+            // NOTE: this tracks the *local* player only. Making AI chase the nearest of several
+            // players is separate, unfinished work — see "World state is still single-player".
+            if (Player == null) return;
+
             if (!stateEntered)
             {
                 // enter state
@@ -164,7 +191,9 @@ namespace UHFPS.Runtime
             }
 
             // player death event
-            if(currentState != null && !IsPlayerDead && PlayerHealth.IsDead)
+            // MULTIPLAYER PATCH: null until the local player spawns; skip the check until then.
+            PlayerHealth playerHealth = PlayerHealth;
+            if(currentState != null && !IsPlayerDead && playerHealth != null && playerHealth.IsDead)
             {
                 currentState.Value.FSMState.OnPlayerDeath();
                 IsPlayerDead = true;

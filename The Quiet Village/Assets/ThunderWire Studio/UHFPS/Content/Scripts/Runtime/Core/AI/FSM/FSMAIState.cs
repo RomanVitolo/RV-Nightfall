@@ -12,13 +12,38 @@ namespace UHFPS.Runtime
         public Transition[] Transitions { get; private set; }
         public StorableCollection StateData { get; set; }
 
-        public Vector3 PlayerPosition => playerMachine.transform.position;
-        public Vector3 PlayerHead => playerManager.CameraHolder.transform.position;
+        // MULTIPLAYER PATCH: fall back to the NPC's own position while no local player exists.
+        // Callers gate on HasPlayer; this only stops a stray call from throwing during the
+        // scene-load-to-spawn window.
+        public Vector3 PlayerPosition => playerMachine != null
+            ? playerMachine.transform.position
+            : machine.transform.position;
+
+        public Vector3 PlayerHead
+        {
+            get
+            {
+                PlayerManager pm = playerManager;
+                return pm != null && pm.CameraHolder != null
+                    ? pm.CameraHolder.transform.position
+                    : machine.transform.position;
+            }
+        }
 
         protected NPCStateMachine machine;
-        protected PlayerStateMachine playerMachine;
-        protected PlayerHealth playerHealth;
-        protected PlayerManager playerManager;
+
+        // MULTIPLAYER PATCH: these were fields cached in the constructor, which runs from
+        // NPCStateMachine.Awake() — scene load, before NGO spawns any player. The cache therefore
+        // captured null and was never refreshed, leaving every NPC permanently blind to the player
+        // even after it arrived. Reading through the machine defers the lookup to first use, and
+        // the machine caches it once the player exists, so this stays cheap in the steady state.
+        // Subclasses only read these, so field-to-property is source-compatible.
+        protected PlayerStateMachine playerMachine => machine.Player;
+        protected PlayerHealth playerHealth => machine.PlayerHealth;
+        protected PlayerManager playerManager => machine.PlayerManager;
+
+        /// <summary>True once this client's player exists. AI logic must not act before it does.</summary>
+        protected bool HasPlayer => machine.Player != null;
         protected Animator animator;
         protected NavMeshAgent agent;
 
@@ -33,9 +58,6 @@ namespace UHFPS.Runtime
         public FSMAIState(NPCStateMachine machine)
         {
             this.machine = machine;
-            playerMachine = machine.Player;
-            playerHealth = machine.PlayerHealth;
-            playerManager = machine.PlayerManager;
             animator = machine.Animator;
             agent = machine.Agent;
             Transitions = OnGetTransitions();
@@ -142,6 +164,9 @@ namespace UHFPS.Runtime
         /// </summary>
         public bool InPlayerDistance(float distance)
         {
+            // MULTIPLAYER PATCH: without a player, PlayerPosition is the NPC's own position,
+            // which would otherwise read as distance zero and fire every proximity transition.
+            if (!HasPlayer) return false;
             return InDistance(distance, PlayerPosition);
         }
 
@@ -158,10 +183,14 @@ namespace UHFPS.Runtime
         /// </summary>
         public bool SeesPlayer()
         {
-            bool isInvisible = (machine.NPCType == NPCTypeEnum.Enemy && playerHealth.IsInvisibleToEnemies)
-                || (machine.NPCType == NPCTypeEnum.Ally && playerHealth.IsInvisibleToAllies);
+            // MULTIPLAYER PATCH: no local player spawned yet means there is nothing to see.
+            PlayerHealth health = playerHealth;
+            if (health == null) return false;
 
-            if (playerHealth.IsDead || isInvisible)
+            bool isInvisible = (machine.NPCType == NPCTypeEnum.Enemy && health.IsInvisibleToEnemies)
+                || (machine.NPCType == NPCTypeEnum.Ally && health.IsInvisibleToAllies);
+
+            if (health.IsDead || isInvisible)
                 return false;
 
             bool seesPlayer = SeesObject(machine.SightsDistance, PlayerHead);

@@ -297,7 +297,7 @@ namespace PluginMaster
             {
                 if (mf.sharedMesh == null) continue;
                 var renderer = mf.GetComponent<MeshRenderer>();
-                if (!renderer.enabled) continue;
+                if (renderer == null || !renderer.enabled) continue;
                 result.Add((mf.sharedMesh, mf.transform));
             }
             var skinnedMeshRenderers = obj.GetComponentsInChildren<SkinnedMeshRenderer>(includeInactive);

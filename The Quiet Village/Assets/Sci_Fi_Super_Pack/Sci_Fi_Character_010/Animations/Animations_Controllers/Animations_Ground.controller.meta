@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 602b8bc9118310548ae74063b14b7233
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/Sci_Fi_Character_010/Animations/Animations_Controllers/Animations_Ground.controller
+  uploadId: 648087

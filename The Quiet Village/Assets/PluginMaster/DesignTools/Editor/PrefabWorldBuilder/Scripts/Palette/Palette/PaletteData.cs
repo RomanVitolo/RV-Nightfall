@@ -291,7 +291,16 @@ namespace PluginMaster
             _saving = true;
             var jsonString = JsonUtility.ToJson(this, true);
             var fileExist = System.IO.File.Exists(filePath);
-            System.IO.File.WriteAllText(filePath, jsonString);
+            UnityEditor.AssetDatabase.StartAssetEditing();
+            try
+            {
+                System.IO.File.WriteAllText(filePath, jsonString);
+            }
+            finally
+            {
+                UnityEditor.AssetDatabase.StopAssetEditing();
+                _saving = false;
+            }
             if (!fileExist) PWBCore.refreshDatabase = true;
             if (OnPaletteSaved != null) OnPaletteSaved();
             return filePath;

@@ -19,7 +19,7 @@ namespace PluginMaster
     {
         public void DeleteObsoleteFiles()
         {
-            var rootDirFullPath = PWBCore.GetFullPath(_rootDirectory);
+            var rootDirFullPath = PWBCore.GetFullPath(rootDirectory);
 
             var obsoleteDirNew = rootDirFullPath + "/Scripts/Obsolete";
             if (System.IO.Directory.Exists(obsoleteDirNew))

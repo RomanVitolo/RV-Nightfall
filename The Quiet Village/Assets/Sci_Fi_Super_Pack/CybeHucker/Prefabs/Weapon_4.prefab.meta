@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: b0979b2a8451b4d438fd44b6bbcc3c1c
+timeCreated: 1576177160
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/CybeHucker/Prefabs/Weapon_4.prefab
+  uploadId: 648087

@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 4f8f15d6be2da5441b295a5b5a946efd
+timeCreated: 1530265936
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/CyberHunter/Prefab/AutoRifle.prefab
+  uploadId: 648087

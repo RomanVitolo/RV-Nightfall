@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: e79d54461097e1542aa1dc077fccc46b
+timeCreated: 1575395416
+licenseType: Store
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/CyberSoldier/Materials/Standard_Two_Sided (2).shader
+  uploadId: 648087

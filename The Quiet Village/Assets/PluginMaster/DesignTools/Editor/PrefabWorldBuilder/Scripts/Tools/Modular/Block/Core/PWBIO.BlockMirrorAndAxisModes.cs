@@ -16,20 +16,6 @@ using UnityEngine;
 
 namespace PluginMaster
 {
-    public struct MirroredTransform
-    {
-        public Vector3 position;
-        public Quaternion rotationOffset;
-        public Vector3 scaleMultiplier;
-
-        public MirroredTransform(Vector3 position, Quaternion rotationOffset, Vector3 scaleMultiplier)
-        {
-            this.position = position;
-            this.rotationOffset = rotationOffset;
-            this.scaleMultiplier = scaleMultiplier;
-        }
-    }
-
     public static partial class PWBIO
     {
         #region MIRROR REFLECTION HELPERS

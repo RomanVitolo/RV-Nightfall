@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 1832c26af7b950c4f96a4ada7436d330
+timeCreated: 1576177093
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/CybeHucker/Prefabs/CyberHucker.prefab
+  uploadId: 648087

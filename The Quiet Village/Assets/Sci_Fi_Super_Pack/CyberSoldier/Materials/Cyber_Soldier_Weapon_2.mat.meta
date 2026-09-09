@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: eb111387b7acc3240880a1028d7eed75
+timeCreated: 1575395217
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/CyberSoldier/Materials/Cyber_Soldier_Weapon_2.mat
+  uploadId: 648087

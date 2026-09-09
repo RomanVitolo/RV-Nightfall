@@ -29,7 +29,7 @@ namespace PluginMaster
         public const string RELATIVE_RESOURCES_DIR = RELATIVE_TOOL_DIR + "/Resources";
         public const string RELATIVE_DATA_DIR = RELATIVE_RESOURCES_DIR + "/" + DATA_DIR;
         public const string PALETTES_DIR = "Palettes";
-        public const string VERSION = "4.12.0";
+        public const string VERSION = "4.12.3";
 
         [SerializeField] private string _version = VERSION;
         [SerializeField] private string _rootDirectory = null;
@@ -479,11 +479,22 @@ namespace PluginMaster
             var fileExist = System.IO.File.Exists(dataPath);
             if (!System.IO.Directory.Exists(PWBSettings.fullDataDir))
                 System.IO.Directory.CreateDirectory(PWBSettings.fullDataDir);
-            System.IO.File.WriteAllText(dataPath, jsonString);
+            UnityEditor.AssetDatabase.StartAssetEditing();
+            try
+            {
+                System.IO.File.WriteAllText(dataPath, jsonString);
+            }
+            finally
+            {
+                UnityEditor.AssetDatabase.StopAssetEditing();
+                _saving = false;
+                _savePending = false;
+            }
             if (!fileExist) PWBCore.refreshDatabase = true;
+#else
+    _savePending = false;
+    _saving = false;
 #endif
-            _savePending = false;
-            _saving = false;
         }
 
         public static string ReadDataText()

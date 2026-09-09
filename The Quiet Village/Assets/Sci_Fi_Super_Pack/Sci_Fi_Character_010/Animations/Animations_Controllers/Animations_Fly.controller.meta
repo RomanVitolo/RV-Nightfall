@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 592656e324da3b74db05229dd91c76da
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277803
+  packageName: Sci-Fi SuperPack (21 Characters)
+  packageVersion: 1.0
+  assetPath: Assets/Sci_Fi_Super_Pack/Sci_Fi_Character_010/Animations/Animations_Controllers/Animations_Fly.controller
+  uploadId: 648087

@@ -54,6 +54,11 @@ namespace PluginMaster
                 NotifyChange();
             }
         }
+
+        public static void ResetEditMode()
+        {
+            _selectedEditMode = EditMode.ATTACH;
+        }
         #endregion
 
         #region MIRROR MODES
@@ -97,6 +102,19 @@ namespace PluginMaster
         }
         #endregion
 
+    }
+    public struct MirroredTransform
+    {
+        public Vector3 position;
+        public Quaternion rotationOffset;
+        public Vector3 scaleMultiplier;
+
+        public MirroredTransform(Vector3 position, Quaternion rotationOffset, Vector3 scaleMultiplier)
+        {
+            this.position = position;
+            this.rotationOffset = rotationOffset;
+            this.scaleMultiplier = scaleMultiplier;
+        }
     }
 }
 #pragma warning restore UDR0001

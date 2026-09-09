@@ -104,11 +104,9 @@ namespace PluginMaster
             var up = rotation * Vector3.up;
             var forward = rotation * Vector3.forward;
 
-            // Always allocate control id to keep IMGUI in sync across events.
             var controlHint = unchecked((POSITION_HANDLE_CONTROL_HASH * 397) ^ handleId);
             var controlId = GUIUtility.GetControlID(controlHint, FocusType.Passive);
 
-            // Disable interaction during RMB / Alt navigation, but keep IDs and rendering consistent.
             var navigating = evt.alt || evt.button == 1;
             if (navigating && _positionHandleActiveId == handleId)
             {

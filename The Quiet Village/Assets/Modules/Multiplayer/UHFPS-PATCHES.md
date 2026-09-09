@@ -1,13 +1,13 @@
 # UHFPS source patches for multiplayer
 
-UHFPS is third-party code. A package update **will overwrite** these edits. **56 of its .cs files** are
+UHFPS is third-party code. A package update **will overwrite** these edits. **57 of its .cs files** are
 now modified. Find what survived an update with:
 
 ```bash
 grep -rl "MULTIPLAYER PATCH\|LocalPlayerContext" "Assets/ThunderWire Studio" --include=*.cs | wc -l
 ```
 
-That must report **56**. A lower number means an update reverted some of them.
+That must report **57**. A lower number means an update reverted some of them.
 
 ## Why these exist
 
@@ -95,11 +95,37 @@ first use and tolerates the player being absent.
 | `Core/Puzzle/.../SafePuzzle.cs` | `PlayerManager` + `ExamineController` |
 | `Trigger/GhostHunting/ThermometerTemp.cs` | Thermometer lookup, retried at each use |
 
-## Known gaps
+## 3. AI held until the player spawns (2 files)
 
+UHFPS AI is entirely player-driven, and NPCs are **scene-placed** — they `Awake` before NGO spawns
+anyone. Every state body and transition predicate reads the player, so before this fix two zombies in
+`GameplayScene` threw a `NullReferenceException` *per NPC, per frame*, for the whole
+scene-load-to-connect window. That is the null-reference spam this slice was expected to hit.
+
+| File | Change |
+|---|---|
+| `Core/AI/NPCStateMachine.cs` | `Player`/`PlayerHealth`/`PlayerManager` are null-tolerant and re-resolve while null. `Update` returns early until a player exists. |
+| `Core/AI/FSM/FSMAIState.cs` | The three cached player fields became lazy properties; sight and distance helpers gate on the new `HasPlayer`. |
+
+The `FSMAIState` change is the load-bearing one. Those were **fields assigned in the constructor**,
+which runs from `NPCStateMachine.Awake()` — so they captured null at scene load and were never
+refreshed. Every NPC would have stayed permanently blind to the player *even after it spawned*. As
+properties they resolve on first use, and `NPCStateMachine` caches the result once, so the steady-state
+cost is unchanged. The six AI states only ever read them, so field-to-property is source-compatible.
+
+The early return in `Update` is deliberate over guarding each predicate: it fixes every state body and
+every transition lambda at once, and freezing player-driven AI when there is no player is the correct
+behaviour rather than a workaround.
+
+**This tracks the _local_ player only.** AI chasing the nearest of several players is unfinished — see
+the world-state gap below.
+
+## Known gaps
 - **Save/load is untested and likely broken.** `SaveGameManager` now lives on the player prefab, so it
   is instantiated once per player and disabled on all but the owner's copy. `Inventory` is
   `ISaveableCustom` and moved too. It went onto the prefab only because it holds a reference to the
   `SavingIcon` in the HUD — not because per-player saving is correct. Out of scope for this slice, and
   the first thing to revisit if saving matters.
+- **World state is still single-player.** Doors, pickups, puzzles and AI are not replicated; a door one
+  player opens does not open for anyone else. AI targets only the local player (see section 3).
 - Backups of the pre-refactor scripts, scene and prefab are in this session's scratchpad.
