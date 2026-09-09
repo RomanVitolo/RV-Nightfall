@@ -1,0 +1,22 @@
+{
+    "name": "Modules.Multiplayer.Runtime",
+    "rootNamespace": "Modules.Multiplayer.Scripts.Runtime",
+    "references": [
+        "Unity.Netcode.Runtime",
+        "Unity.Services.Core",
+        "Unity.Services.Authentication",
+        "Unity.Services.Multiplayer",
+        "Unity.InputSystem",
+        "Unity.Cinemachine",
+        "Unity.StarterAssets"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

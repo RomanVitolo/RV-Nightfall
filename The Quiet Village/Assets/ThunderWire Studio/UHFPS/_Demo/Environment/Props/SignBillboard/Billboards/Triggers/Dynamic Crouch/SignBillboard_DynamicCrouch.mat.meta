@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: baa23910cdc86504cb8c9604a5dcf4d6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 254506
+  packageName: UHFPS - Ultimate Horror FPS KIT (URP)
+  packageVersion: 1.4.3
+  assetPath: Assets/ThunderWire Studio/UHFPS/_Demo/Environment/Props/SignBillboard/Billboards/Triggers/Dynamic
+    Crouch/SignBillboard_DynamicCrouch.mat
+  uploadId: 959518

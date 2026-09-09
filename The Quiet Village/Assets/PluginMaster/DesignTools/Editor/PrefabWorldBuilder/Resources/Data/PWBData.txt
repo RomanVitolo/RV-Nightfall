@@ -1396,7 +1396,7 @@
                     "MainCamera",
                     "Player",
                     "GameController",
-                    "CinemachineTarget"
+                    "Flesh"
                 ],
                 "_slopeFilter": {
                     "_v1": 0.0,
@@ -1568,7 +1568,7 @@
                 "MainCamera",
                 "Player",
                 "GameController",
-                "CinemachineTarget"
+                "Flesh"
             ],
             "_slopeFilter": {
                 "_v1": 0.0,
@@ -3132,7 +3132,7 @@
                     "MainCamera",
                     "Player",
                     "GameController",
-                    "CinemachineTarget"
+                    "Flesh"
                 ]
             }
         ],
@@ -3162,7 +3162,7 @@
                 "MainCamera",
                 "Player",
                 "GameController",
-                "CinemachineTarget"
+                "Flesh"
             ]
         }
     },

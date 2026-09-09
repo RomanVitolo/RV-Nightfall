@@ -7,3 +7,10 @@ ShaderImporter:
   userData: Version 2.0
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 254506
+  packageName: UHFPS - Ultimate Horror FPS KIT (URP)
+  packageVersion: 1.4.3
+  assetPath: Assets/TextMesh Pro/Shaders/TMPro.cginc
+  uploadId: 959518

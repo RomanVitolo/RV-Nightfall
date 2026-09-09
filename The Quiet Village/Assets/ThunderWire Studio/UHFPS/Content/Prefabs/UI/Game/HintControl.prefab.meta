@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1cec131f4abc1d047b8d6df80c64959a
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 254506
+  packageName: UHFPS - Ultimate Horror FPS KIT (URP)
+  packageVersion: 1.4.3
+  assetPath: Assets/ThunderWire Studio/UHFPS/Content/Prefabs/UI/Game/HintControl.prefab
+  uploadId: 959518

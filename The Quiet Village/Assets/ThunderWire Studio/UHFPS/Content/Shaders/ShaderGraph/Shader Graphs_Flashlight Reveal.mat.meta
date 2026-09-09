@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 8d5840c0a4a860e478470f67a57e60a5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 254506
+  packageName: UHFPS - Ultimate Horror FPS KIT (URP)
+  packageVersion: 1.4.3
+  assetPath: Assets/ThunderWire Studio/UHFPS/Content/Shaders/ShaderGraph/Shader Graphs_Flashlight
+    Reveal.mat
+  uploadId: 959518

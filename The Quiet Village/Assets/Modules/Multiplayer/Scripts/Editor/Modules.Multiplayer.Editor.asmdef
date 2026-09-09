@@ -1,0 +1,21 @@
+{
+    "name": "Modules.Multiplayer.Editor",
+    "rootNamespace": "Modules.Multiplayer.Scripts.Editor",
+    "references": [
+        "Modules.Multiplayer.Runtime",
+        "Unity.Netcode.Runtime",
+        "Unity.Cinemachine",
+        "Unity.StarterAssets"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
