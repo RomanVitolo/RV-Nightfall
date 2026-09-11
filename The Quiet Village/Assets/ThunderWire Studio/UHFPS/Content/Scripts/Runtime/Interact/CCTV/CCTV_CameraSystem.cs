@@ -33,9 +33,11 @@ namespace UHFPS.Runtime
         [Header("Enter Condition")]
         public ReflectionField Condition;
 
-        private PlayerPresenceManager playerPresence;
-        private PlayerItemsManager playerItems;
-        private GameManager gameManager;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached references stayed null for the whole session.
+        private PlayerPresenceManager playerPresence => LocalPlayerContext.Presence;
+        private PlayerItemsManager playerItems => LocalPlayerContext.PlayerManager != null ? LocalPlayerContext.PlayerManager.PlayerItems : null;
+        private GameManager gameManager => LocalPlayerContext.GameManager;
 
         private bool isActive;
         private bool isCameraView;
@@ -45,11 +47,11 @@ namespace UHFPS.Runtime
         private GameObject cctvOverlay;
         private TMP_Text camText;
 
-        private void Awake()
+        // MULTIPLAYER PATCH: the CCTV overlay is part of the HUD, which lives on the player prefab and so does not
+        // exist when Awake runs. Wired on first use instead.
+        private void EnsureOverlay()
         {
-            playerPresence = LocalPlayerContext.Presence;
-            playerItems = playerPresence.PlayerManager.PlayerItems;
-            gameManager = LocalPlayerContext.GameManager;
+            if (cctvOverlay != null || gameManager == null) return;
 
             var behaviours = gameManager.GraphicReferences.Value["CCTV"];
             cctvOverlay = behaviours[0].gameObject;
@@ -178,6 +180,9 @@ namespace UHFPS.Runtime
         {
             if (Condition.IsSet && !Condition.Value)
                 return;
+
+            if (playerPresence == null || playerItems == null) return;
+            EnsureOverlay();
 
             playerPresence.FreezePlayer(true);
             playerPresence.SwitchActiveCamera(currentCamera.VirtualCamera.gameObject, FadeViewSpeed, OnBackgroundFade, () => { isActive = true; });

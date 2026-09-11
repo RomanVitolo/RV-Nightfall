@@ -35,11 +35,58 @@ namespace UHFPS.Runtime
         // scene-load-to-spawn window. They now yield null until the local player exists and
         // re-resolve on each access, so the AI picks the player up on the frame it appears
         // instead of caching the "not yet" answer forever.
+        // MULTIPLAYER PATCH: in a session the host runs the AI and chooses which networked player it pursues —
+        // the bridge's NetworkedNpc calls SetTarget. Without a chosen target it falls back to the local player.
+        private PlayerStateMachine m_TargetOverride;
+        private bool m_HasTargetOverride;
+
+        /// <summary>Pursue this player from now on; null means nobody. MULTIPLAYER PATCH.</summary>
+        public void SetTarget(PlayerStateMachine target)
+        {
+            if (m_HasTargetOverride && m_TargetOverride == target) return;
+
+            m_HasTargetOverride = true;
+            m_TargetOverride = target;
+
+            // Cached per player, so a new target needs fresh ones.
+            m_PlayerHealth = null;
+            m_PlayerManager = null;
+
+            // Whether "the player" is dead depends on who the player now is: a zombie whose last target died
+            // must go on to hunt the next one rather than stay stood down.
+            IAITarget newTarget = Target;
+            IsPlayerDead = newTarget != null && newTarget.IsDead;
+        }
+
+        private IAITarget m_Target;
+        private PlayerStateMachine m_TargetOwner;
+
+        /// <summary>
+        /// The pursued player's state as the AI should see it — replicated, not read from a remote copy's
+        /// switched-off UHFPS components. MULTIPLAYER PATCH.
+        /// </summary>
+        public IAITarget Target
+        {
+            get
+            {
+                PlayerStateMachine player = Player;
+                if (player != m_TargetOwner)
+                {
+                    m_TargetOwner = player;
+                    m_Target = player != null ? player.GetComponent<IAITarget>() : null;
+                }
+
+                return m_Target;
+            }
+        }
+
         private PlayerStateMachine m_Player;
         public PlayerStateMachine Player
         {
             get
             {
+                if (m_HasTargetOverride) return m_TargetOverride;
+
                 if (m_Player == null)
                 {
                     PlayerPresenceManager presence = LocalPlayerContext.Presence;
@@ -191,9 +238,10 @@ namespace UHFPS.Runtime
             }
 
             // player death event
-            // MULTIPLAYER PATCH: null until the local player spawns; skip the check until then.
-            PlayerHealth playerHealth = PlayerHealth;
-            if(currentState != null && !IsPlayerDead && playerHealth != null && playerHealth.IsDead)
+            // MULTIPLAYER PATCH: read through the target, whose death is the server-authoritative health — on the
+            // host, a remote player's own PlayerHealth never changes. Null until a player exists.
+            IAITarget target = Target;
+            if(currentState != null && !IsPlayerDead && target != null && target.IsDead)
             {
                 currentState.Value.FSMState.OnPlayerDeath();
                 IsPlayerDead = true;

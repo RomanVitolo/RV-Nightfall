@@ -29,9 +29,11 @@ namespace UHFPS.Runtime
         public bool LoadCallEvent;
         public UnityEvent OnUnlock;
 
-        public GameManager GameManager;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached references stayed null for the whole session.
+        public GameManager GameManager => LocalPlayerContext.GameManager;
         public PlayerManager PlayerManager;
-        private PlayerPresenceManager PlayerPresence;
+        private PlayerPresenceManager PlayerPresence => LocalPlayerContext.Presence;
         private ExamineController ExamineController;
 
         public GameObject SafeLockPanel;
@@ -49,9 +51,6 @@ namespace UHFPS.Runtime
 
         private void Awake()
         {
-            GameManager = LocalPlayerContext.GameManager;
-            PlayerPresence = LocalPlayerContext.Presence;
-
             // MULTIPLAYER PATCH: PlayerManager and ExamineController are resolved in InteractStart —
             // the player is spawned by Netcode after scene load.
 
@@ -67,23 +66,25 @@ namespace UHFPS.Runtime
         /// <remarks>MULTIPLAYER PATCH. Netcode spawns the player after scene load.</remarks>
         private bool EnsurePlayerManager()
         {
-            if (PlayerManager != null) return true;
-
-            PlayerManager = LocalPlayerContext.PlayerManager;
+            if (PlayerManager == null) PlayerManager = LocalPlayerContext.PlayerManager;
             if (PlayerManager == null) return false;
 
-            ExamineController = PlayerManager.GetComponentInChildren<ExamineController>();
+            if (ExamineController == null) ExamineController = PlayerManager.GetComponentInChildren<ExamineController>();
+
+            // The safe's number panel is part of the HUD, which lives on the player prefab and so did not exist
+            // when Start ran. Wired on first use instead.
+            if (SafeLockPanel == null && GameManager != null)
+            {
+                var references = GameManager.GraphicReferences.Value["SafeLock"];
+                SafeLockPanel = references[0].gameObject;
+                Number1 = (TMP_Text)references[1];
+                Number2 = (TMP_Text)references[2];
+                Number3 = (TMP_Text)references[3];
+            }
+
             return true;
         }
 
-        private void Start()
-        {
-            var references = GameManager.GraphicReferences.Value["SafeLock"];
-            SafeLockPanel = references[0].gameObject;
-            Number1 = (TMP_Text)references[1];
-            Number2 = (TMP_Text)references[2];
-            Number3 = (TMP_Text)references[3];
-        }
 
         public void InteractStart()
         {

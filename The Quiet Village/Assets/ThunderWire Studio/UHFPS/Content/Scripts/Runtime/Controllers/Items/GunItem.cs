@@ -360,6 +360,7 @@ namespace UHFPS.Runtime
             }
 
             Animator.SetTrigger(animationSettings.ShootTrigger);
+            RaiseActionPerformed(ItemAction.Shoot); // MULTIPLAYER PATCH: mirror the shot on this player's body for others.
             audioSource.PlayOneShotSoundClip(gunSounds.ShootSound);
 
             if (bulletAndMuzzleFlash.MuzzleFlash)
@@ -458,6 +459,7 @@ namespace UHFPS.Runtime
                 : bulletSettings.BulletsPerMag;
 
             Animator.SetTrigger(animationSettings.ReloadTrigger);
+            RaiseActionPerformed(ItemAction.Reload); // MULTIPLAYER PATCH: mirror the reload on this player's body for others.
             yield return new WaitForAnimatorStateExit(Animator, animationSettings.GunReloadState);
 
             if (carryingBullets >= bulletsToFullMag)

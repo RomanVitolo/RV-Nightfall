@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UHFPS.Tools;
+using Modules.Multiplayer.Bridge;
 using static UnityEngine.Object;
 using static UHFPS.Runtime.NPCStateMachine;
 
@@ -41,6 +42,13 @@ namespace UHFPS.Runtime
         protected PlayerStateMachine playerMachine => machine.Player;
         protected PlayerHealth playerHealth => machine.PlayerHealth;
         protected PlayerManager playerManager => machine.PlayerManager;
+
+        /// <summary>
+        /// MULTIPLAYER PATCH: the pursued player's state as the AI must see it — alive, hidden, invisible — and
+        /// where its damage goes. Read this rather than playerHealth or playerMachine's state: on the host those
+        /// belong to a remote player's switched-off copy and never change.
+        /// </summary>
+        protected IAITarget aiTarget => machine.Target;
 
         /// <summary>True once this client's player exists. AI logic must not act before it does.</summary>
         protected bool HasPlayer => machine.Player != null;
@@ -183,14 +191,12 @@ namespace UHFPS.Runtime
         /// </summary>
         public bool SeesPlayer()
         {
-            // MULTIPLAYER PATCH: no local player spawned yet means there is nothing to see.
-            PlayerHealth health = playerHealth;
-            if (health == null) return false;
+            // MULTIPLAYER PATCH: asked of the target, which answers from replicated state. No target yet means
+            // there is nobody to see.
+            IAITarget target = aiTarget;
+            if (target == null) return false;
 
-            bool isInvisible = (machine.NPCType == NPCTypeEnum.Enemy && health.IsInvisibleToEnemies)
-                || (machine.NPCType == NPCTypeEnum.Ally && health.IsInvisibleToAllies);
-
-            if (health.IsDead || isInvisible)
+            if (target.IsDead || target.IsInvisibleTo(machine.NPCType))
                 return false;
 
             bool seesPlayer = SeesObject(machine.SightsDistance, PlayerHead);

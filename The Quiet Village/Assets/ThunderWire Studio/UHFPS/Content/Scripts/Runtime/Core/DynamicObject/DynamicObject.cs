@@ -32,8 +32,10 @@ namespace UHFPS.Runtime
         public Animator animator;
         public HingeJoint joint;
         public new Rigidbody rigidbody;
-        public Inventory inventory;
-        public GameManager gameManager;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached reference stayed null for the whole session.
+        public Inventory inventory => LocalPlayerContext.Inventory;
+        public GameManager gameManager => LocalPlayerContext.GameManager;
 
         // MULTIPLAYER PATCH: set while waiting for the networked local player to spawn.
         private bool pendingIgnorePlayerCollider;
@@ -112,9 +114,6 @@ namespace UHFPS.Runtime
 
         private void Awake()
         {
-            inventory = LocalPlayerContext.Inventory;
-            gameManager = LocalPlayerContext.GameManager;
-
             if (dynamicStatus == DynamicStatus.Locked && !SaveGameManager.GameActuallyLoad)
             {
                 // Main value for defining object as locked.

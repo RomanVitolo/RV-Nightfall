@@ -23,9 +23,11 @@ namespace UHFPS.Runtime
 
         public UnityEvent<bool> OnScreenFade;
 
-        protected PlayerPresenceManager playerPresence;
-        protected PlayerManager playerManager;
-        protected GameManager gameManager;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached reference stayed null for the whole session.
+        protected PlayerPresenceManager playerPresence => LocalPlayerContext.Presence;
+        protected PlayerManager playerManager => LocalPlayerContext.PlayerManager;
+        protected GameManager gameManager => LocalPlayerContext.GameManager;
         private bool canSwitch;
 
         /// <summary>
@@ -45,10 +47,6 @@ namespace UHFPS.Runtime
 
         public virtual void Awake()
         {
-            playerPresence = LocalPlayerContext.Presence;
-            playerManager = playerPresence.PlayerManager;
-            gameManager = LocalPlayerContext.GameManager;
-
             foreach (var control in ControlsContexts)
             {
                 control.SubscribeGloc();

@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="Multiplayer.uss" />
+    <!-- Full-screen but click-through: only the panel itself takes input, so the game underneath is untouched. -->
+    <ui:VisualElement name="overlay-root" class="mp-overlay-root mp-hidden" picking-mode="Ignore">
+        <ui:Label name="overlay-hint" class="mp-overlay-hint" picking-mode="Ignore" />
+        <ui:VisualElement name="overlay-panel" class="mp-overlay-panel mp-hidden">
+            <ui:Label name="overlay-room" class="mp-section-title" />
+            <ui:Label name="overlay-code" class="mp-muted" />
+            <ui:VisualElement name="overlay-players" style="margin: 12px 0 0 0;" />
+            <ui:VisualElement class="mp-actions">
+                <ui:Button name="overlay-close" text="Close" class="mp-button mp-button--small" />
+                <ui:Button name="overlay-leave" text="Leave to Lobby" class="mp-button mp-button--small mp-button--primary" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -26,11 +26,13 @@ namespace UHFPS.Runtime
         [Range(2, 10)] public ushort Rows = 5;
         [Range(2, 10)] public ushort Columns = 5;
 
-        protected Inventory inventory;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached reference stayed null for the whole session.
+        protected Inventory inventory => LocalPlayerContext.Inventory;
 
         public virtual void Awake()
         {
-            inventory = LocalPlayerContext.Inventory;
+            // Kept virtual and empty: subclasses call base.Awake(). The inventory is now resolved on use.
         }
 
         private void Start()

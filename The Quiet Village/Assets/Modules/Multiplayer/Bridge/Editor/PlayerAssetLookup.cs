@@ -19,7 +19,11 @@ namespace Modules.Multiplayer.Bridge.EditorTools
     /// </remarks>
     public static class PlayerAssetLookup
     {
-        private const string PlayerPrefabPath = "Assets/_NetworkPrefabs/NetworkedHeroPlayer.prefab";
+        /// <summary>
+        /// The networked player prefab. The only path to it in the codebase — HeroPlayerSetup builds this
+        /// same asset, so the two can never disagree about where the player lives.
+        /// </summary>
+        internal const string PlayerPrefabPath = "Assets/Modules/Multiplayer/Prefabs/NetworkedWorkerPlayer.prefab";
 
         /// <summary>The player's inventory, or <c>null</c> if the prefab cannot be found.</summary>
         public static Inventory FindInventory() => FindOnPlayer<Inventory>();

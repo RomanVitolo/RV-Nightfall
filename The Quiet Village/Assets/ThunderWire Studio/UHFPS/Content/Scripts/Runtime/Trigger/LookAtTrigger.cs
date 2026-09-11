@@ -28,14 +28,12 @@ namespace UHFPS.Runtime
         public UnityEvent OnLookAt;
         public UnityEvent OnLookAway;
 
-        private PlayerPresenceManager playerPresence;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached reference stayed null for the whole session.
+        private PlayerPresenceManager playerPresence => LocalPlayerContext.Presence;
         private bool isLookedOnce = false;
         private bool resetLook = false;
 
-        private void Awake()
-        {
-            playerPresence = LocalPlayerContext.Presence;
-        }
 
         private void Update()
         {

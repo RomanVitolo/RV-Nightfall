@@ -51,7 +51,8 @@ namespace UHFPS.Runtime.States
             {
                 return new Transition[]
                 {
-                    Transition.To<ZombieChaseState>(() => !playerMachine.IsCurrent(PlayerStateMachine.HIDING_STATE) 
+                    // MULTIPLAYER PATCH: hiding as the target's own client reports it, via aiTarget.
+                    Transition.To<ZombieChaseState>(() => !(aiTarget != null && aiTarget.IsHiding)
                     && (SeesPlayer() || InDistance(State.VeryClosePlayerDetection, PlayerPosition)) && !IsPlayerDead)
                 };
             }

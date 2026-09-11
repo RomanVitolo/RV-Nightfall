@@ -26,12 +26,9 @@ namespace UHFPS.Runtime
         private bool isEventCalled;
         private bool triggerEntered;
 
-        private GameManager gameManager;
-
-        private void Awake()
-        {
-            gameManager = LocalPlayerContext.GameManager;
-        }
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached reference stayed null for the whole session.
+        private GameManager gameManager => LocalPlayerContext.GameManager;
 
         private void Start()
         {

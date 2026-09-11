@@ -68,6 +68,7 @@ namespace UHFPS.Runtime
             if (isAttack && isAttackEnd && attackTime <= 0)
             {
                 Animator.SetTrigger(SlashTrigger);
+                RaiseActionPerformed(ItemAction.Attack); // MULTIPLAYER PATCH: mirror the slash on this player's body for others.
                 isAttackEnd = false;
             }
             else if (attackTime > 0f)

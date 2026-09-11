@@ -224,6 +224,18 @@ namespace UHFPS.Runtime
         /// </summary>
         public virtual bool CanCombine() => false;
 
+        // MULTIPLAYER PATCH: UHFPS items fire, swing and reload inside their own update logic and
+        // expose nothing a third-person body could follow, so remote players saw no reaction at all.
+        // This is the single seam the bridge's PlayerActionSync listens to. Items raise it on the same
+        // line that triggers their first-person animation, i.e. only once UHFPS has committed to the
+        // action — never for a dry click on an empty magazine or a swing still on cooldown.
+        public enum ItemAction { Shoot, Reload, Attack }
+
+        /// <summary>Raised on the owning client when this item performs an action other players should see.</summary>
+        public event System.Action<ItemAction> ActionPerformed;
+
+        protected void RaiseActionPerformed(ItemAction action) => ActionPerformed?.Invoke(action);
+
         // --------------------------------------------------
         // Unity Methods
         // --------------------------------------------------

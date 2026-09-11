@@ -21,13 +21,11 @@ namespace UHFPS.Runtime
         public UnityEvent<Vector3> OnHold;
         public UnityEvent OnStop;
 
-        private PlayerPresenceManager playerPresence;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached reference stayed null for the whole session.
+        private PlayerPresenceManager playerPresence => LocalPlayerContext.Presence;
         private bool isInteracted;
 
-        private void Awake()
-        {
-            playerPresence = LocalPlayerContext.Presence;
-        }
 
         public void InteractStart()
         {

@@ -164,6 +164,13 @@ namespace UHFPS.Runtime
                 if (interactableItem.ExamineType == ExamineTypeEnum.None)
                     return;
 
+                // MULTIPLAYER PATCH: first come, first served — one player examines a world object at a time.
+                // The gate refuses at once if someone else holds it, or asks the host and calls back here once
+                // granted. Inventory examines work on a local copy of the item nobody else can see, so no gate.
+                if (!isInventoryExamine && obj.TryGetComponent(out IExamineGate gate)
+                    && !gate.TryBeginExamine(() => { if (!IsExamining && obj != null) StartExamine(obj); }))
+                    return;
+
                 ExamineObject(interactableItem);
                 gameManager.SetBlur(true, true);
                 gameManager.FreezePlayer(true);

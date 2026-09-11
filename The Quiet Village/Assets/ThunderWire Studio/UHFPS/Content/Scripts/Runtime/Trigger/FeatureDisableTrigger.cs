@@ -8,8 +8,10 @@ namespace UHFPS.Runtime
     [InspectorHeader("Feature Disable Trigger")]
     public class FeatureDisableTrigger : MonoBehaviour
     {
-        private GameManager gameManager;
-        private PlayerStateMachine player;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached reference stayed null for the whole session.
+        private GameManager gameManager => LocalPlayerContext.GameManager;
+        private PlayerStateMachine player => LocalPlayerContext.StateMachine;
 
         [Flags]
         public enum Features
@@ -24,11 +26,6 @@ namespace UHFPS.Runtime
 
         public Features FeaturesToDisable = Features.None;
 
-        private void Awake()
-        {
-            gameManager = LocalPlayerContext.GameManager;
-            player = gameManager.PlayerPresence.StateMachine;
-        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -57,6 +54,9 @@ namespace UHFPS.Runtime
                 bool loadState = !loadDisable || state;
                 gameManager.SetSaveInteractable(saveState, loadState);
             }
+
+            // Triggers are entered by the local player, so it normally exists — but not in the frames before it spawns.
+            if (player == null) return;
 
             if (FeaturesToDisable.HasFlag(Features.Jump))
                 player.SetStateEnabled(PlayerStateMachine.JUMP_STATE, state);

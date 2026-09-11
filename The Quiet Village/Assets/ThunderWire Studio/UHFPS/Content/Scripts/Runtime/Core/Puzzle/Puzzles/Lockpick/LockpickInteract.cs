@@ -38,19 +38,18 @@ namespace UHFPS.Runtime
         public GameObject LockpickUI;
         public TMP_Text LockpickText;
 
-        public PlayerPresenceManager PlayerPresence;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached references stayed null for the whole session.
+        public PlayerPresenceManager PlayerPresence => LocalPlayerContext.Presence;
         public PlayerManager PlayerManager;
         public DynamicObject DynamicObject;
-        public GameManager GameManager;
+        public GameManager GameManager => LocalPlayerContext.GameManager;
 
         private Camera MainCamera => PlayerPresence.PlayerCamera;
         private bool isUnlocked;
 
         private void Awake()
         {
-            PlayerPresence = LocalPlayerContext.Presence;
-            GameManager = LocalPlayerContext.GameManager;
-
             // MULTIPLAYER PATCH: PlayerManager is resolved in InteractStart instead — the player is
             // spawned by Netcode after scene load, and interaction can only happen once it exists.
             if (RandomUnlockAngle) UnlockAngle = Mathf.Floor(GameTools.Random(BobbyPinLimits));
@@ -64,10 +63,6 @@ namespace UHFPS.Runtime
             }
 
             LockpicksText.SubscribeGloc();
-
-            var references = GameManager.GraphicReferences.Value["Lockpick"];
-            LockpickUI = references[0].gameObject;
-            LockpickText = (TMP_Text)references[1];
         }
 
         public void InteractStart()
@@ -86,10 +81,19 @@ namespace UHFPS.Runtime
         /// <remarks>MULTIPLAYER PATCH. Netcode spawns the player after scene load.</remarks>
         private bool EnsurePlayerManager()
         {
-            if (PlayerManager != null) return true;
+            if (PlayerManager == null) PlayerManager = LocalPlayerContext.PlayerManager;
+            if (PlayerManager == null) return false;
 
-            PlayerManager = LocalPlayerContext.PlayerManager;
-            return PlayerManager != null;
+            // The lockpick UI is part of the HUD, which lives on the player prefab and so did not exist when
+            // Start ran. Wired on first use instead.
+            if (LockpickUI == null && GameManager != null)
+            {
+                var references = GameManager.GraphicReferences.Value["Lockpick"];
+                LockpickUI = references[0].gameObject;
+                LockpickText = (TMP_Text)references[1];
+            }
+
+            return true;
         }
 
         public void OnTryUnlock(DynamicObject dynamicObject)

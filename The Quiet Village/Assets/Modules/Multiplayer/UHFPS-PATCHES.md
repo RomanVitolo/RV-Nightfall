@@ -1,13 +1,13 @@
 # UHFPS source patches for multiplayer
 
-UHFPS is third-party code. A package update **will overwrite** these edits. **57 of its .cs files** are
+UHFPS is third-party code. A package update **will overwrite** these edits. **63 of its .cs files** are
 now modified. Find what survived an update with:
 
 ```bash
 grep -rl "MULTIPLAYER PATCH\|LocalPlayerContext" "Assets/ThunderWire Studio" --include=*.cs | wc -l
 ```
 
-That must report **57**. A lower number means an update reverted some of them.
+That must report **63**. A lower number means an update reverted some of them.
 
 ## Why these exist
 
@@ -120,12 +120,112 @@ behaviour rather than a workaround.
 **This tracks the _local_ player only.** AI chasing the nearest of several players is unfinished — see
 the world-state gap below.
 
+## 4. Item actions for the third-person body (4 files, 2 new)
+
+UHFPS items fire, swing and reload inside their own update logic and expose no event, so a remote
+player's body could not react. One seam was added and raised at the four points where UHFPS commits to
+an action — the same line that triggers its first-person animation, so a dry click on an empty magazine
+or a swing still on cooldown raises nothing.
+
+| File | Change |
+|---|---|
+| `Controllers/Items/PlayerItemBehaviour.cs` | Added `ItemAction` enum, `ActionPerformed` event and protected `RaiseActionPerformed`. |
+| `Controllers/Items/GunItem.cs` | Raises `Shoot` in `FireOneBullet` and `Reload` in `ReloadGun`. |
+| `Controllers/Items/AxeItem.cs` | Raises `Attack` on the swing. *(newly patched)* |
+| `Controllers/Items/KnifeItem.cs` | Raises `Attack` on the slash. *(newly patched)* |
+
+The bridge's `PlayerActionSync` subscribes on the owner only and forwards each action through an
+owner-only RPC (`InvokePermission = Owner`), so no client can make another player appear to fire.
+Remote copies never raise it themselves: every item returns early unless equipped, and only
+`PlayerItemsManager` equips — a `PlayerComponent` that is disabled on remote copies.
+
+If an update reverts these, weapons still work for the player using them; other players simply stop
+seeing the body react.
+
+## 5. World objects that cached the player at load (16 files, none new)
+
+Section 2 deferred nine of these; sixteen more still read the local player in `Awake`/`Start`, where it does
+not exist yet. The first time anyone ran the game, interacting surfaced three of them as
+`NullReferenceException`s: storage (`ItemsStorage` → `InventoryContainer.inventory`), lockpicking
+(`LockpickInteract.PlayerPresence`) and doors (`DynamicObject.gameManager`). The rest failed the same way
+more quietly — `PuzzleBase` and `PuzzleBaseBlend` even dereferenced the null in `Awake`, so every puzzle threw
+at level load and skipped the rest of its initialisation.
+
+Found systematically (any assignment from `LocalPlayerContext` inside `Awake`/`Start`/`OnEnable`), and fixed
+with one pattern: the cached field becomes a property of the same name that resolves on use. Existing reads
+compile unchanged; the only writes were the `Awake` lines removed.
+
+| File | Resolved on use |
+|---|---|
+| `Core/DynamicObject/DynamicObject.cs` | `inventory`, `gameManager` |
+| `Core/DynamicObject/DynamicUnlock/DynamicBrokenFix.cs` | `gameManager` |
+| `Core/Inventory/Behaviour/InventoryContainer.cs` | `inventory` (base of `ItemsStorage`, `ItemsContainer`) |
+| `Core/Puzzle/PuzzleBase.cs` | `playerPresence`, `playerManager`, `gameManager` |
+| `Core/Puzzle/PuzzleBaseBlend.cs` | the above, `playerItems`, the Cinemachine brain; the blend to restore is captured when the puzzle starts |
+| `Core/Puzzle/Puzzles/Maze/MazePuzzle.cs` | `inventory` |
+| `Core/Puzzle/Puzzles/Lockpick/LockpickInteract.cs` | `PlayerPresence`, `GameManager`; lockpick HUD wired on first use |
+| `Core/Puzzle/Puzzles/Safe/SafeBig/SafePuzzle.cs` | `GameManager`, `PlayerPresence`; safe HUD wired on first use |
+| `Interact/CCTV/CCTV_CameraSystem.cs` | `playerPresence`, `playerItems`, `gameManager`; CCTV overlay wired on first use |
+| `Interact/Hiding/HideInteract.cs` | presence, managers, state machine, controllers, Cinemachine brain |
+| `Interact/Other/CustomInteractEvent.cs` | `playerPresence` |
+| `Interact/PowerGenerator/GeneratorFuelTank.cs` | `gameManager`, `inventory` |
+| `Trigger/FeatureDisableTrigger.cs` | `gameManager`, `player` |
+| `Trigger/HintTrigger.cs` | `gameManager` |
+| `Trigger/LookAtTrigger.cs` | `playerPresence` |
+| `Core/Inventory/Event/InventoryUseEvents.cs` | registers its use events on `LocalPlayerContext.Ready` instead of in `Start` |
+
+The HUD panels (lockpick, safe, CCTV) are a variant of the same problem: their widgets live in the HUD on the
+player prefab, so looking them up in `Start` found nothing. They are wired the first time they are needed.
+
+## World state replication (no UHFPS changes)
+
+Doors, pickups, props and puzzles replicate through `Assets/Modules/Multiplayer/Bridge/World/`, set up by
+**Tools > Multiplayer > Set Up World Sync**. It hooks UHFPS only through interfaces UHFPS already calls
+(`IInteractStart`) and data it already exposes (`OnSave`/`OnLoad`, `DynamicObject.target`), so it adds nothing
+to this list and survives a UHFPS update as long as those stay.
+
+## 6. AI simulated by the host for every player (6 files, 4 new)
+
+UHFPS AI ran on every client against that client's own player, so each player was chased by a private copy of
+the same zombie. Now only the host simulates NPCs: the bridge's `NetworkedNpc` switches the AI, navigation and
+root motion off on clients, which show the host's zombie through NetworkTransform and NetworkAnimator.
+
+The host needs a view of *every* player, and on the host a remote player's UHFPS components are switched off —
+its `PlayerHealth` never changes and its state machine never enters Hiding. So the AI no longer reads those. It
+asks `IAITarget` (implemented by the bridge's `PlayerAiTarget` on the player prefab), which answers from
+replicated state: server-authoritative health, and hiding/invisibility as each player's own client reports it.
+
+| File | Change |
+|---|---|
+| `Core/AI/NPCStateMachine.cs` | `SetTarget` (the host picks the pursued player) and `Target` (its `IAITarget`); target death via `Target.IsDead`. |
+| `Core/AI/FSM/FSMAIState.cs` | `aiTarget` accessor; the sight check reads death and invisibility from it. |
+| `Core/AI/AIStates/Zombie/ZombieChaseState.cs` | Hiding and death via `aiTarget`; attacks call `aiTarget.ApplyDamage`. *(newly patched)* |
+| `Core/AI/AIStates/Zombie/ZombiePatrolState.cs` | Hiding via `aiTarget`. *(newly patched)* |
+| `Core/AI/AIStates/Zombie/ZombiePlayerHideState.cs` | Hiding place, concealment, health and damage via `aiTarget`; pulling a player out calls `aiTarget.ForceUnhide`, which runs on that player's own client. *(newly patched)* |
+| `Core/AI/NPCHealth.cs` | `DamageRelay`: a client's hit goes to the host instead of its own copy; an `ApplyDamageMax` override so one-hit kills are relayed too. *(newly patched)* |
+
+Attack animations also play on clients, and their events reach the AI states there; `IAITarget.ApplyDamage`
+does nothing off the server, so only the host's attack lands.
+
+## 7. One examiner per object (2 files, none new)
+
+| File | Change |
+|---|---|
+| `Controllers/Camera/ExamineController.cs` | `StartExamine` asks the object's `IExamineGate` first; if the host has not granted it yet, the examine starts from the grant's callback. Inventory examines skip it. |
+| `Controllers/Camera/InteractController.cs` | `Interact` refuses to pick up an object another player is examining. |
+
+The gate is the bridge's `SyncedExamineLock`: first come, first served, decided by the host, and released when
+the examine ends, when the item is taken mid-examine, or when the examiner disconnects.
+
 ## Known gaps
+
 - **Save/load is untested and likely broken.** `SaveGameManager` now lives on the player prefab, so it
   is instantiated once per player and disabled on all but the owner's copy. `Inventory` is
   `ISaveableCustom` and moved too. It went onto the prefab only because it holds a reference to the
   `SavingIcon` in the HUD — not because per-player saving is correct. Out of scope for this slice, and
   the first thing to revisit if saving matters.
-- **World state is still single-player.** Doors, pickups, puzzles and AI are not replicated; a door one
-  player opens does not open for anyone else. AI targets only the local player (see section 3).
+- **World state is replicated, with limits.** Doors, pickups, props, puzzles, switches, lights and NPCs sync
+  (see above). Per-player triggers (cutscenes, dialogue, objectives, jumpscares) stay local by design. Events a
+  saveable fires are not replayed on other clients; their effects arrive only through objects that replicate
+  their own state. NPC ragdolls fall independently on each client once dead.
 - Backups of the pre-refactor scripts, scene and prefab are in this session's scratchpad.

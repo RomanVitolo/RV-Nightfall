@@ -4,10 +4,8 @@ using System.Text;
 using Modules.Multiplayer.Bridge;
 using Modules.Multiplayer.Scripts.Runtime.Player;
 using Modules.Multiplayer.Scripts.Runtime.Sessions;
-using Modules.Multiplayer.Scripts.Runtime.UI;
 using Unity.Netcode;
 using Unity.Netcode.Components;
-using Unity.Netcode.Transports.UTP;
 using UHFPS.Runtime;
 using Unity.AI.Navigation;
 using UnityEditor;
@@ -35,25 +33,33 @@ namespace Modules.Multiplayer.Bridge.EditorTools
         private const string SourcePrefabPath =
             "Assets/ThunderWire Studio/UHFPS/Content/Resources/Setup/HEROPLAYER.prefab";
 
-        private const string VariantPath = "Assets/_NetworkPrefabs/NetworkedHeroPlayer.prefab";
+        private const string VariantPath = PlayerAssetLookup.PlayerPrefabPath;
 
-        private const string ScenePath =
+        /// <summary>The level players are spawned into. Shared with LobbySetup, which also edits it.</summary>
+        internal const string ScenePath =
             "Assets/ThunderWire Studio/UHFPS/_Demo/Scenes/GameplayScene.unity";
 
+        private const string NetworkPrefabsListPath = LobbySetup.NetworkPrefabsListPath;
+
+        // The body other players see. Changing character is this line plus a re-run: ConfigureAvatar
+        // replaces any body that is not an instance of this prefab. Nested unmodified, so the vendor
+        // asset stays pristine and every override lives on the player prefab.
         private const string AvatarPrefabPath =
-            "Assets/Synty/PolygonHorrorMansion/Prefabs/Characters/Characters/SM_Chr_Jock_01.prefab";
+            "Assets/Sci_Fi_Super_Pack/Character_Worker/Prefabs/Sci_Fi_Worker 01.prefab";
 
+        // Source of the body's Humanoid Avatar, which the locomotion clips retarget through.
         private const string AvatarModelPath =
-            "Assets/Synty/PolygonHorrorMansion/Models/Characters.fbx";
+            "Assets/Sci_Fi_Super_Pack/Character_Worker/Mesh/Sci_Fi_Worker.FBX";
 
-        private const string AvatarControllerPath =
-            "Assets/Starter Assets/Runtime/ThirdPersonController/Character/Animations/StarterAssetsThirdPerson.controller";
+        // Beyond these, a remote player's body visibly floats, sinks or clips its collider.
+        private const float MaxBodyHeightMismatch = 0.3f;
+        private const float MaxFeetOffset = 0.1f;
+        private const float MaxFacingError = 45f;
 
-        private const string NetworkPrefabsListPath = "Assets/DefaultNetworkPrefabs.asset";
         private const string AvatarChildName = "RemoteAvatar";
 
-        // Matches SessionService.MaxPlayers so every connecting client has its own point.
-        private const int SpawnPointCount = 4;
+        // One point per player a room can hold, so every client that joins has its own.
+        private const int SpawnPointCount = SessionService.MaxRoomSize;
         private const float SpawnHeightOffset = 0.2f;
 
         // Far enough apart that four CharacterControllers do not start inside one another, close
@@ -386,12 +392,22 @@ namespace Modules.Multiplayer.Bridge.EditorTools
             var root = PrefabUtility.LoadPrefabContents(VariantPath);
             try
             {
+                WarnIfManagersMissing(root, report);
+
                 GetOrAddComponent<NetworkObject>(root);
                 ConfigureBodyTransform(GetOrAddComponent<NetworkTransform>(root));
 
                 if (!ConfigureHeadTransform(root, report)) return null;
 
-                var avatar = ConfigureAvatar(root, report);
+                var stateMachine = root.GetComponent<PlayerStateMachine>();
+                if (stateMachine == null || stateMachine.PlayerBasicSettings == null)
+                {
+                    report.AppendLine("FAILED: HEROPLAYER has no PlayerStateMachine settings to read speeds from.");
+                    return null;
+                }
+
+                var speeds = stateMachine.PlayerBasicSettings;
+                var avatar = ConfigureAvatar(root, speeds.WalkSpeed, speeds.RunSpeed, report);
                 if (avatar == null) return null;
 
                 ConfigureBridgeComponents(root, avatar, report);
@@ -483,48 +499,47 @@ namespace Modules.Multiplayer.Bridge.EditorTools
         }
 
         /// <summary>Attaches the third-person body other clients will see.</summary>
-        private static RemoteAvatarBinder ConfigureAvatar(GameObject root, StringBuilder report)
+        private static RemoteAvatarBinder ConfigureAvatar(
+            GameObject root, float walkSpeed, float runSpeed, StringBuilder report)
         {
+            var avatarSource = AssetDatabase.LoadAssetAtPath<GameObject>(AvatarPrefabPath);
+            if (avatarSource == null)
+            {
+                report.AppendLine($"FAILED: avatar prefab not found at {AvatarPrefabPath}");
+                return null;
+            }
+
+            RemoveStaleAvatars(root, avatarSource, report);
+
             var existing = FindDirectChild(root.transform, AvatarChildName);
             GameObject avatarRoot;
 
             if (existing != null)
             {
                 avatarRoot = existing.gameObject;
-                report.AppendLine("Reusing existing RemoteAvatar child.");
+                report.AppendLine($"Reusing existing RemoteAvatar ('{avatarSource.name}').");
             }
             else
             {
-                var avatarSource = AssetDatabase.LoadAssetAtPath<GameObject>(AvatarPrefabPath);
-                if (avatarSource == null)
-                {
-                    report.AppendLine($"FAILED: avatar prefab not found at {AvatarPrefabPath}");
-                    return null;
-                }
-
                 avatarRoot = (GameObject)PrefabUtility.InstantiatePrefab(avatarSource, root.transform);
                 avatarRoot.name = AvatarChildName;
 
-                // HEROPLAYER's origin sits at the feet, as does the Synty rig, so no offset is needed.
+                // HEROPLAYER's origin sits at its feet, as does the Worker rig, so no offset is needed.
+                // ReportBodyFit checks that claim against the real mesh rather than trusting it.
                 avatarRoot.transform.localPosition = Vector3.zero;
                 avatarRoot.transform.localRotation = Quaternion.identity;
 
                 report.AppendLine($"Added avatar '{avatarSource.name}'.");
             }
 
+            var controller = AvatarAnimatorAssets.BuildOrLoad(walkSpeed, runSpeed, report);
+            if (controller == null) return null;
+
             var animator = GetOrAddComponent<Animator>(avatarRoot);
-
-            var controller = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(AvatarControllerPath);
-            if (controller == null)
-            {
-                report.AppendLine($"FAILED: animator controller not found at {AvatarControllerPath}");
-                return null;
-            }
-
             animator.runtimeAnimatorController = controller;
 
-            // Both the Synty rig and the Starter Assets clips are Humanoid, so the clips retarget onto
-            // this skeleton with no authoring. Without the Avatar assigned they would not play at all.
+            // The Worker rig and the locomotion clips are both Humanoid, so the clips retarget onto this
+            // skeleton with no authoring. Without the Avatar assigned they would not play at all.
             var humanoidAvatar = LoadHumanoidAvatar(AvatarModelPath);
             if (humanoidAvatar == null)
             {
@@ -534,7 +549,17 @@ namespace Modules.Multiplayer.Bridge.EditorTools
             }
 
             animator.avatar = humanoidAvatar;
+
+            // The vendor prefab ships with root motion on. Here the CharacterController moves the player
+            // and NetworkTransform replicates that; root motion would walk the body off its collider.
             animator.applyRootMotion = false;
+
+            // AvatarAim leans the spine after the Animator writes the pose. With culling, an off-screen
+            // Animator skips that write and the lean would compound frame after frame. Animating the three
+            // remote bodies a session can have while off-screen is cheap by comparison.
+            animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+
+            ReportBodyFit(root, avatarRoot, animator, report);
 
             var binder = GetOrAddComponent<RemoteAvatarBinder>(root);
             AssignSerializedReference(binder, "m_avatarRoot", avatarRoot);
@@ -563,7 +588,83 @@ namespace Modules.Multiplayer.Bridge.EditorTools
             var health = GetOrAddComponent<PlayerHealthSync>(root);
             AssignSerializedReference(health, "m_playerHealth", root.GetComponent<PlayerHealth>());
 
+            // How the host's AI sees this player — alive, hidden, where its damage goes — from replicated state,
+            // since on the host a remote player's own UHFPS components are switched off.
+            var aiTarget = GetOrAddComponent<PlayerAiTarget>(root);
+            AssignSerializedReference(aiTarget, "m_health", health);
+            AssignSerializedReference(aiTarget, "m_stateMachine", root.GetComponent<PlayerStateMachine>());
+            AssignSerializedReference(aiTarget, "m_playerHealth", root.GetComponent<PlayerHealth>());
+
+            // Hits, death and fidgets. Wired after health, which it derives hits and death from.
+            var actions = GetOrAddComponent<PlayerActionSync>(root);
+            AssignSerializedReference(actions, "m_avatar", avatar);
+            AssignSerializedReference(actions, "m_health", health);
+            AssignSerializedReference(actions, "m_locomotion", locomotion);
+
+            // Must sit on the avatar's own Animator object: Unity only calls OnAnimatorIK there.
+            if (avatar.AvatarRoot != null && playerManager != null)
+            {
+                var aim = GetOrAddComponent<AvatarAim>(avatar.AvatarRoot.gameObject);
+                AssignSerializedReference(aim, "m_animator", avatar.Animator);
+                AssignSerializedReference(aim, "m_lookTransform", playerManager.CameraHolder);
+                AssignSerializedReference(aim, "m_locomotion", locomotion);
+                CopyLeanSettings(root, aim, report);
+            }
+            else
+            {
+                report.AppendLine("WARNING: could not attach AvatarAim; remote bodies will not show look or lean.");
+            }
+
             report.AppendLine("Bridge components attached and wired.");
+        }
+
+        /// <summary>
+        /// Copies UHFPS's lean tuning onto the remote body, so both lean the same distance.
+        /// </summary>
+        /// <remarks>
+        /// The owner's lean comes from a <see cref="LeanMotion"/> module inside the camera's motion preset.
+        /// Its tuning fields are public, so they are read here at author time rather than duplicated as
+        /// constants that would silently diverge the first time someone tunes the preset. Re-run the tool
+        /// after changing lean in the preset.
+        /// </remarks>
+        private static void CopyLeanSettings(GameObject root, AvatarAim aim, StringBuilder report)
+        {
+            var motion = root.GetComponentInChildren<MotionController>(true);
+            var preset = motion != null ? motion.MotionPreset : null;
+
+            LeanMotion lean = null;
+            if (preset != null && preset.StateMotions != null)
+            {
+                foreach (var state in preset.StateMotions)
+                {
+                    if (state?.Motions == null) continue;
+
+                    foreach (var module in state.Motions)
+                    {
+                        if (module is LeanMotion found)
+                        {
+                            lean = found;
+                            break;
+                        }
+                    }
+
+                    if (lean != null) break;
+                }
+            }
+
+            if (lean == null)
+            {
+                report.AppendLine(
+                    "WARNING: no LeanMotion in the player's motion preset; AvatarAim keeps its default lean settings.");
+                return;
+            }
+
+            AssignSerializedValue(aim, "m_leanDistance", property => property.floatValue = lean.leanPosition);
+            AssignSerializedValue(aim, "m_leanProbeRadius", property => property.floatValue = lean.leanColliderRadius);
+            AssignSerializedValue(aim, "m_leanMask", property => property.intValue = lean.leanMask.value);
+
+            report.AppendLine(
+                $"Lean copied from {preset.name}: {lean.leanPosition} m, probe radius {lean.leanColliderRadius} m.");
         }
 
         private static GameObject PersistAndVerifyHash(StringBuilder report)
@@ -611,6 +712,8 @@ namespace Modules.Multiplayer.Bridge.EditorTools
                 return;
             }
 
+            RemoveDeletedNetworkPrefabs(list, report);
+
             if (list.Contains(playerPrefab))
             {
                 report.AppendLine("Prefab already registered in DefaultNetworkPrefabs.");
@@ -625,10 +728,13 @@ namespace Modules.Multiplayer.Bridge.EditorTools
         private static void ConfigureScene(GameObject playerPrefab, StringBuilder report)
         {
             RemoveScenePlayer(report);
-            ConfigureNetworkManager(playerPrefab, report);
-            ConfigureSessionRoot(report);
             ConfigureSpawnPoints(report);
             ConfigureSceneReferences(report);
+
+            // The NetworkManager and the room services no longer live in this scene: they sit on the
+            // persistent multiplayer root the lobby creates, and players are spawned by it after the level
+            // loads. Only the prefab reference has to reach them.
+            LobbySetup.AssignPlayerPrefab(playerPrefab, report);
         }
 
         /// <summary>
@@ -887,49 +993,151 @@ namespace Modules.Multiplayer.Bridge.EditorTools
             report.AppendLine("Cleared PlayerPresenceManager.Player; it is bound at runtime on spawn.");
         }
 
-        private static void ConfigureNetworkManager(GameObject playerPrefab, StringBuilder report)
+        /// <summary>
+        /// Flags a player prefab rebuilt from bare HEROPLAYER, which has no HUD and no per-player managers.
+        /// </summary>
+        /// <remarks>
+        /// A one-way migration moved those out of GameplayScene onto this prefab, so the prefab is their
+        /// only copy. If it is deleted, re-creating it from HEROPLAYER yields a player with no GameManager,
+        /// inventory or HUD — and the migration cannot be re-run, because the scene no longer has them.
+        /// Restore the .prefab and its .meta from version control instead: keeping the .meta keeps the
+        /// GUID, so the scene's PlayerPrefab reference and the network prefab list reconnect by themselves.
+        /// </remarks>
+        private static void WarnIfManagersMissing(GameObject root, StringBuilder report)
         {
-            var networkManager = Object.FindFirstObjectByType<NetworkManager>(FindObjectsInactive.Include);
-            if (networkManager == null)
-            {
-                var host = new GameObject("NetworkManager");
-                Undo.RegisterCreatedObjectUndo(host, "Create NetworkManager");
-                networkManager = host.AddComponent<NetworkManager>();
-                report.AppendLine("Created NetworkManager.");
-            }
+            if (root.GetComponentInChildren<GameManager>(true) != null) return;
 
-            if (networkManager.NetworkConfig == null) networkManager.NetworkConfig = new NetworkConfig();
-
-            var transport = networkManager.GetComponent<UnityTransport>();
-            if (transport == null) transport = networkManager.gameObject.AddComponent<UnityTransport>();
-
-            // Relay rewrites the endpoint when a session starts; these are only resting defaults.
-            networkManager.NetworkConfig.NetworkTransport = transport;
-            networkManager.NetworkConfig.PlayerPrefab = playerPrefab;
-
-            EditorUtility.SetDirty(networkManager);
-            report.AppendLine("NetworkManager configured with the networked HEROPLAYER.");
+            report.AppendLine(
+                "WARNING: the player prefab has no GameManager, which means it also lacks the HUD and the " +
+                "per-player managers. Restore it (with its .meta) from version control rather than rebuilding.");
         }
 
-        private static void ConfigureSessionRoot(StringBuilder report)
+        /// <summary>
+        /// Deletes any body this tool previously attached that is not an instance of the configured avatar.
+        /// </summary>
+        /// <remarks>
+        /// That includes a body whose source prefab no longer exists. Unity keeps such an instance as a
+        /// "Missing Prefab" placeholder that renders nothing, so leaving it would make every remote player
+        /// invisible. Missing-prefab children are only removed if this variant added them — anything that
+        /// came from HEROPLAYER itself is not this tool's to delete.
+        /// </remarks>
+        private static void RemoveStaleAvatars(GameObject root, GameObject avatarSource, StringBuilder report)
         {
-            var sessionService = Object.FindFirstObjectByType<SessionService>(FindObjectsInactive.Include);
-            if (sessionService == null)
+            for (var i = root.transform.childCount - 1; i >= 0; i--)
             {
-                var host = new GameObject("SessionRoot");
-                Undo.RegisterCreatedObjectUndo(host, "Create SessionRoot");
-                sessionService = host.AddComponent<SessionService>();
-                report.AppendLine("Created SessionRoot with SessionService.");
+                var child = root.transform.GetChild(i).gameObject;
+                var sourceMissing = PrefabUtility.IsPrefabAssetMissing(child);
+                var addedByVariant = PrefabUtility.IsAddedGameObjectOverride(child);
+
+                var isAvatarSlot = child.name == AvatarChildName || (sourceMissing && addedByVariant);
+                if (!isAvatarSlot) continue;
+
+                var source = sourceMissing ? null : PrefabUtility.GetCorrespondingObjectFromSource(child);
+                if (source == avatarSource) continue;
+
+                report.AppendLine(sourceMissing
+                    ? $"Removed body '{child.name}': its source prefab no longer exists."
+                    : $"Replaced body '{(source != null ? source.name : child.name)}' with '{avatarSource.name}'.");
+
+                Object.DestroyImmediate(child);
             }
-
-            var debugUI = sessionService.GetComponent<SessionDebugUI>();
-            if (debugUI == null) debugUI = sessionService.gameObject.AddComponent<SessionDebugUI>();
-
-            AssignSerializedReference(debugUI, "m_sessionService", sessionService);
-            EditorUtility.SetDirty(debugUI);
-            report.AppendLine("SessionDebugUI wired to SessionService.");
         }
 
+        /// <summary>
+        /// Checks the body against the collider it stands in.
+        /// </summary>
+        /// <remarks>
+        /// Reports rather than corrects: the owner never sees their own body, so a floating, sunken or
+        /// sideways-facing avatar only ever shows up on someone else's screen, where it is easy to miss.
+        /// </remarks>
+        private static void ReportBodyFit(GameObject root, GameObject avatarRoot, Animator animator, StringBuilder report)
+        {
+            var renderers = avatarRoot.GetComponentsInChildren<Renderer>(true);
+            if (renderers.Length == 0)
+            {
+                report.AppendLine("WARNING: the avatar has no renderers; remote players will be invisible.");
+                return;
+            }
+
+            var bounds = renderers[0].bounds;
+            for (var i = 1; i < renderers.Length; i++) bounds.Encapsulate(renderers[i].bounds);
+
+            var feetOffset = bounds.min.y - root.transform.position.y;
+            report.AppendLine($"Body is {bounds.size.y:0.00} m tall, feet {feetOffset:+0.00;-0.00} m from the root.");
+
+            var collider = root.GetComponent<CharacterController>();
+            if (collider != null)
+            {
+                var colliderBottom = collider.center.y - collider.height * 0.5f;
+
+                if (Mathf.Abs(bounds.size.y - collider.height) > MaxBodyHeightMismatch)
+                {
+                    report.AppendLine(
+                        $"WARNING: body height {bounds.size.y:0.00} m vs collider {collider.height:0.00} m. " +
+                        "Scale RemoteAvatar or the body will clip through walls and doorways others see.");
+                }
+
+                if (Mathf.Abs(feetOffset - colliderBottom) > MaxFeetOffset)
+                {
+                    report.AppendLine(
+                        $"WARNING: feet sit {feetOffset - colliderBottom:+0.00;-0.00} m off the collider's base; " +
+                        "offset RemoteAvatar vertically or remote players will float or sink.");
+                }
+            }
+
+            // Facing is derived from the shoulders rather than trusted, because PlayerLocomotionSync turns
+            // the avatar root to the look direction: a model authored facing another axis would walk sideways.
+            var left = animator.GetBoneTransform(HumanBodyBones.LeftUpperArm);
+            var right = animator.GetBoneTransform(HumanBodyBones.RightUpperArm);
+            if (left == null || right == null)
+            {
+                report.AppendLine("Facing not checked: upper-arm bones unavailable in edit mode.");
+                return;
+            }
+
+            var bodyForward = Vector3.Cross(right.position - left.position, Vector3.up);
+            bodyForward.y = 0f;
+            var facingError = Vector3.Angle(bodyForward, avatarRoot.transform.forward);
+
+            if (facingError > MaxFacingError)
+            {
+                report.AppendLine(
+                    $"WARNING: the body faces {facingError:0} degrees off RemoteAvatar's forward axis, so it " +
+                    "will move sideways relative to where its owner looks.");
+            }
+            else
+            {
+                report.AppendLine($"Body faces its root's forward axis (within {facingError:0} degrees).");
+            }
+        }
+
+        /// <summary>
+        /// Drops list entries whose prefab has been deleted.
+        /// </summary>
+        /// <remarks>
+        /// A deleted prefab leaves its entry behind pointing at nothing, and NetworkManager validates the
+        /// whole list when a session starts. Only entries that are already broken are removed; valid
+        /// registrations, including ones this tool did not make, are left alone.
+        /// </remarks>
+        private static void RemoveDeletedNetworkPrefabs(NetworkPrefabsList list, StringBuilder report)
+        {
+            var removed = 0;
+            var entries = list.PrefabList;
+
+            for (var i = entries.Count - 1; i >= 0; i--)
+            {
+                var entry = entries[i];
+                if (entry != null && entry.Prefab != null) continue;
+
+                list.Remove(entry);
+                removed++;
+            }
+
+            if (removed == 0) return;
+
+            EditorUtility.SetDirty(list);
+            report.AppendLine($"Removed {removed} DefaultNetworkPrefabs entr{(removed == 1 ? "y" : "ies")} for deleted prefabs.");
+        }
         private static Avatar LoadHumanoidAvatar(string modelPath)
         {
             foreach (var asset in AssetDatabase.LoadAllAssetRepresentationsAtPath(modelPath))
@@ -951,7 +1159,7 @@ namespace Modules.Multiplayer.Bridge.EditorTools
             return null;
         }
 
-        private static T GetOrAddComponent<T>(GameObject target) where T : Component
+        internal static T GetOrAddComponent<T>(GameObject target) where T : Component
         {
             var existing = target.GetComponent<T>();
             return existing != null ? existing : target.AddComponent<T>();
@@ -961,7 +1169,7 @@ namespace Modules.Multiplayer.Bridge.EditorTools
         /// Writes a [SerializeField] private reference through Unity's serialization API, which is the
         /// supported route and avoids reflecting into the type.
         /// </summary>
-        private static void AssignSerializedReference(Object target, string propertyPath, Object value)
+        internal static void AssignSerializedReference(Object target, string propertyPath, Object value)
         {
             if (target == null) return;
 
@@ -976,6 +1184,25 @@ namespace Modules.Multiplayer.Bridge.EditorTools
             }
 
             property.objectReferenceValue = value;
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        /// <summary>Writes a [SerializeField] private value through Unity's serialization API.</summary>
+        internal static void AssignSerializedValue(Object target, string propertyPath, System.Action<SerializedProperty> assign)
+        {
+            if (target == null || assign == null) return;
+
+            var serializedObject = new SerializedObject(target);
+            var property = serializedObject.FindProperty(propertyPath);
+
+            if (property == null)
+            {
+                Debug.LogWarning(
+                    $"HeroPlayerSetup: '{propertyPath}' not found on {target.GetType().Name}.", target);
+                return;
+            }
+
+            assign(property);
             serializedObject.ApplyModifiedPropertiesWithoutUndo();
         }
     }

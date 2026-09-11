@@ -16,13 +16,27 @@ namespace UHFPS.Runtime
         public List<Collider> CollidersEnable = new();
         public List<Collider> CollidersDisable = new();
 
-        protected PlayerPresenceManager playerPresence;
-        protected PlayerManager playerManager;
-        protected GameManager gameManager;
-        protected PlayerItemsManager playerItems;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached references stayed null for the whole session.
+        protected PlayerPresenceManager playerPresence => LocalPlayerContext.Presence;
+        protected PlayerManager playerManager => LocalPlayerContext.PlayerManager;
+        protected GameManager gameManager => LocalPlayerContext.GameManager;
+        protected PlayerItemsManager playerItems => playerManager != null ? playerManager.PlayerItems : null;
 
-        private CinemachineBrain cinemachineBrain;
-        private CinemachineBlendDefinition defaultBlend;
+        private CinemachineBrain m_cinemachineBrain;
+        private CinemachineBrain cinemachineBrain
+        {
+            get
+            {
+                if (m_cinemachineBrain == null)
+                {
+                    var playerCamera = LocalPlayerContext.PlayerCamera;
+                    if (playerCamera != null) m_cinemachineBrain = playerCamera.GetComponent<CinemachineBrain>();
+                }
+
+                return m_cinemachineBrain;
+            }
+        }        private CinemachineBlendDefinition defaultBlend;
         private bool canSwitch;
 
         /// <summary>
@@ -51,15 +65,6 @@ namespace UHFPS.Runtime
 
         public virtual void Awake()
         {
-            playerPresence = LocalPlayerContext.Presence;
-            gameManager = LocalPlayerContext.GameManager;
-
-            playerManager = playerPresence.PlayerManager;
-            playerItems = playerManager.PlayerItems;
-
-            cinemachineBrain = playerManager.MainCamera.GetComponent<CinemachineBrain>();
-            defaultBlend = cinemachineBrain.DefaultBlend;
-
             foreach (var control in ControlsContexts)
             {
                 control.SubscribeGloc();
@@ -81,6 +86,9 @@ namespace UHFPS.Runtime
                 return;
 
             // set blend definition
+            // MULTIPLAYER PATCH: the blend to restore is captured here rather than in Awake, where the player's
+            // camera did not exist yet — and here it is also the blend actually in effect when the puzzle starts.
+            defaultBlend = cinemachineBrain.DefaultBlend;
             cinemachineBrain.DefaultBlend = BlendDefinition;
 
             OnBlendStart(true);

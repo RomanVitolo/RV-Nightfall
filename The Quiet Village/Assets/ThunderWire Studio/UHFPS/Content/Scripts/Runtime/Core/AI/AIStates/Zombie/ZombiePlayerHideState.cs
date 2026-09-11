@@ -23,11 +23,13 @@ namespace UHFPS.Runtime.States
             private readonly ZombieStateGroup Group;
             private readonly ZombiePlayerHideState State;
 
-            private HidingPlayerState PlayerHide;
+            // MULTIPLAYER PATCH: hiding is read from aiTarget, which carries what the hidden player's own client
+            // reports. On the host, a remote player's state machine never enters Hiding, and its HidingPlayerState
+            // holds nothing, so reading those directly left the AI unable to find anyone hiding.
             private HideInteract HidingPlace;
 
-            private bool PlayerFullyHidden => PlayerHide.IsFullyHidden;
-            private bool IsPlayerHiding => playerMachine.IsCurrent(PlayerStateMachine.HIDING_STATE);
+            private bool PlayerFullyHidden => aiTarget != null && aiTarget.IsFullyHidden;
+            private bool IsPlayerHiding => aiTarget != null && aiTarget.IsHiding;
 
             private bool hidingPlaceSeen;
             private bool attackBeforeHide;
@@ -55,8 +57,7 @@ namespace UHFPS.Runtime.States
 
             public override void OnStateEnter()
             {
-                PlayerHide ??= (HidingPlayerState)playerMachine.GetState<HidingStateAsset>();
-                if (PlayerHide != null) HidingPlace = PlayerHide.HidingPlace;
+                HidingPlace = aiTarget != null ? aiTarget.HidingPlace : null;
 
                 if (SeesPlayer())
                 {
@@ -88,7 +89,7 @@ namespace UHFPS.Runtime.States
                     }
                     else if(!PlayerFullyHidden && PathDistanceCompleted())
                     {
-                        if (!attackBeforeHide && playerHealth.EntityHealth > Group.DamageRange.RealMax)
+                        if (!attackBeforeHide && aiTarget != null && aiTarget.Health > Group.DamageRange.RealMax)
                         {
                             animator.SetTrigger(Group.AttackTrigger);
                             attackBeforeHide = true;
@@ -96,7 +97,9 @@ namespace UHFPS.Runtime.States
                     }
                     else if(PlayerFullyHidden && !unhidePlayer)
                     {
-                        HidingPlace.Unhide(true);
+                        // MULTIPLAYER PATCH: hiding is driven by the hidden player's own client, so it is asked to
+                        // come out there rather than this copy of the hiding place being told locally.
+                        if (aiTarget != null) aiTarget.ForceUnhide();
                         chasePlayer = true;
                         unhidePlayer = true;
                     }
@@ -133,7 +136,8 @@ namespace UHFPS.Runtime.States
 
             private void AttackPlayer()
             {
-                playerHealth.ApplyDamage(State.SeePlayerDamage, machine.transform);
+                // MULTIPLAYER PATCH: to the server-authoritative health, and only from the server — see ZombieChaseState.
+                if (aiTarget != null) aiTarget.ApplyDamage(State.SeePlayerDamage, machine.transform);
             }
         }
     }

@@ -28,8 +28,10 @@ namespace UHFPS.Runtime
 
         private readonly Dictionary<InventoryItem, float> requiredCanisters = new();
         private AudioCrossfader crossfader;
-        private GameManager gameManager;
-        private Inventory inventory;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached reference stayed null for the whole session.
+        private GameManager gameManager => LocalPlayerContext.GameManager;
+        private Inventory inventory => LocalPlayerContext.Inventory;
 
         private float refuelLiters;
         private bool canRefuel;
@@ -48,8 +50,6 @@ namespace UHFPS.Runtime
         private void Awake()
         {
             crossfader = new AudioCrossfader(AudioSource);
-            gameManager = LocalPlayerContext.GameManager;
-            inventory = LocalPlayerContext.Inventory;
         }
 
         private void Start()

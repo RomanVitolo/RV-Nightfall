@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UHFPS.Tools;
 using Newtonsoft.Json.Linq;
+using Modules.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {
@@ -73,9 +74,19 @@ namespace UHFPS.Runtime
             }
         }
 
+        /// <summary>
+        /// MULTIPLAYER PATCH: set by the bridge's NetworkedNpc. The host owns an NPC's health, so a client's hit
+        /// is handed to this relay and sent there instead of being applied to the client's own copy.
+        /// </summary>
+        public INpcDamageRelay DamageRelay { get; set; }
+
         public override void ApplyDamage(int damage, Transform sender = null)
         {
             if (IsDead || corpseRemoved)
+                return;
+
+            // MULTIPLAYER PATCH: see DamageRelay.
+            if (DamageRelay != null && DamageRelay.TryRelayDamage(damage))
                 return;
 
             base.ApplyDamage(damage, sender);
@@ -87,6 +98,21 @@ namespace UHFPS.Runtime
                 GameTools.PlayOneShot3D(transform.position, DamageSounds[damageSound], DamageVolume, "ZombieDamageAudio");
                 lastDamageSound = damageSound;
             }
+        }
+
+        /// <summary>
+        /// MULTIPLAYER PATCH: the base class kills by setting health to zero directly, bypassing ApplyDamage and
+        /// with it the relay — so a one-hit kill needs relaying on its own.
+        /// </summary>
+        public override void ApplyDamageMax(Transform sender = null)
+        {
+            if (IsDead || corpseRemoved)
+                return;
+
+            if (DamageRelay != null && DamageRelay.TryRelayKill())
+                return;
+
+            base.ApplyDamageMax(sender);
         }
 
         public override void OnHealthZero()

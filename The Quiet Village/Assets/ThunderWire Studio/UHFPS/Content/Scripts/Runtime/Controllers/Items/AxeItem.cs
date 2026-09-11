@@ -67,6 +67,7 @@ namespace UHFPS.Runtime
                 audioSource.PlayOneShotSoundClip(AxeSlash);
                 attack = StartCoroutine(OnAttack());
                 Animator.SetTrigger(AttackTrigger);
+                RaiseActionPerformed(ItemAction.Attack); // MULTIPLAYER PATCH: mirror the swing on this player's body for others.
                 attackTime = NextAttackTime;
             }
         }

@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ThunderWire Studio/UHFPS/_Demo/Scenes/Raining.unity
     guid: 5d02e5420369bbe42bc168890153f297
+  - enabled: 1
+    path: Assets/Modules/Multiplayer/Scenes/LobbyScene.unity
+    guid: 0273da6d128f2bf43961da0183453db4
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: ae838b1c970aab641bb8e4643590df24, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: ce68c4c37abec5347801e4204a280574, type: 2}

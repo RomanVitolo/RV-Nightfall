@@ -389,6 +389,14 @@ namespace UHFPS.Runtime
 
         public void Interact(GameObject interactObj)
         {
+            // MULTIPLAYER PATCH: an object another player is examining is in their hands. Picking it up from there
+            // would pull it out of their view mid-examine; it is theirs until they put it down.
+            if (interactObj.TryGetComponent(out IExamineGate gate) && gate.IsHeldByOther)
+            {
+                gate.NotifyBlocked();
+                return;
+            }
+
             if (interactObj.TryGetComponent(out InteractableItem interactable))
             {
                 bool isAddedToInventory = false;

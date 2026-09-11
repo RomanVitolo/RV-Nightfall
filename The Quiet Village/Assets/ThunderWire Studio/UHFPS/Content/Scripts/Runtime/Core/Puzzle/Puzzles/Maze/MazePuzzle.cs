@@ -48,7 +48,9 @@ namespace UHFPS.Runtime
         public UnityEvent OnBallEnterWrongHole;
         public UnityEvent OnBallEnterFinishHole;
 
-        private Inventory inventory;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached reference stayed null for the whole session.
+        private Inventory inventory => LocalPlayerContext.Inventory;
 
         private Vector3 defaulPosition;
         private Quaternion defaulRotation;
@@ -61,7 +63,6 @@ namespace UHFPS.Runtime
         public override void Awake()
         {
             base.Awake();
-            inventory = LocalPlayerContext.Inventory;
             defaulPosition = MazeTransform.position;
             defaulRotation = MazeTransform.rotation;
         }

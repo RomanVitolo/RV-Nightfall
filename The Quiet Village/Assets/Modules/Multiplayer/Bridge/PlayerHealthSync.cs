@@ -76,6 +76,20 @@ namespace Modules.Multiplayer.Bridge
             m_health.Value = Mathf.Clamp(m_health.Value - damage, 0, m_maxHealth);
         }
 
+        /// <summary>
+        /// Damages this player from code already running on the server, such as an AI attack.
+        /// </summary>
+        /// <remarks>
+        /// Server-side callers write the value directly instead of sending themselves an RPC. Ignored anywhere
+        /// else, so an AI whose attack animation fires on a client cannot deal damage from there.
+        /// </remarks>
+        public void ApplyServerDamage(int damage)
+        {
+            if (!IsServer || damage <= 0 || m_health.Value <= 0) return;
+
+            m_health.Value = Mathf.Clamp(m_health.Value - damage, 0, m_maxHealth);
+        }
+
         /// <summary>Asks the server to heal this player. Safe to call from any client.</summary>
         /// <param name="healAmount">Heal amount; non-positive values are ignored.</param>
         [Rpc(SendTo.Server)]

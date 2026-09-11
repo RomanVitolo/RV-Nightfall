@@ -40,36 +40,36 @@ namespace UHFPS.Runtime
         public bool IsHidden;
         private bool isHiding;
 
-        private PlayerPresenceManager presenceManager;
-        private GameManager gameManager;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. World objects Awake at scene load,
+        // before Netcode spawns the local player, so the cached references stayed null for the whole session.
+        private PlayerPresenceManager presenceManager => LocalPlayerContext.Presence;
+        private GameManager gameManager => LocalPlayerContext.GameManager;
 
-        private PlayerManager playerManager;
-        private PlayerStateMachine stateMachine;
-        private PlayerItemsManager playerItems;
-        private MotionController motionController;
-        private InteractController interactController;
+        private PlayerManager playerManager => LocalPlayerContext.PlayerManager;
+        private PlayerStateMachine stateMachine => LocalPlayerContext.StateMachine;
+        private PlayerItemsManager playerItems => playerManager != null ? playerManager.PlayerItems : null;
+        private MotionController motionController => playerManager != null ? playerManager.MotionController : null;
+        private InteractController interactController => playerManager != null ? playerManager.InteractController : null;
 
-        private CinemachineBrain cinemachineBrain;
-        private CinemachineBlendDefinition defaultBlend;
+        private CinemachineBrain m_cinemachineBrain;
+        private CinemachineBrain cinemachineBrain
+        {
+            get
+            {
+                if (m_cinemachineBrain == null)
+                {
+                    var playerCamera = LocalPlayerContext.PlayerCamera;
+                    if (playerCamera != null) m_cinemachineBrain = playerCamera.GetComponent<CinemachineBrain>();
+                }
+
+                return m_cinemachineBrain;
+            }
+        }        private CinemachineBlendDefinition defaultBlend;
 
         private HidingPlayerState _hideState;
         private HidingPlayerState HideState
         {
             get => _hideState ??= (HidingPlayerState)stateMachine.GetState<HidingStateAsset>();
-        }
-
-        private void Awake()
-        {
-            presenceManager = LocalPlayerContext.Presence;
-            gameManager = LocalPlayerContext.GameManager;
-
-            playerManager = presenceManager.PlayerManager;
-            stateMachine = presenceManager.StateMachine;
-            playerItems = playerManager.PlayerItems;
-            motionController = playerManager.MotionController;
-            interactController = playerManager.InteractController;
-
-            cinemachineBrain = playerManager.MainCamera.GetComponent<CinemachineBrain>();
         }
 
         private void Start()

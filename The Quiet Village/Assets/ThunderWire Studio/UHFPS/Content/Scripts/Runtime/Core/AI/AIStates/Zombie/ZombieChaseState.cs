@@ -52,7 +52,8 @@ namespace UHFPS.Runtime.States
                 return new Transition[]
                 {
                     Transition.To<ZombiePatrolState>(() => waitTime > State.LostPlayerPatrolTime || playerDied),
-                    Transition.To<ZombiePlayerHideState>(() => playerMachine.IsCurrent(PlayerStateMachine.HIDING_STATE))
+                    // MULTIPLAYER PATCH: hiding as the target's own client reports it, via aiTarget.
+                    Transition.To<ZombiePlayerHideState>(() => aiTarget != null && aiTarget.IsHiding)
                 };
             }
 
@@ -146,7 +147,8 @@ namespace UHFPS.Runtime.States
             private void Chasing()
             {
                 bool isAttacking = IsAnimation(1, Group.AttackState);
-                if(InPlayerDistance(State.AttackDistance) && IsObjectInSights(State.AttackFOV, PlayerPosition) && !isAttacking && !playerHealth.IsDead)
+                // MULTIPLAYER PATCH: death by the server-authoritative health, via aiTarget.
+                if(InPlayerDistance(State.AttackDistance) && IsObjectInSights(State.AttackFOV, PlayerPosition) && !isAttacking && aiTarget != null && !aiTarget.IsDead)
                 {
                     animator.SetTrigger(Group.AttackTrigger);
                 }
@@ -154,7 +156,7 @@ namespace UHFPS.Runtime.States
 
             private bool PlayerInSights()
             {
-                if (playerHealth.IsDead)
+                if (aiTarget == null || aiTarget.IsDead)
                     return false;
 
                 if (!isChaseStarted || isPatrolPending)
@@ -169,7 +171,10 @@ namespace UHFPS.Runtime.States
                     return;
 
                 int damage = Group.DamageRange.Random();
-                playerHealth.ApplyDamage(damage, machine.transform);
+
+                // MULTIPLAYER PATCH: to the pursued player's server-authoritative health. The attack animation's
+                // event also fires on clients; the target ignores damage from anywhere but the server.
+                if (aiTarget != null) aiTarget.ApplyDamage(damage, machine.transform);
             }
         }
     }
