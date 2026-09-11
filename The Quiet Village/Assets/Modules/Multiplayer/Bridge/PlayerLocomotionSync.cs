@@ -89,6 +89,9 @@ namespace Modules.Multiplayer.Bridge
         /// <summary>Replicated lean input, -1 (left) to 1 (right). Valid on every client.</summary>
         public float Lean => m_lean.Value;
 
+        /// <summary>The camera holder, carrying this player's look on every client.</summary>
+        public Transform LookTransform => m_lookTransform != null ? m_lookTransform : transform;
+
         private void Update()
         {
             if (IsOwner) PublishLocalMotion();

@@ -107,6 +107,45 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
             }
         }
 
+        /// <summary>
+        /// Leaves the room from inside the level and returns to the lobby. On the host this ends the game for
+        /// everyone; the others are brought back by their own session ending.
+        /// </summary>
+        public async Task LeaveGameAsync()
+        {
+            if (m_sessions != null && m_sessions.IsConnected)
+            {
+                // The session reports Disconnected once it is left, and HandleSessionStateChanged takes it from there.
+                await m_sessions.LeaveSessionAsync();
+                return;
+            }
+
+            // No room to leave, e.g. a session that ended a moment ago, or a NetworkManager started without one.
+            if (IsInGameplay) ReturnToLobby();
+        }
+
+        /// <summary>
+        /// Host only: reloads the level for every player in the room, e.g. once everyone has died.
+        /// </summary>
+        /// <remarks>
+        /// Through Netcode's scene manager, like the first start, so every client reloads in the same scene event.
+        /// Players are spawned with the scene and destroyed with it, and each comes back fresh when its client
+        /// finishes loading (NetworkPlayerSpawner).
+        /// </remarks>
+        /// <returns><c>true</c> if the reload started.</returns>
+        public bool RestartLevel()
+        {
+            var networkManager = NetworkManager.Singleton;
+            if (!IsInGameplay || networkManager == null || !networkManager.IsServer || networkManager.SceneManager == null)
+                return false;
+
+            var status = networkManager.SceneManager.LoadScene(m_gameplaySceneName, LoadSceneMode.Single);
+            if (status == SceneEventProgressStatus.Started) return true;
+
+            Debug.LogError($"{nameof(SessionFlow)}: could not restart {m_gameplaySceneName} ({status}).", this);
+            return false;
+        }
+
         private void SetStarting(bool starting)
         {
             if (IsStarting == starting) return;

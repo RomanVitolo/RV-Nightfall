@@ -1,13 +1,13 @@
 # UHFPS source patches for multiplayer
 
-UHFPS is third-party code. A package update **will overwrite** these edits. **63 of its .cs files** are
+UHFPS is third-party code. A package update **will overwrite** these edits. **64 of its .cs files** are
 now modified. Find what survived an update with:
 
 ```bash
 grep -rl "MULTIPLAYER PATCH\|LocalPlayerContext" "Assets/ThunderWire Studio" --include=*.cs | wc -l
 ```
 
-That must report **63**. A lower number means an update reverted some of them.
+That must report **64**. A lower number means an update reverted some of them.
 
 ## Why these exist
 
@@ -217,6 +217,52 @@ does nothing off the server, so only the host's attack lands.
 The gate is the bridge's `SyncedExamineLock`: first come, first served, decided by the host, and released when
 the examine ends, when the item is taken mid-examine, or when the examiner disconnects.
 
+## 8. Player health decided by the server (1 file, none new)
+
+The host already owned player health, but UHFPS still changed the local copy wherever damage or healing was
+noticed — medkits, health/damage item attributes, damage zones, falls — and the host never heard about it.
+
+| File | Change |
+|---|---|
+| `Controllers/Player/PlayerHealth.cs` | `Authority` (an `IPlayerHealthAuthority`): when set, `ApplyDamage`, `ApplyDamageMax`, `ApplyHeal` and `ApplyHealMax` send a request instead of changing health. `SetAuthoritativeHealth` applies the server's value and plays the blood and hurt-sound feedback the local call used to. `Awake` no longer dereferences the health volume. |
+
+The authority is the bridge's `PlayerHealthSync`. Only the owner's requests go out, so an event seen by several
+copies counts once and there is no friendly fire. Healing does not revive a dead player. Fall damage was forced
+off while it could not reach the server; it is back to the prefab's setting.
+
+The `Awake` fix repairs an older bug. The health volume is a scene reference the bridge assigns at spawn, after
+`Awake`, so reading it there threw on every spawn and skipped `InitHealth`. `MaxEntityHealth` stayed 0, so every
+heal clamped to zero and the inventory greyed out medkits. The eye blink is now looked up on first use.
+
+## 9. No single-player scene changes in a session (2 files, none new)
+
+UHFPS restarts, loads saves, changes level and quits to the main menu with plain `SceneManager` loads. In a
+session that takes one player out of the room, or ends the game for everyone when it is the host, and a locked
+room cannot be rejoined.
+
+| File | Change |
+|---|---|
+| `Core/Game/GameManager.cs` | `SessionExit` (an `ISessionExit`): when set, `LoadNextLevel`, `LoadNextWorld`, `LoadWorldLastState` and `LoadGameState` (and so `RestartGame`) are refused with a hint, and `MainMenu` leaves the session instead. |
+| `Interact/Other/LevelInteract.cs` | `SwitchLevel` checks `GameManager.BlockSceneChange` before saving, so a refused level exit writes no save either. |
+
+The bridge's `SessionMenus` sets `SessionExit` on the local player and adapts the menus, finding each button by
+the UHFPS method it calls: Save Game, Load Game and Restart are hidden; Quit and the death screen's Main Menu become
+Leave Game (End Game on the host) and act on a second press. `SavesUILoader` still loads scenes itself, but its only
+way in is the hidden Load Game button.
+
+## 10. Dropped items shared (1 file, new)
+
+| File | Change |
+|---|---|
+| `Core/Inventory/Behaviour/Inventory.ContextHandler.cs` | `DropSync` (an `IItemDropSync`): `DropItem` reports the object it just created, with its ObjectReference GUID and quantity. |
+
+UHFPS creates a dropped item on the dropping client only, and World Sync only knew objects that were in the level
+when it loaded. The bridge's `DroppedItems` asks the host for keys; the host broadcasts the drop, every other client
+creates the same object at the same pose, and each copy gets the components Set Up World Sync gives a scene pickup
+(`SyncedPickup`, `SyncedRigidbody`, `SyncedExamineLock`). The copies are held still until the dropper's physics
+stream moves them, so the item falls once, as the dropper saw it, and lands in the same place for everyone. Taking
+it follows the usual rule: the first taker gets it, and everyone else's copy is destroyed.
+
 ## Known gaps
 
 - **Save/load is untested and likely broken.** `SaveGameManager` now lives on the player prefab, so it
@@ -224,8 +270,10 @@ the examine ends, when the item is taken mid-examine, or when the examiner disco
   `ISaveableCustom` and moved too. It went onto the prefab only because it holds a reference to the
   `SavingIcon` in the HUD — not because per-player saving is correct. Out of scope for this slice, and
   the first thing to revisit if saving matters.
-- **World state is replicated, with limits.** Doors, pickups, props, puzzles, switches, lights and NPCs sync
+- **World state is replicated, with limits.** Doors, pickups, dropped items, props, puzzles, switches, lights and NPCs sync
   (see above). Per-player triggers (cutscenes, dialogue, objectives, jumpscares) stay local by design. Events a
   saveable fires are not replayed on other clients; their effects arrive only through objects that replicate
   their own state. NPC ragdolls fall independently on each client once dead.
+- **Death is permanent until the level restarts** (the bridge's `SessionDeathScreen`, no UHFPS changes). What a
+  dead player carried is out of play with them, so a key they held can leave the level unfinishable.
 - Backups of the pre-refactor scripts, scene and prefab are in this session's scratchpad.

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UHFPS.Runtime;
 using UnityEngine;
@@ -11,15 +12,16 @@ namespace Modules.Multiplayer.Bridge
     /// <remarks>
     /// Authority: server. Health is the one player value a client must never be able to declare for
     /// itself — otherwise any modified client is immortal, and two clients can disagree about who
-    /// died. Clients <em>request</em> damage through <see cref="RequestDamageRpc"/>; only the server
-    /// writes the result.
+    /// died. The owner <em>requests</em> damage and healing it detects on itself (medkits, damage zones,
+    /// falls) through <see cref="PlayerHealth.Authority"/>; AI attacks already run on the server. Only the
+    /// server writes the result.
     ///
-    /// The owner mirrors the replicated value into its local <see cref="PlayerHealth"/> by assigning
-    /// <c>EntityHealth</c> rather than calling <c>ApplyDamage</c>. The setter on
-    /// <c>BaseHealthEntity</c> already raises UHFPS's health-changed and death callbacks, so the
-    /// existing UI, blood overlay and death flow keep working without the damage being applied twice.
+    /// The owner mirrors the replicated value into its local <see cref="PlayerHealth"/> through
+    /// <see cref="PlayerHealth.SetAuthoritativeHealth"/> rather than calling <c>ApplyDamage</c>, which would
+    /// only send another request. It raises UHFPS's health-changed and death callbacks and plays the blood and
+    /// hurt-sound feedback, so the existing UI and death flow keep working without the damage being applied twice.
     /// </remarks>
-    public class PlayerHealthSync : NetworkBehaviour
+    public class PlayerHealthSync : NetworkBehaviour, IPlayerHealthAuthority
     {
         [SerializeField] private PlayerHealth m_playerHealth;
 
@@ -28,8 +30,35 @@ namespace Modules.Multiplayer.Bridge
 
         private int m_maxHealth = 100;
 
+        private static readonly List<PlayerHealthSync> s_spawned = new();
+
+        /// <summary>Every player spawned in the level, on every client, whoever owns them.</summary>
+        public static IReadOnlyList<PlayerHealthSync> Spawned => s_spawned;
+
+        /// <summary>True once at least one player has spawned and every spawned player is dead.</summary>
+        /// <remarks>A player who left is despawned, so they neither keep the others alive nor count as dead.</remarks>
+        public static bool EveryoneDead
+        {
+            get
+            {
+                var anyone = false;
+                foreach (var player in s_spawned)
+                {
+                    if (player == null) continue;
+                    if (!player.IsDead) return false;
+
+                    anyone = true;
+                }
+
+                return anyone;
+            }
+        }
+
         /// <summary>Current replicated health. Readable on every client, written only by the server.</summary>
         public int Health => m_health.Value;
+
+        /// <summary>Dead by the replicated health. Death is permanent until the level restarts.</summary>
+        public bool IsDead => m_health.Value <= 0;
 
         /// <summary>Raised on every client when this player's health changes.</summary>
         public event Action<int, int> HealthChanged;
@@ -40,10 +69,9 @@ namespace Modules.Multiplayer.Bridge
             {
                 m_maxHealth = (int)m_playerHealth.MaxHealth;
 
-                // UHFPS applies fall damage locally on whichever client detects the landing, which
-                // would move health without the server's knowledge and be overwritten on the next
-                // replication. Fall damage has to come back through RequestDamageRpc to be authoritative.
-                m_playerHealth.EnableFallDamage = false;
+                // Set on every copy, not only the owner's: a remote copy has to swallow what it detects rather than
+                // change its own health locally, where nothing would ever correct it.
+                m_playerHealth.Authority = this;
             }
 
             if (IsServer)
@@ -53,28 +81,38 @@ namespace Modules.Multiplayer.Bridge
             }
 
             m_health.OnValueChanged += HandleHealthChanged;
+            s_spawned.Add(this);
 
             // A late joiner receives the current value as initial state rather than as a change, so
             // apply it once on spawn or its UI would sit at the prefab default.
-            if (IsOwner) MirrorToLocalHealth(m_health.Value);
+            if (IsOwner) MirrorToLocalHealth(m_health.Value, false);
         }
 
         public override void OnNetworkDespawn()
         {
             m_health.OnValueChanged -= HandleHealthChanged;
+            s_spawned.Remove(this);
+
+            if (m_playerHealth != null && ReferenceEquals(m_playerHealth.Authority, this))
+                m_playerHealth.Authority = null;
         }
 
-        /// <summary>
-        /// Asks the server to damage this player. Safe to call from any client.
-        /// </summary>
-        /// <param name="damage">Damage amount; non-positive values are ignored.</param>
-        [Rpc(SendTo.Server)]
-        public void RequestDamageRpc(int damage)
+        void IPlayerHealthAuthority.RequestDamage(int damage)
         {
-            if (damage <= 0 || m_health.Value <= 0) return;
-
-            m_health.Value = Mathf.Clamp(m_health.Value - damage, 0, m_maxHealth);
+            // Only the owner reports damage to itself. A damage zone or a fall is noticed by the client moving the
+            // body; a remote copy noticing the same event would count it twice. That also leaves friendly fire off.
+            if (IsOwner) RequestDamageRpc(damage);
         }
+
+        void IPlayerHealthAuthority.RequestHeal(int healAmount)
+        {
+            if (IsOwner) RequestHealRpc(healAmount);
+        }
+
+        /// <summary>Asks the server to damage this player.</summary>
+        /// <param name="damage">Damage amount; non-positive values are ignored.</param>
+        [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
+        private void RequestDamageRpc(int damage) => ApplyServerDamage(damage);
 
         /// <summary>
         /// Damages this player from code already running on the server, such as an AI attack.
@@ -90,30 +128,31 @@ namespace Modules.Multiplayer.Bridge
             m_health.Value = Mathf.Clamp(m_health.Value - damage, 0, m_maxHealth);
         }
 
-        /// <summary>Asks the server to heal this player. Safe to call from any client.</summary>
+        /// <summary>Asks the server to heal this player.</summary>
         /// <param name="healAmount">Heal amount; non-positive values are ignored.</param>
-        [Rpc(SendTo.Server)]
-        public void RequestHealRpc(int healAmount)
+        [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
+        private void RequestHealRpc(int healAmount)
         {
-            if (healAmount <= 0) return;
+            // Healing does not revive: in multiplayer death is permanent until the level restarts.
+            if (healAmount <= 0 || m_health.Value <= 0) return;
 
             m_health.Value = Mathf.Clamp(m_health.Value + healAmount, 0, m_maxHealth);
         }
 
         private void HandleHealthChanged(int previous, int current)
         {
-            // Only the owner runs the full UHFPS health stack; on remote copies PlayerHealth is
-            // disabled and driving it would reach into this client's own HUD.
-            if (IsOwner) MirrorToLocalHealth(current);
+            // Only the owner runs the full UHFPS health stack; remote copies have PlayerHealth disabled, and
+            // driving it would play this client's hurt sounds for someone else's hit.
+            if (IsOwner) MirrorToLocalHealth(current, true);
 
             HealthChanged?.Invoke(previous, current);
         }
 
-        private void MirrorToLocalHealth(int value)
+        private void MirrorToLocalHealth(int value, bool playFeedback)
         {
             if (m_playerHealth == null) return;
 
-            m_playerHealth.EntityHealth = value;
+            m_playerHealth.SetAuthoritativeHealth(value, playFeedback);
         }
     }
 }

@@ -65,10 +65,19 @@ namespace UHFPS.Runtime
         private bool wasInAir;
         private bool lastPosLoaded;
 
+        /// <summary>
+        /// MULTIPLAYER PATCH: set by the bridge's PlayerHealthSync. The server owns player health, so damage and
+        /// healing detected here (medkits, damage zones, falls) is sent to it instead of changing this copy's
+        /// health. The server's answer comes back through <see cref="SetAuthoritativeHealth"/>.
+        /// </summary>
+        public IPlayerHealthAuthority Authority { get; set; }
+
         private void Awake()
         {
             gameManager = LocalPlayerContext.ResolveGameManager(this);
-            gameManager.HealthPPVolume.profile.TryGet(out eyeBlink);
+            // MULTIPLAYER PATCH: the health volume is a scene reference the bridge assigns at spawn, after Awake, so
+            // the eye blink is looked up on first use instead. Dereferencing it here threw and skipped InitHealth,
+            // leaving MaxEntityHealth at 0 — which clamped every heal to zero and greyed out medkits.
             player = GetComponent<PlayerStateMachine>();
 
             if (!SaveGameManager.GameWillLoad || !SaveGameManager.GameStateExist)
@@ -101,7 +110,13 @@ namespace UHFPS.Runtime
             }
 
             bloodWeight = Mathf.MoveTowards(bloodWeight, targetBlood, Time.deltaTime * (bloodTime > 0 ? BloodFadeInSpeed : BloodFadeOutSpeed));
-            gameManager.HealthPPVolume.weight = bloodWeight;
+
+            // MULTIPLAYER PATCH: null until the bridge assigns the scene's volume at spawn; see Awake.
+            if (gameManager.HealthPPVolume != null)
+            {
+                gameManager.HealthPPVolume.weight = bloodWeight;
+                if (eyeBlink == null) gameManager.HealthPPVolume.profile.TryGet(out eyeBlink);
+            }
 
             if (CloseEyesOnDie && IsDead && eyeBlink != null)
             {
@@ -179,8 +194,79 @@ namespace UHFPS.Runtime
         {
             if (IsDead) return;
 
-            base.ApplyDamage(damage, sender);
+            // MULTIPLAYER PATCH: see Authority. The feedback plays when the server's value arrives.
+            if (Authority != null)
+            {
+                Authority.RequestDamage(damage);
+                return;
+            }
 
+            base.ApplyDamage(damage, sender);
+            PlayDamageFeedback();
+        }
+
+        /// <summary>
+        /// MULTIPLAYER PATCH: the base class kills by setting health to zero directly, bypassing ApplyDamage and
+        /// with it the Authority — so a kill needs routing on its own.
+        /// </summary>
+        public override void ApplyDamageMax(Transform sender = null)
+        {
+            if (IsDead) return;
+
+            if (Authority != null)
+            {
+                Authority.RequestDamage((int)MaxHealth);
+                return;
+            }
+
+            base.ApplyDamageMax(sender);
+        }
+
+        public override void ApplyHeal(int healAmount)
+        {
+            // MULTIPLAYER PATCH: see Authority.
+            if (Authority != null)
+            {
+                if (!IsDead) Authority.RequestHeal(healAmount);
+                return;
+            }
+
+            base.ApplyHeal(healAmount);
+            PlayHealFeedback();
+        }
+
+        /// <summary>MULTIPLAYER PATCH: like ApplyDamageMax, the base class bypasses ApplyHeal.</summary>
+        public override void ApplyHealMax()
+        {
+            if (Authority != null)
+            {
+                if (!IsDead) Authority.RequestHeal((int)MaxHealth);
+                return;
+            }
+
+            base.ApplyHealMax();
+        }
+
+        /// <summary>
+        /// MULTIPLAYER PATCH: applies the health the server decided, with the feedback the local call would have
+        /// played. Setting EntityHealth raises the health-changed and death callbacks, so the HUD and death flow
+        /// run unchanged.
+        /// </summary>
+        /// <param name="health">The server's value.</param>
+        /// <param name="playFeedback"><c>false</c> for an initial value, which is not a hit or a heal.</param>
+        public void SetAuthoritativeHealth(int health, bool playFeedback)
+        {
+            int previous = EntityHealth;
+            EntityHealth = health;
+
+            if (!playFeedback) return;
+
+            if (health < previous) PlayDamageFeedback();
+            else if (health > previous) PlayHealFeedback();
+        }
+
+        private void PlayDamageFeedback()
+        {
             if (UseDamageSounds && DamageSounds.Length > 0)
             {
                 int damageSound = GameTools.RandomUnique(0, DamageSounds.Length, lastDamageSound);
@@ -192,9 +278,8 @@ namespace UHFPS.Runtime
             bloodTime = BloodDuration;
         }
 
-        public override void ApplyHeal(int healAmount)
+        private void PlayHealFeedback()
         {
-            base.ApplyHeal(healAmount);
             if (EntityHealth > MinHealthFade)
                 bloodTime = BloodDuration;
         }

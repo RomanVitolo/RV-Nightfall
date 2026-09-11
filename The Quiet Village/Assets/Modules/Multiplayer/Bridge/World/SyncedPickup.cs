@@ -26,6 +26,9 @@ namespace Modules.Multiplayer.Bridge.World
         private bool m_locallyExamining;
         private bool m_taken;
 
+        /// <summary>Destroy rather than deactivate when another player takes it: set on dropped items.</summary>
+        internal bool DestroyWhenTaken { get; set; }
+
         private void Awake()
         {
             if (m_item == null) m_item = GetComponent<InteractableItem>();
@@ -73,6 +76,13 @@ namespace Modules.Multiplayer.Bridge.World
         internal override void ApplyRemoteTaken()
         {
             m_taken = true;
+
+            // A dropped item exists only because someone dropped it, so it goes, as UHFPS would have it.
+            if (DestroyWhenTaken)
+            {
+                Destroy(gameObject);
+                return;
+            }
 
             // Deactivated rather than destroyed even when UHFPS would destroy it: harmless either way for a
             // scene object, and it keeps the entity registered should the id ever be referenced again.

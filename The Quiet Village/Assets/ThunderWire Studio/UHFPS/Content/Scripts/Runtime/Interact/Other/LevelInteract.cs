@@ -38,6 +38,12 @@ namespace UHFPS.Runtime
 
         public void SwitchLevel()
         {
+            // MULTIPLAYER PATCH: refused before saving, not only at the load. In a session the save would be this
+            // player's alone, and the load is refused anyway; see GameManager.SessionExit.
+            var gameManager = LocalPlayerContext.GameManager;
+            if (gameManager != null && gameManager.BlockSceneChange())
+                return;
+
             if (LevelType == LevelTypeEnum.PlayerData)
             {
                 SaveGameManager.SavePlayer();

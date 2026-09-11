@@ -511,6 +511,25 @@ namespace UHFPS.Runtime
         }
         #endregion
 
+        #region MULTIPLAYER PATCH: session exit
+        /// <summary>
+        /// Set by the bridge on the local player in a multiplayer session. Every scene change below is a plain
+        /// SceneManager load, which takes this one player out of the session — or ends it for everyone if they
+        /// are the host. While set, level changes, loads and restarts are refused, and MainMenu leaves the
+        /// session instead.
+        /// </summary>
+        public ISessionExit SessionExit { get; set; }
+
+        /// <returns><c>true</c> if a scene change must not happen; the player has been told why.</returns>
+        public bool BlockSceneChange()
+        {
+            if (SessionExit == null) return false;
+
+            SessionExit.NotifySceneChangeBlocked();
+            return true;
+        }
+        #endregion
+
         /// <summary>
         /// Start background fade.
         /// </summary>
@@ -540,6 +559,8 @@ namespace UHFPS.Runtime
         /// </summary>
         public void LoadNextLevel(string sceneName)
         {
+            if (BlockSceneChange()) return; // MULTIPLAYER PATCH: see SessionExit.
+
             StopAllCoroutines();
             StartCoroutine(LoadNext(sceneName, false));
         }
@@ -549,6 +570,8 @@ namespace UHFPS.Runtime
         /// </summary>
         public void LoadNextWorld(string sceneName)
         {
+            if (BlockSceneChange()) return; // MULTIPLAYER PATCH: see SessionExit.
+
             StopAllCoroutines();
             StartCoroutine(LoadNext(sceneName, true));
         }
@@ -558,6 +581,8 @@ namespace UHFPS.Runtime
         /// </summary>
         public void LoadWorldLastState()
         {
+            if (BlockSceneChange()) return; // MULTIPLAYER PATCH: see SessionExit.
+
             StopAllCoroutines();
             StartCoroutine(LoadLast());
         }
@@ -568,6 +593,9 @@ namespace UHFPS.Runtime
         /// <remarks>If sceneName is null, the current scene is used.</remarks>
         public void LoadGameState(string sceneName, string folderName)
         {
+            // MULTIPLAYER PATCH: see SessionExit. RestartGame comes through here too.
+            if (BlockSceneChange()) return;
+
             if (string.IsNullOrEmpty(sceneName))
                 sceneName = SceneManager.GetActiveScene().name;
 
@@ -1089,6 +1117,13 @@ namespace UHFPS.Runtime
 
         public void MainMenu()
         {
+            // MULTIPLAYER PATCH: a session cannot follow the player to the main menu, so leave it instead.
+            if (SessionExit != null)
+            {
+                SessionExit.LeaveGame();
+                return;
+            }
+
             StartCoroutine(LoadMainMenu());
         }
 

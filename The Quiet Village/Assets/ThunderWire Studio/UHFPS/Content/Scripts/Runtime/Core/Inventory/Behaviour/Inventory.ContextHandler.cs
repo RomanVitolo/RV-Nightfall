@@ -5,6 +5,7 @@ using UHFPS.Input;
 using UHFPS.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Modules.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {
@@ -25,6 +26,12 @@ namespace UHFPS.Runtime
 
         private bool bindShortcut;
         private bool itemSelector;
+
+        /// <summary>
+        /// MULTIPLAYER PATCH: set by the bridge on the local player. A dropped item is created on the dropping client
+        /// only; this is told about it so every other client can create it too.
+        /// </summary>
+        public IItemDropSync DropSync { get; set; }
 
         public void InitializeContextHandler()
         {
@@ -402,6 +409,9 @@ namespace UHFPS.Runtime
                     interactable.DisableType = InteractableItem.DisableTypeEnum.Destroy;
                     interactable.Quantity = (ushort)activeItem.Quantity;
                 }
+
+                // MULTIPLAYER PATCH: see DropSync.
+                DropSync?.OnItemDropped(dropObj, item.ItemObject.GUID, activeItem.Quantity);
 
                 RemoveItem(activeItem);
             }

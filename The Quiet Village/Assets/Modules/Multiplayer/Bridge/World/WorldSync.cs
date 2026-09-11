@@ -38,6 +38,11 @@ namespace Modules.Multiplayer.Bridge.World
         private readonly HashSet<uint> m_taken = new();
         private readonly Dictionary<uint, MotionOwner> m_motionOwners = new();
         private readonly Dictionary<uint, ulong> m_locks = new();
+        private uint m_dropSerial;
+
+        // Items this client dropped, waiting for the keys the host allocates them. Keyed by a local request number.
+        private readonly Dictionary<int, GameObject> m_pendingDrops = new();
+        private int m_dropRequest;
 
         /// <summary>Lock owner meaning nobody.</summary>
         public const ulong NoOwner = ulong.MaxValue;
@@ -77,6 +82,7 @@ namespace Modules.Multiplayer.Bridge.World
             m_taken.Clear();
             m_motionOwners.Clear();
             m_locks.Clear();
+            m_pendingDrops.Clear();
         }
 
         private void RegisterSceneEntities()
@@ -357,6 +363,97 @@ namespace Modules.Multiplayer.Bridge.World
         private void TakeDeniedRpc(uint key, RpcParams rpcParams = default)
         {
             if (TryGetEntity(key, out var entity)) entity.OnTakeDenied();
+        }
+
+        // ---- Dropped items ---------------------------------------------------------------------------
+
+        /// <summary>Asks the host to make an item this client just dropped exist for everyone.</summary>
+        internal void PublishDrop(GameObject dropped, string referenceGuid, int quantity)
+        {
+            if (!IsSpawned || dropped == null) return;
+
+            var request = ++m_dropRequest;
+            m_pendingDrops[request] = dropped;
+
+            var pose = dropped.transform;
+            DropRpc(request, referenceGuid, quantity, pose.position, pose.rotation);
+        }
+
+        [Rpc(SendTo.Server)]
+        private void DropRpc(int request, string referenceGuid, int quantity, Vector3 position, Quaternion rotation,
+            RpcParams rpcParams = default)
+        {
+            ApplyDropRpc(AllocateDropKeys(), request, referenceGuid, quantity, position, rotation,
+                rpcParams.Receive.SenderClientId);
+        }
+
+        /// <summary>A run of <see cref="DroppedItems.KeyCount"/> keys no entity holds.</summary>
+        /// <remarks>
+        /// Only the host allocates, and each drop gets a new serial, so drops never share keys; the check only guards
+        /// against a hash landing on a scene object's key.
+        /// </remarks>
+        private uint AllocateDropKeys()
+        {
+            while (true)
+            {
+                var key = WorldSyncEntity.KeyFor($"drop:{++m_dropSerial}");
+
+                var free = true;
+                for (uint i = 0; i < DroppedItems.KeyCount && free; i++)
+                {
+                    free = !m_entities.ContainsKey(key + i);
+                }
+
+                if (free) return key;
+            }
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void ApplyDropRpc(uint key, int request, string referenceGuid, int quantity, Vector3 position,
+            Quaternion rotation, ulong author)
+        {
+            if (!IsFromSelf(author))
+            {
+                var copy = DroppedItems.CreateCopy(referenceGuid, quantity, position, rotation);
+                if (copy != null) RegisterDrop(copy, key, false, author);
+                return;
+            }
+
+            if (m_pendingDrops.Remove(request, out var dropped) && dropped != null)
+            {
+                RegisterDrop(dropped, key, true, author);
+                return;
+            }
+
+            // Taken back before its keys arrived, so the pickup was never reported. Everyone else has a copy now.
+            DropGoneRpc(key + DroppedItems.PickupSlot);
+        }
+
+        private void RegisterDrop(GameObject dropped, uint key, bool isAuthor, ulong author)
+        {
+            var entities = DroppedItems.AttachEntities(dropped);
+            for (var i = 0; i < entities.Length; i++)
+            {
+                var entity = entities[i];
+                if (entity == null) continue;
+
+                var entityKey = key + (uint)i;
+                m_entities[entityKey] = entity;
+                entity.Bind(this, entityKey);
+            }
+
+            if (entities[DroppedItems.MotionSlot] is not SyncedMotionEntity motion) return;
+
+            if (isAuthor) motion.StartAuthoring();
+            else motion.FollowFrom(author);
+        }
+
+        [Rpc(SendTo.Server)]
+        private void DropGoneRpc(uint pickupKey, RpcParams rpcParams = default)
+        {
+            if (!m_taken.Add(pickupKey)) return;
+
+            ApplyTakenRpc(pickupKey, rpcParams.Receive.SenderClientId);
         }
     }
 }

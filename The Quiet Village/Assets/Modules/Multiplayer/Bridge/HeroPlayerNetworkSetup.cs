@@ -1,5 +1,8 @@
+using Modules.Multiplayer.Bridge.World;
 using Modules.Multiplayer.Scripts.Runtime.Player;
+using Modules.Multiplayer.Scripts.Runtime.Sessions;
 using Unity.Cinemachine;
+using Unity.Collections;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UHFPS.Runtime;
@@ -27,6 +30,20 @@ namespace Modules.Multiplayer.Bridge
         [Tooltip("Third-person stand-in shown to other clients.")]
         [SerializeField] private RemoteAvatarBinder m_avatar;
 
+        // Owner-written: a name is the player's own to declare, and nothing but other players' UI reads it.
+        private readonly NetworkVariable<FixedString128Bytes> m_displayName =
+            new(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+        /// <summary>This player's room name, readable on every client; "Player N" until the owner publishes it.</summary>
+        public string DisplayName
+        {
+            get
+            {
+                var displayName = m_displayName.Value.ToString();
+                return string.IsNullOrEmpty(displayName) ? $"Player {OwnerClientId + 1}" : displayName;
+            }
+        }
+
         public override void OnNetworkSpawn()
         {
             if (IsOwner) ConfigureAsLocalPlayer();
@@ -47,6 +64,9 @@ namespace Modules.Multiplayer.Bridge
             MoveToSpawnPoint();
             BindPlayerCamera();
             BindScenePostProcessing();
+            PublishDisplayName();
+            AdaptMenusToSession();
+            ShareDroppedItems();
 
             // UHFPS resolves the player through this manager from about ten different systems (AI
             // targeting, doors, dialogue, cutscenes). Its scene reference is empty until we hand it
@@ -94,6 +114,59 @@ namespace Modules.Multiplayer.Bridge
 
             if (gameManager.HealthPPVolume == null)
                 gameManager.HealthPPVolume = sceneReferences.HealthPostProcessing;
+        }
+
+        /// <summary>
+        /// Replaces the pause and death menu actions that would take this player out of the session, and turns the
+        /// death screen into spectating.
+        /// </summary>
+        /// <remarks>
+        /// Added at runtime rather than on the prefab: both only ever belong on the owner's copy, and they find
+        /// their buttons themselves. Must run before the HUD's first Start; see <see cref="SessionMenus.Bind"/>.
+        /// </remarks>
+        private void AdaptMenusToSession()
+        {
+            var gameManager = GetComponentInChildren<GameManager>(true);
+            if (gameManager == null) return;
+
+            var menus = GetComponent<SessionMenus>();
+            if (menus == null) menus = gameObject.AddComponent<SessionMenus>();
+
+            menus.Bind(gameManager, IsServer);
+
+            // After the menus: it takes over the death screen's Restart, which SessionMenus has hidden.
+            var health = GetComponent<PlayerHealthSync>();
+            if (health == null) return;
+
+            var deathScreen = GetComponent<SessionDeathScreen>();
+            if (deathScreen == null) deathScreen = gameObject.AddComponent<SessionDeathScreen>();
+
+            deathScreen.Bind(gameManager, health, IsServer);
+        }
+
+        /// <summary>Makes what this player drops from the inventory appear for everyone, not only here.</summary>
+        private void ShareDroppedItems()
+        {
+            var inventory = GetComponentInChildren<Inventory>(true);
+            if (inventory != null) inventory.DropSync = new DroppedItems();
+        }
+
+        /// <summary>Publishes the name this player chose in the lobby, for the others' UI.</summary>
+        private void PublishDisplayName()
+        {
+            // Lives on the persistent multiplayer root.
+            var sessions = FindAnyObjectByType<SessionService>();
+            if (sessions == null) return;
+
+            foreach (var member in sessions.Members)
+            {
+                if (!member.IsLocal) continue;
+
+                var displayName = new FixedString128Bytes();
+                displayName.CopyFromTruncated(member.DisplayName);
+                m_displayName.Value = displayName;
+                return;
+            }
         }
 
         /// <summary>
@@ -225,6 +298,11 @@ namespace Modules.Multiplayer.Bridge
                 component.SetEnabled(false);
                 component.enabled = false;
             }
+
+            // Not a PlayerComponent, so the loop above misses it. Its Update drives the HUD, the blood volume and
+            // fall damage, all of which belong to the owner; this body's health arrives through PlayerHealthSync.
+            var health = GetComponent<PlayerHealth>();
+            if (health != null) health.enabled = false;
 
             // CharacterController's overlap recovery keeps depenetrating the capsule away from the
             // positions NetworkTransform writes, which reads as jitter. Remote players become

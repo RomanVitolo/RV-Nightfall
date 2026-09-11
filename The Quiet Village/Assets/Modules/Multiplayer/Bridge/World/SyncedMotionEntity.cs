@@ -178,6 +178,30 @@ namespace Modules.Multiplayer.Bridge.World
                 Quaternion.Slerp(current.rotation, m_followTarget.rotation, blend)));
         }
 
+        /// <summary>Streams from now on, moving or not, for a dropped item's first moments on its dropper's copy.</summary>
+        /// <remarks>
+        /// The other copies start out held still (<see cref="FollowFrom"/>) and only move when this stream says so.
+        /// It must reach them even if the item landed before its id arrived, which the usual start, on movement,
+        /// would never send.
+        /// </remarks>
+        internal void StartAuthoring()
+        {
+            if (!IsLive || Moving == null) return;
+
+            var pose = ReadPose();
+            m_mode = Mode.Authoring;
+            m_observed = pose;
+            m_lastMovedAt = Time.time;
+            World.PublishMotionBegin(this, CaptureState());
+            SendPose(pose);
+        }
+
+        /// <summary>
+        /// Holds this copy still until <paramref name="author"/>'s stream moves it, for a dropped item created here
+        /// on another client's behalf. Left to its own physics it would start a competing stream of its own.
+        /// </summary>
+        internal void FollowFrom(ulong author) => ApplyRemoteMotionBegin(null, author);
+
         internal override void ApplyRemoteMotionBegin(string state, ulong author)
         {
             // If this copy was authoring too, the server has granted the other client; its stream wins here.
