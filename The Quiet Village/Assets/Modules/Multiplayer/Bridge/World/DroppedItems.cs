@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UHFPS.Runtime;
 using UnityEngine;
 
@@ -14,6 +16,9 @@ namespace Modules.Multiplayer.Bridge.World
     ///
     /// Nobody can join a started game, so there are no late joiners to show earlier drops to; a level restart
     /// clears them with everything else.
+    ///
+    /// The same path drops a whole inventory when its player dies (<see cref="CarriedItems"/>) or leaves
+    /// (<see cref="WorldSync"/>), so nothing a level needs goes out of play with them.
     /// </remarks>
     public sealed class DroppedItems : IItemDropSync
     {
@@ -84,6 +89,67 @@ namespace Modules.Multiplayer.Bridge.World
                 entities[ExamineSlot] = GetOrAdd<SyncedExamineLock>(dropped);
 
             return entities;
+        }
+
+        /// <summary>
+        /// Where the <paramref name="index"/>th of <paramref name="count"/> items goes when a player's whole inventory
+        /// falls at <paramref name="feet"/>: a small ring at chest height, so they drop apart rather than into each other.
+        /// </summary>
+        internal static Pose ScatterPose(Vector3 feet, int index, int count)
+        {
+            var facing = Quaternion.Euler(0f, count > 0 ? index * 360f / count : 0f, 0f);
+            var offset = count > 1 ? facing * Vector3.forward * 0.35f : Vector3.zero;
+            return new Pose(feet + Vector3.up * 0.8f + offset, facing);
+        }
+
+        /// <summary>One entry of what a player carries, as much as another client needs to drop it for them.</summary>
+        internal readonly struct CarriedItem
+        {
+            public readonly string ReferenceGuid;
+            public readonly int Quantity;
+
+            public CarriedItem(string referenceGuid, int quantity)
+            {
+                ReferenceGuid = referenceGuid;
+                Quantity = quantity;
+            }
+        }
+
+        /// <summary>The droppable items in an inventory; items with no drop object cannot fall and are left out.</summary>
+        internal static List<(InventoryItem Entry, CarriedItem Item)> Droppable(Inventory inventory)
+        {
+            var droppable = new List<(InventoryItem, CarriedItem)>();
+            if (inventory == null || inventory.carryingItems == null) return droppable;
+
+            foreach (var entry in inventory.carryingItems.Keys)
+            {
+                var guid = entry != null && entry.Item != null && entry.Item.ItemObject != null
+                    ? entry.Item.ItemObject.GUID
+                    : null;
+
+                if (!string.IsNullOrEmpty(guid)) droppable.Add((entry, new CarriedItem(guid, entry.Quantity)));
+            }
+
+            return droppable;
+        }
+
+        // ObjectReference GUIDs are hex, so neither separator can occur inside one.
+        internal static string Encode(IEnumerable<CarriedItem> items) =>
+            string.Join(";", items.Select(item => $"{item.ReferenceGuid}:{item.Quantity}"));
+
+        internal static List<CarriedItem> Decode(string encoded)
+        {
+            var items = new List<CarriedItem>();
+            if (string.IsNullOrEmpty(encoded)) return items;
+
+            foreach (var entry in encoded.Split(';'))
+            {
+                var parts = entry.Split(':');
+                if (parts.Length == 2 && int.TryParse(parts[1], out var quantity) && quantity > 0)
+                    items.Add(new CarriedItem(parts[0], quantity));
+            }
+
+            return items;
         }
 
         private static T GetOrAdd<T>(GameObject target) where T : Component =>

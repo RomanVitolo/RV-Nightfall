@@ -1,13 +1,13 @@
 # UHFPS source patches for multiplayer
 
-UHFPS is third-party code. A package update **will overwrite** these edits. **64 of its .cs files** are
+UHFPS is third-party code. A package update **will overwrite** these edits. **65 of its .cs files** are
 now modified. Find what survived an update with:
 
 ```bash
 grep -rl "MULTIPLAYER PATCH\|LocalPlayerContext" "Assets/ThunderWire Studio" --include=*.cs | wc -l
 ```
 
-That must report **64**. A lower number means an update reverted some of them.
+That must report **65**. A lower number means an update reverted some of them.
 
 ## Why these exist
 
@@ -120,7 +120,7 @@ behaviour rather than a workaround.
 **This tracks the _local_ player only.** AI chasing the nearest of several players is unfinished — see
 the world-state gap below.
 
-## 4. Item actions for the third-person body (4 files, 2 new)
+## 4. Item actions, sounds and light for the third-person body (5 files, 1 new)
 
 UHFPS items fire, swing and reload inside their own update logic and expose no event, so a remote
 player's body could not react. One seam was added and raised at the four points where UHFPS commits to
@@ -132,7 +132,8 @@ or a swing still on cooldown raises nothing.
 | `Controllers/Items/PlayerItemBehaviour.cs` | Added `ItemAction` enum, `ActionPerformed` event and protected `RaiseActionPerformed`. |
 | `Controllers/Items/GunItem.cs` | Raises `Shoot` in `FireOneBullet` and `Reload` in `ReloadGun`. |
 | `Controllers/Items/AxeItem.cs` | Raises `Attack` on the swing. *(newly patched)* |
-| `Controllers/Items/KnifeItem.cs` | Raises `Attack` on the slash. *(newly patched)* |
+| `Controllers/Items/KnifeItem.cs` | Raises `Attack` on the slash. |
+| `Animation/AnimationSoundEvent.cs` | Raises `SoundPlayed` for each sound an item animation plays, and `GetSound` returns the clip behind a name. *(newly patched)* |
 
 The bridge's `PlayerActionSync` subscribes on the owner only and forwards each action through an
 owner-only RPC (`InvokePermission = Owner`), so no client can make another player appear to fire.
@@ -141,6 +142,17 @@ Remote copies never raise it themselves: every item returns early unless equippe
 
 If an update reverts these, weapons still work for the player using them; other players simply stop
 seeing the body react.
+
+Reloading is voiced by the item's animation rather than by any field, which is what `AnimationSoundEvent` is for.
+Its names travel instead of its clips: every client has the same item with the same named sounds, so the owner sends
+"MagOut" and the others play their own copy of it at that player's body.
+
+The same events also feed `AvatarSounds`, which gives a remote body the sounds its own switched-off AudioSources
+would have made: footsteps read from that copy's `FootstepsSystem` and the surface underfoot, and the shot or swing
+clip of whatever the player holds, plus its draw and holster sounds and a flashlight's click. Which item that is
+comes from `PlayerActionSync`, whose owner publishes it along with whether its light is lit, so `AvatarHeldLight` can
+shine another player's flashlight and `AvatarHeldItem` can put the item's pickup model in their hand. None of those
+need a UHFPS change: they read settings that are already on every copy of the player.
 
 ## 5. World objects that cached the player at load (16 files, none new)
 
@@ -275,5 +287,7 @@ it follows the usual rule: the first taker gets it, and everyone else's copy is 
   saveable fires are not replayed on other clients; their effects arrive only through objects that replicate
   their own state. NPC ragdolls fall independently on each client once dead.
 - **Death is permanent until the level restarts** (the bridge's `SessionDeathScreen`, no UHFPS changes). What a
-  dead player carried is out of play with them, so a key they held can leave the level unfinishable.
+  player carries falls where they die, or where they last stood if they leave (`CarriedItems`, `WorldSync`), so a
+  key never leaves play. Items without a drop object cannot fall and are lost; so is an item's custom data (a gun's
+  loaded ammo, say), as with any UHFPS drop.
 - Backups of the pre-refactor scripts, scene and prefab are in this session's scratchpad.

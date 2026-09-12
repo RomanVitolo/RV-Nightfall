@@ -144,11 +144,24 @@ namespace Modules.Multiplayer.Bridge
             deathScreen.Bind(gameManager, health, IsServer);
         }
 
-        /// <summary>Makes what this player drops from the inventory appear for everyone, not only here.</summary>
+        /// <summary>
+        /// Makes what this player drops from the inventory appear for everyone, not only here, and keeps what they
+        /// carry in play when they die or leave.
+        /// </summary>
         private void ShareDroppedItems()
         {
             var inventory = GetComponentInChildren<Inventory>(true);
-            if (inventory != null) inventory.DropSync = new DroppedItems();
+            if (inventory == null) return;
+
+            inventory.DropSync = new DroppedItems();
+
+            var health = GetComponent<PlayerHealthSync>();
+            if (health == null) return;
+
+            var carried = GetComponent<CarriedItems>();
+            if (carried == null) carried = gameObject.AddComponent<CarriedItems>();
+
+            carried.Bind(inventory, health);
         }
 
         /// <summary>Publishes the name this player chose in the lobby, for the others' UI.</summary>
@@ -251,6 +264,7 @@ namespace Modules.Multiplayer.Bridge
             DisableFirstPersonStack();
             DisableViewmodelAnimators();
             DisableLocalOnlyOutputs();
+            GiveAvatarSoundAndLight();
 
             // Only now is this object safe to draw for everyone else.
             if (m_avatar != null) m_avatar.SetAvatarVisible(true);
@@ -309,6 +323,33 @@ namespace Modules.Multiplayer.Bridge
             // non-solid as a result — you can walk through them until they get a collider of their own.
             var characterController = GetComponent<CharacterController>();
             if (characterController != null) characterController.enabled = false;
+        }
+
+        /// <summary>
+        /// Lets this body be heard and seen: its footsteps and item sounds, and the light it carries.
+        /// </summary>
+        /// <remarks>
+        /// After the outputs above are switched off, so the AudioSource it adds for the body is not caught by that
+        /// sweep. Added at runtime rather than on the prefab: neither belongs on the copy its owner plays.
+        /// </remarks>
+        private void GiveAvatarSoundAndLight()
+        {
+            var locomotion = GetComponent<PlayerLocomotionSync>();
+            var actions = GetComponent<PlayerActionSync>();
+            var footsteps = GetComponentInChildren<FootstepsSystem>(true);
+
+            if (locomotion != null && actions != null && footsteps != null)
+                gameObject.AddComponent<AvatarSounds>().Bind(locomotion, actions, footsteps);
+
+            if (locomotion != null && actions != null)
+                gameObject.AddComponent<AvatarHeldLight>().Bind(actions, locomotion.LookTransform);
+
+            // The body's own animator, and any inventory for the item database every copy shares.
+            var avatarAnimator = m_avatar != null ? m_avatar.Animator : null;
+            var inventory = GetComponentInChildren<Inventory>(true);
+
+            if (actions != null && avatarAnimator != null)
+                gameObject.AddComponent<AvatarHeldItem>().Bind(actions, avatarAnimator, inventory);
         }
 
         /// <summary>Silences the first-person arm, candle and item Animators on remote copies.</summary>

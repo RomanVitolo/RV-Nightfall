@@ -44,6 +44,11 @@ namespace Modules.Multiplayer.Bridge.World
         private readonly Dictionary<int, GameObject> m_pendingDrops = new();
         private int m_dropRequest;
 
+        // Server: what each client last said it carries, and where its player last stood. A player's object is
+        // already despawned by the time its disconnect is reported, so the position has to be remembered.
+        private readonly Dictionary<ulong, string> m_carried = new();
+        private readonly Dictionary<ulong, Vector3> m_lastPositions = new();
+
         /// <summary>Lock owner meaning nobody.</summary>
         public const ulong NoOwner = ulong.MaxValue;
 
@@ -83,6 +88,19 @@ namespace Modules.Multiplayer.Bridge.World
             m_motionOwners.Clear();
             m_locks.Clear();
             m_pendingDrops.Clear();
+            m_carried.Clear();
+            m_lastPositions.Clear();
+        }
+
+        private void Update()
+        {
+            if (!IsServer || !IsSpawned) return;
+
+            foreach (var client in NetworkManager.ConnectedClientsList)
+            {
+                var player = client.PlayerObject;
+                if (player != null) m_lastPositions[client.ClientId] = player.transform.position;
+            }
         }
 
         private void RegisterSceneEntities()
@@ -303,9 +321,13 @@ namespace Modules.Multiplayer.Bridge.World
             if (TryGetEntity(key, out var entity)) entity.OnLockDenied();
         }
 
-        /// <summary>A player who leaves mid-examine must not take the object's lock with them.</summary>
+        /// <summary>
+        /// A player who leaves must not take anything with them: not what they carry, not an object's lock.
+        /// </summary>
         private void HandleClientDisconnected(ulong clientId)
         {
+            DropCarriedItems(clientId);
+
             var released = new List<uint>();
             foreach (var pair in m_locks)
             {
@@ -454,6 +476,47 @@ namespace Modules.Multiplayer.Bridge.World
             if (!m_taken.Add(pickupKey)) return;
 
             ApplyTakenRpc(pickupKey, rpcParams.Receive.SenderClientId);
+        }
+
+        // ---- Carried items ---------------------------------------------------------------------------
+
+        /// <summary>Tells the host what this client carries, so it can drop it for them if they leave.</summary>
+        /// <param name="encoded">See <see cref="DroppedItems.Encode"/>.</param>
+        internal void ReportCarried(string encoded)
+        {
+            if (!IsSpawned) return;
+
+            CarriedRpc(encoded ?? string.Empty);
+        }
+
+        [Rpc(SendTo.Server)]
+        private void CarriedRpc(string encoded, RpcParams rpcParams = default)
+        {
+            m_carried[rpcParams.Receive.SenderClientId] = encoded;
+        }
+
+        /// <summary>
+        /// Drops what a departed player carried where they last stood, as the host: the player's own client, which
+        /// would normally drop things, is gone.
+        /// </summary>
+        /// <remarks>
+        /// A player who died has already dropped everything and reported an empty inventory, so this finds nothing.
+        /// </remarks>
+        private void DropCarriedItems(ulong clientId)
+        {
+            // Without a position there is nowhere sensible to put things; a player who never spawned carried nothing.
+            var hadPosition = m_lastPositions.Remove(clientId, out var feet);
+            if (!m_carried.Remove(clientId, out var encoded) || !hadPosition) return;
+
+            var items = DroppedItems.Decode(encoded);
+            for (var i = 0; i < items.Count; i++)
+            {
+                var pose = DroppedItems.ScatterPose(feet, i, items.Count);
+                var item = items[i];
+
+                var dropped = DroppedItems.CreateCopy(item.ReferenceGuid, item.Quantity, pose.position, pose.rotation);
+                if (dropped != null) PublishDrop(dropped, item.ReferenceGuid, item.Quantity);
+            }
         }
     }
 }

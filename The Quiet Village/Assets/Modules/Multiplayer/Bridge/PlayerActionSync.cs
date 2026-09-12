@@ -69,6 +69,49 @@ namespace Modules.Multiplayer.Bridge
         private static readonly int AttackHash = Animator.StringToHash(AttackParameter);
         private static readonly int AttackVariantHash = Animator.StringToHash(AttackVariantParameter);
 
+        // Owner-written: which item this player holds, and whether its light is on. Both are cosmetic elsewhere
+        // — they decide what the body carries and whether a beam shines, never an outcome — so the owner decides.
+        private readonly NetworkVariable<sbyte> m_equippedItem =
+            new(NoItem, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+        private readonly NetworkVariable<bool> m_heldLightOn =
+            new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+        /// <summary>Nothing equipped, matching PlayerItemsManager's own "no current item".</summary>
+        private const sbyte NoItem = -1;
+
+        private PlayerItemsManager m_itemsManager;
+        private PlayerItemBehaviour m_lastLightItem;
+        private Light m_lastItemLight;
+
+        /// <summary>Raised on every client but the owner's, when this player's item acts.</summary>
+        /// <remarks>The body animates from the same message; this lets a listener add the sound it makes.</remarks>
+        public event System.Action<PlayerItemBehaviour.ItemAction> ItemActionPlayed;
+
+        /// <summary>Raised on every client but the owner's, with a sound this player's item animation played.</summary>
+        public event System.Action<SoundClip> ItemSoundPlayed;
+
+        /// <summary>Raised on the other clients when this player puts one item away and takes another out.</summary>
+        public event System.Action<PlayerItemBehaviour, PlayerItemBehaviour> EquippedItemChanged;
+
+        /// <summary>Raised on the other clients when this player's held light is switched on or off.</summary>
+        public event System.Action<bool> HeldLightToggled;
+
+        private AnimationSoundEvent[] m_itemSounds;
+
+        /// <summary>The item this player holds, resolved on any client, or <c>null</c> if their hands are empty.</summary>
+        /// <remarks>
+        /// The index is into PlayerItemsManager's own list, which is the same fixed list of prefab children on
+        /// every copy of the player, so the index means the same thing everywhere.
+        /// </remarks>
+        public PlayerItemBehaviour EquippedItem => ItemAt(m_equippedItem.Value);
+
+        /// <summary>Which of PlayerItemsManager's items this player holds, or -1 for empty hands.</summary>
+        public int EquippedItemIndex => m_equippedItem.Value;
+
+        /// <summary>Whether the held item's light is currently on, e.g. a lit flashlight.</summary>
+        public bool HeldLightOn => m_heldLightOn.Value;
+
         private PlayerItemBehaviour[] m_items;
         private float m_stillTime;
         private float m_fidgetDelay;
@@ -101,7 +144,23 @@ namespace Modules.Multiplayer.Bridge
             // Items tick themselves, but every one returns early unless equipped, and only PlayerItemsManager
             // equips them — a PlayerComponent HeroPlayerNetworkSetup disables on remote copies. So only the
             // owner's items ever act. They are fixed children of the prefab, so one scan suffices.
-            if (IsOwner) SubscribeToItems();
+            // Needed on every copy: the owner publishes the index, the others resolve it back to an item.
+            m_itemsManager = GetComponentInChildren<PlayerItemsManager>(true);
+
+            // Fixed children of the prefab, so the same scan gives the same order on every copy, and an index
+            // into it means the same component everywhere.
+            m_itemSounds = GetComponentsInChildren<AnimationSoundEvent>(true);
+
+            if (IsOwner)
+            {
+                SubscribeToItems();
+                SubscribeToItemSounds();
+            }
+            else
+            {
+                m_equippedItem.OnValueChanged += HandleEquippedItemChanged;
+                m_heldLightOn.OnValueChanged += HandleHeldLightChanged;
+            }
         }
 
         public override void OnNetworkDespawn()
@@ -109,12 +168,48 @@ namespace Modules.Multiplayer.Bridge
             if (m_health != null) m_health.HealthChanged -= HandleHealthChanged;
 
             m_fidget.OnValueChanged -= HandleFidgetChanged;
+            m_equippedItem.OnValueChanged -= HandleEquippedItemChanged;
+            m_heldLightOn.OnValueChanged -= HandleHeldLightChanged;
+
             UnsubscribeFromItems();
+            UnsubscribeFromItemSounds();
         }
 
         private void Update()
         {
-            if (IsOwner) TickFidget();
+            if (!IsOwner) return;
+
+            TickFidget();
+            TickEquippedItem();
+        }
+
+        // ---- Held item -------------------------------------------------------------------------------
+
+        /// <summary>Publishes what the owner holds, so the other clients can light and sound it.</summary>
+        private void TickEquippedItem()
+        {
+            if (m_itemsManager == null) return;
+
+            var current = m_itemsManager.CurrentItem;
+            var index = current != null ? (sbyte)m_itemsManager.CurrentItemIndex : NoItem;
+            if (index != m_equippedItem.Value) m_equippedItem.Value = index;
+
+            var lightOn = IsLightOn(current);
+            if (lightOn != m_heldLightOn.Value) m_heldLightOn.Value = lightOn;
+        }
+
+        private bool IsLightOn(PlayerItemBehaviour item)
+        {
+            if (item == null) return false;
+
+            // Cached per item: this runs every frame, and an item's light never moves between its children.
+            if (!ReferenceEquals(item, m_lastLightItem))
+            {
+                m_lastLightItem = item;
+                m_lastItemLight = item.GetComponentInChildren<Light>(true);
+            }
+
+            return m_lastItemLight != null && m_lastItemLight.enabled && m_lastItemLight.gameObject.activeInHierarchy;
         }
 
         // ---- Item actions ----------------------------------------------------------------------------
@@ -158,8 +253,12 @@ namespace Modules.Multiplayer.Bridge
         [Rpc(SendTo.NotOwner, InvokePermission = RpcInvokePermission.Owner)]
         private void PlayItemActionRpc(PlayerItemBehaviour.ItemAction action, byte variant)
         {
+            if (IsDead) return;
+
+            ItemActionPlayed?.Invoke(action);
+
             var animator = ActiveAnimator;
-            if (animator == null || IsDead) return;
+            if (animator == null) return;
 
             switch (action)
             {
@@ -178,6 +277,60 @@ namespace Modules.Multiplayer.Bridge
                     animator.SetTrigger(AttackHash);
                     break;
             }
+        }
+
+        // ---- Item sounds -----------------------------------------------------------------------------
+
+        private void SubscribeToItemSounds()
+        {
+            for (var i = 0; i < m_itemSounds.Length; i++)
+            {
+                if (m_itemSounds[i] == null) continue;
+
+                // The index is captured per subscription: the receiver needs to know which item spoke.
+                var index = (byte)i;
+                m_itemSounds[i].SoundPlayed += name => HandleItemSound(index, name);
+            }
+        }
+
+        private void UnsubscribeFromItemSounds()
+        {
+            // The closures above are per subscription and cannot be removed by name; the components die with the
+            // player object they are on, which is the same object this despawns with.
+            m_itemSounds = null;
+        }
+
+        private void HandleItemSound(byte index, string soundName)
+        {
+            if (IsSpawned) PlayItemSoundRpc(index, soundName);
+        }
+
+        /// <summary>Plays a sound this player's item animation made, on their body, for everyone else.</summary>
+        /// <remarks>
+        /// The name is sent rather than the clip: clips cannot travel, and every client has the same item with the
+        /// same named sounds on its own copy of this player.
+        /// </remarks>
+        [Rpc(SendTo.NotOwner, InvokePermission = RpcInvokePermission.Owner)]
+        private void PlayItemSoundRpc(byte index, string soundName)
+        {
+            if (IsDead || m_itemSounds == null || index >= m_itemSounds.Length) return;
+
+            var source = m_itemSounds[index];
+            if (source == null) return;
+
+            var sound = source.GetSound(soundName);
+            if (sound != null) ItemSoundPlayed?.Invoke(sound);
+        }
+
+        private void HandleEquippedItemChanged(sbyte previous, sbyte current) =>
+            EquippedItemChanged?.Invoke(ItemAt(previous), ItemAt(current));
+
+        private void HandleHeldLightChanged(bool previous, bool current) => HeldLightToggled?.Invoke(current);
+
+        private PlayerItemBehaviour ItemAt(sbyte index)
+        {
+            var items = m_itemsManager != null ? m_itemsManager.PlayerItems : null;
+            return items != null && index >= 0 && index < items.Count ? items[index] : null;
         }
 
         // ---- Fidgets ---------------------------------------------------------------------------------
