@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Modules.Multiplayer.Scripts.Runtime.Flow;
+using Modules.Multiplayer.Scripts.Runtime.Saves;
 using Modules.Multiplayer.Scripts.Runtime.Sessions;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -46,6 +47,8 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
         private VisualElement m_browserView;
         private VisualElement m_roomView;
         private Label m_statusBar;
+        private VisualElement m_endedNotice;
+        private Label m_endedNoticeText;
 
         private Label m_roomCount;
         private ListView m_roomList;
@@ -68,6 +71,9 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
         private SliderInt m_createMaxPlayers;
         private TextField m_createPassword;
         private Label m_createError;
+        private DropdownField m_createSave;
+        private Label m_createSaveHint;
+        private readonly List<SaveEntry> m_saves = new();
         private Button m_createCancel;
         private Button m_createConfirm;
 
@@ -86,6 +92,8 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
         private bool m_querying;
         private float m_nextAutoRefreshAt;
         private float m_refreshAllowedAt;
+
+        private const string NewGameChoice = "New game";
 
         // Errors that are not the session's own state: a failed refresh, a failed start.
         private string m_message = string.Empty;
@@ -171,6 +179,12 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
             m_roomView = root.Q("room-view");
             m_statusBar = root.Q<Label>("status-bar");
 
+            // Not required: an older LobbyScreen.uxml without the notice should still open the lobby.
+            m_endedNotice = root.Q("ended-notice");
+            m_endedNoticeText = root.Q<Label>("ended-notice-text");
+            var dismissNotice = root.Q<Button>("ended-notice-dismiss");
+            if (dismissNotice != null) dismissNotice.clicked += DismissEndedNotice;
+
             m_roomCount = root.Q<Label>("room-count");
             m_roomList = root.Q<ListView>("room-list");
             m_roomListEmpty = root.Q<Label>("room-list-empty");
@@ -192,6 +206,10 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
             m_createMaxPlayers = root.Q<SliderInt>("create-max-players");
             m_createPassword = root.Q<TextField>("create-password");
             m_createError = root.Q<Label>("create-error");
+
+            // Not required: an older LobbyScreen.uxml without the picker still creates new games.
+            m_createSave = root.Q<DropdownField>("create-save");
+            m_createSaveHint = root.Q<Label>("create-save-hint");
             m_createCancel = root.Q<Button>("create-cancel");
             m_createConfirm = root.Q<Button>("create-confirm");
 
@@ -313,6 +331,31 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
             RefreshBrowser();
             RefreshRoom();
             RefreshStatus();
+            RefreshEndedNotice();
+        }
+
+        /// <summary>
+        /// Explains a room the player did not leave: the host ended it, or the connection dropped.
+        /// </summary>
+        /// <remarks>
+        /// Landing back in the lobby is otherwise silent, and looks like the game simply quit itself. The status
+        /// bar is not enough: it is small, and it is cleared by the room refresh that follows a session ending.
+        /// </remarks>
+        private void RefreshEndedNotice()
+        {
+            if (m_endedNotice == null || m_endedNoticeText == null) return;
+
+            var reason = m_sessions.SessionEndedReason;
+            var show = !string.IsNullOrEmpty(reason) && !m_sessions.IsConnected;
+
+            SetHidden(m_endedNotice, !show);
+            if (show) m_endedNoticeText.text = reason;
+        }
+
+        private void DismissEndedNotice()
+        {
+            m_sessions.ClearSessionEndedReason();
+            RefreshEndedNotice();
         }
 
         private void RefreshBusy()
@@ -539,8 +582,48 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
             m_createPassword.value = string.Empty;
             m_createError.text = string.Empty;
 
+            _ = RefreshSavesAsync();
+
             SetHidden(m_createDialog, false);
             m_createName.Focus();
+        }
+
+        /// <summary>
+        /// Offers the host a new game or one of this machine's saves to carry on from.
+        /// </summary>
+        /// <remarks>
+        /// Saves live with whoever hosts them, so this list is the host's own. Players joining bring nothing but
+        /// their account, which is what the save keys their belongings to.
+        /// </remarks>
+        private async Task RefreshSavesAsync()
+        {
+            if (m_createSave == null) return;
+
+            m_saves.Clear();
+            m_createSave.choices = new List<string> { NewGameChoice };
+            m_createSave.index = 0;
+            if (m_createSaveHint != null) m_createSaveHint.text = string.Empty;
+
+            var catalog = SaveCatalog.Active;
+            if (catalog == null) return;
+
+            var saves = await catalog.ListAsync();
+
+            // The dialog may have closed, or the lobby unloaded, while the files were read.
+            if (!m_uiReady || m_createSave == null) return;
+
+            m_saves.AddRange(saves);
+
+            var choices = new List<string> { NewGameChoice };
+            foreach (var save in m_saves) choices.Add(save.Label);
+
+            m_createSave.choices = choices;
+            m_createSave.index = 0;
+
+            if (m_createSaveHint != null)
+                m_createSaveHint.text = m_saves.Count > 0
+                    ? "Everyone keeps what they had when the game was saved."
+                    : "No saved games yet.";
         }
 
         private void ConfirmCreate()
@@ -556,7 +639,35 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
 
             SetHidden(m_createDialog, true);
             SaveDisplayName();
-            Run(m_sessions.CreateRoomAsync(DisplayName, m_createName.value, m_createMaxPlayers.value, m_createPassword.value));
+            Run(CreateRoomAsync());
+        }
+
+        /// <summary>Reads the chosen save, if any, then opens the room that will play it.</summary>
+        private async Task CreateRoomAsync()
+        {
+            var catalog = SaveCatalog.Active;
+            var chosen = m_createSave != null ? m_createSave.index - 1 : -1;
+
+            if (catalog != null)
+            {
+                if (chosen >= 0 && chosen < m_saves.Count)
+                {
+                    // Read now, in the lobby: a damaged save should not be found halfway into starting a game.
+                    if (!await catalog.ResumeAsync(m_saves[chosen].Folder))
+                    {
+                        m_message = "That save could not be read, so it was not loaded.";
+                        RefreshAll();
+                        return;
+                    }
+                }
+                else
+                {
+                    catalog.StartFresh();
+                }
+            }
+
+            await m_sessions.CreateRoomAsync(DisplayName, m_createName.value, m_createMaxPlayers.value,
+                m_createPassword.value);
         }
 
         /// <param name="room">The listed room needing a password, or <c>null</c> to join by code.</param>

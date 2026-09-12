@@ -59,11 +59,30 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
         /// <summary>Human-readable reason for the last failure. Kept after recovering, for display.</summary>
         public string LastError { get; private set; } = string.Empty;
 
+        /// <summary>
+        /// Why the last room ended under this player, for the lobby to explain when it takes them back; empty when
+        /// they left of their own accord.
+        /// </summary>
+        /// <remarks>
+        /// Separate from <see cref="LastError"/>, which is also a failed join or a failed room list, and is cleared
+        /// as soon as the next thing succeeds. This survives the trip back to the lobby, because that trip is the
+        /// only chance to say what happened: the level is already unloading when it starts.
+        /// </remarks>
+        public string SessionEndedReason { get; private set; } = string.Empty;
+
         public bool IsBusy => State == SessionConnectionState.SigningIn || State == SessionConnectionState.Connecting;
 
         public bool IsConnected => State == SessionConnectionState.Connected && m_session != null;
 
         public bool IsHost => m_session != null && m_session.IsHost;
+
+        /// <summary>
+        /// This player's Unity account id, the same across sessions and machines, or empty when signed out.
+        /// </summary>
+        /// <remarks>Saves key each player's belongings to this, so resuming one hands people back their own.</remarks>
+        public string LocalPlayerId => m_session != null && m_session.CurrentPlayer != null
+            ? m_session.CurrentPlayer.Id
+            : string.Empty;
 
         public string RoomName => m_session != null ? m_session.Name : string.Empty;
 
@@ -199,6 +218,8 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
 
             try
             {
+                // Whatever happened to the last room is past once they are starting another.
+                ClearSessionEndedReason();
                 SetState(SessionConnectionState.Connecting);
 
                 var options = new SessionOptions
@@ -255,6 +276,7 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
 
             try
             {
+                ClearSessionEndedReason();
                 SetState(SessionConnectionState.Connecting);
 
                 var options = new JoinSessionOptions
@@ -272,6 +294,9 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
                 Fail("Could not join the room", exception);
             }
         }
+
+        /// <summary>Forgets why the last room ended, once the player has been told.</summary>
+        public void ClearSessionEndedReason() => SessionEndedReason = string.Empty;
 
         /// <summary>Leaves the current room; the package shuts the NetworkManager down for us.</summary>
         public async Task LeaveSessionAsync()
@@ -409,16 +434,18 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
             RosterChanged?.Invoke();
         }
 
-        private void HandleRemovedFromSession() => EndUnexpectedly("You were removed from the room.");
+        private void HandleRemovedFromSession() => EndUnexpectedly("The host removed you from the room.");
 
-        private void HandleSessionDeleted() => EndUnexpectedly("The host closed the room.");
+        private void HandleSessionDeleted() => EndUnexpectedly("The host ended the game, so the room is closed.");
 
         private void HandleClientStopped(bool wasHost)
         {
             if (m_session == null) return;
 
             var session = m_session;
-            EndUnexpectedly(wasHost ? "The room shut down." : "Lost the connection to the host.");
+            EndUnexpectedly(wasHost
+                ? "The room shut down."
+                : "Lost the connection to the host. They may have left, or the connection dropped.");
 
             // Our membership may still be registered with the service; clear it so the room's player count
             // is right for everyone else. Failure is fine — stale members time out.
@@ -441,6 +468,7 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
         {
             DetachSession();
             LastError = reason;
+            SessionEndedReason = reason;
             SetState(SessionConnectionState.Error);
         }
 

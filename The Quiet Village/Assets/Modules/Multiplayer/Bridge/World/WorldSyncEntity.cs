@@ -44,6 +44,18 @@ namespace Modules.Multiplayer.Bridge.World
         /// <summary>True when local changes should be published. False while the level is still settling.</summary>
         protected bool CanPublish => IsLive && !World.IsSettling;
 
+        /// <summary>
+        /// The UHFPS component whose saved state this entity stands for, or <c>null</c> when it replicates
+        /// something a save does not keep, such as a motion stream or an examine lock.
+        /// </summary>
+        /// <remarks>
+        /// A co-op save stores the world under these ids rather than UHFPS's own save tokens. Those tokens are
+        /// paired to scene objects on the SaveGameManager component, which now lives on the player prefab and so
+        /// cannot hold scene references at all. An entity id is written into the scene at author time and is the
+        /// same on every machine, which a save shared by a room needs anyway.
+        /// </remarks>
+        internal virtual ISaveable SaveTarget => null;
+
         internal void Bind(WorldSync world, uint key)
         {
             World = world;

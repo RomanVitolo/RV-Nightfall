@@ -15,10 +15,11 @@ namespace Modules.Multiplayer.Bridge
     /// <remarks>
     /// Each of those buttons ends in a plain SceneManager load, which takes one player out of the session, or,
     /// pressed by the host, ends it for everyone without warning. Rooms lock when the game starts, so whoever
-    /// leaves cannot come back. Save and Load are hidden because saving is not multiplayer-aware yet; Restart
-    /// because a level cannot restart under one player (<see cref="SessionDeathScreen"/> brings it back for the
-    /// host, once everyone is dead). Quit and Main Menu become Leave Game (End Game on the host), and act only
-    /// on a second press.
+    /// leaves cannot come back. Save belongs to the host, who saves the whole room's game through World Sync, and
+    /// is hidden for everyone else; Load is hidden because a save is resumed from the lobby, where the room that
+    /// plays it is made; Restart because a level cannot restart under one player (<see cref="SessionDeathScreen"/>
+    /// brings it back for the host, once everyone is dead). Quit and Main Menu become Leave Game (End Game on the
+    /// host), and act only on a second press.
     ///
     /// Buttons are found by the UHFPS method their click calls, not by name or reference, so this needs no prefab
     /// wiring and survives the menus being rearranged. <see cref="GameManager.SessionExit"/> covers every other
@@ -32,6 +33,9 @@ namespace Modules.Multiplayer.Bridge
         private const float BlockedHintSeconds = 3f;
 
         private const string BlockedHint = "Changing levels isn't available in multiplayer yet.";
+
+        private const string SaveLabel = "Save Game";
+        private const string SaveTooltip = "Saves the world and everyone's belongings, for the host to resume later.";
         private const string LeavingLabel = "Leaving...";
 
         private sealed class LeaveButton
@@ -106,6 +110,19 @@ namespace Modules.Multiplayer.Bridge
             Debug.LogError($"{nameof(SessionMenus)}: no {nameof(SessionFlow)} loaded, so there is no session to leave.", this);
         }
 
+        /// <summary>Host only: saves the room's game through the level's World Sync, which gathers the players.</summary>
+        private void HandleSaveClicked()
+        {
+            var world = FindAnyObjectByType<World.WorldSync>();
+            if (world == null)
+            {
+                Debug.LogError($"{nameof(SessionMenus)}: no WorldSync in the level, so the game cannot be saved.", this);
+                return;
+            }
+
+            world.SaveGame();
+        }
+
         public void NotifySceneChangeBlocked()
         {
             if (m_gameManager != null) m_gameManager.ShowHintMessage(BlockedHint, BlockedHintSeconds);
@@ -119,6 +136,14 @@ namespace Modules.Multiplayer.Bridge
             {
                 var target = onClick.GetPersistentTarget(i);
                 var method = onClick.GetPersistentMethodName(i);
+
+                // The host saves for the whole room; a client's copy of the button would save nothing of the world.
+                if (Calls<SaveGameManager>(target, method, nameof(SaveGameManager.SaveGame)) && m_isHost)
+                {
+                    onClick.SetPersistentListenerState(i, UnityEventCallState.Off);
+                    TakeOverButton(button, SaveLabel, SaveTooltip, HandleSaveClicked);
+                    return;
+                }
 
                 if (Calls<SaveGameManager>(target, method, nameof(SaveGameManager.SaveGame))
                     || Calls<SavesUILoader>(target, method, nameof(SavesUILoader.LoadSavedGames))
@@ -140,6 +165,23 @@ namespace Modules.Multiplayer.Bridge
 
         private static bool Calls<T>(Object target, string method, string expected) =>
             target is T && method == expected;
+
+        /// <summary>Gives a button a new label, tooltip and action, in place of the UHFPS one it called.</summary>
+        private static void TakeOverButton(Button button, string label, string tooltip, UnityAction onClick)
+        {
+            // GLocText localizes the label once, in Start. Stopped before then, it leaves the label to us.
+            foreach (var localized in button.GetComponentsInChildren<GLocText>(true))
+            {
+                localized.enabled = false;
+            }
+
+            var text = button.GetComponentInChildren<TMP_Text>(true);
+            if (text != null) text.text = label;
+
+            if (button.TryGetComponent(out MenuHoverTooltip hover)) hover.TooltipMessage = tooltip;
+
+            button.onClick.AddListener(onClick);
+        }
 
         private void TakeOverLeaveButton(Button button)
         {

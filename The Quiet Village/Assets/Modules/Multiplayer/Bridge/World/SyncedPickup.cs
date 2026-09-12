@@ -22,6 +22,9 @@ namespace Modules.Multiplayer.Bridge.World
 
         private const string LostRaceHint = "Someone else took it.";
 
+        // Whether it has been taken, and where it lies if it has not.
+        internal override ISaveable SaveTarget => m_item;
+
         private int m_localInteractFrame = -1;
         private bool m_locallyExamining;
         private bool m_taken;

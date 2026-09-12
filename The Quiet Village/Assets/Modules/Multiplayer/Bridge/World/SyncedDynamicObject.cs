@@ -31,6 +31,9 @@ namespace Modules.Multiplayer.Bridge.World
 
         protected override bool LocalSpace => true;
 
+        // Open or closed, locked or unlocked.
+        internal override ISaveable SaveTarget => m_dynamicObject;
+
         private void Awake()
         {
             if (m_dynamicObject == null) m_dynamicObject = GetComponent<DynamicObject>();

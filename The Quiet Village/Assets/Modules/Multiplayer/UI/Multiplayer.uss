@@ -290,3 +290,19 @@
     align-items: center;
     padding: 6px 0;
 }
+
+/* The room ended without the player choosing it: said plainly, above everything else in the lobby. */
+.mp-notice {
+    flex-direction: row;
+    align-items: center;
+    border-left-width: 4px;
+    border-left-color: rgb(214, 106, 84);
+    background-color: rgba(214, 106, 84, 0.12);
+}
+
+.mp-notice-text {
+    color: rgb(240, 202, 194);
+    font-size: 15px;
+    white-space: normal;
+    flex-shrink: 1;
+}

@@ -21,10 +21,9 @@ namespace Modules.Multiplayer.Bridge
     /// </remarks>
     public class AvatarSounds : MonoBehaviour
     {
-        // Between the prefab's crouch (1 m/s), walk (2.5) and run (6). Crouching is not replicated, so a player
-        // moving at crouching pace is given the quieter step, which is what they are almost certainly doing.
-        private const float CrouchSpeed = 0.3f;
-        private const float WalkSpeed = 1.7f;
+        // Between the prefab's walk (2.5 m/s) and run (6). Crouching comes from the player's replicated state
+        // rather than their pace, so a crouching player creeping or shuffling is quiet either way.
+        private const float MovingSpeed = 0.3f;
         private const float RunSpeed = 4.2f;
 
         private const float RaycastUp = 0.3f;
@@ -100,7 +99,7 @@ namespace Modules.Multiplayer.Bridge
 
         private void TickFootsteps()
         {
-            var state = StateForSpeed(m_locomotion.PlanarSpeed);
+            var state = StepStateNow();
             if (state == FootstepsSystem.StepState.None)
             {
                 // The next step lands as they set off again, not half a stride later.
@@ -115,13 +114,14 @@ namespace Modules.Multiplayer.Bridge
             PlayStep(state);
         }
 
-        private static FootstepsSystem.StepState StateForSpeed(float speed)
+        private FootstepsSystem.StepState StepStateNow()
         {
-            if (speed >= RunSpeed) return FootstepsSystem.StepState.Run;
-            if (speed >= WalkSpeed) return FootstepsSystem.StepState.Walk;
-            if (speed >= CrouchSpeed) return FootstepsSystem.StepState.Crouch;
+            var speed = m_locomotion.PlanarSpeed;
+            if (speed < MovingSpeed) return FootstepsSystem.StepState.None;
 
-            return FootstepsSystem.StepState.None;
+            if (m_locomotion.IsCrouching) return FootstepsSystem.StepState.Crouch;
+
+            return speed >= RunSpeed ? FootstepsSystem.StepState.Run : FootstepsSystem.StepState.Walk;
         }
 
         private float StepInterval(FootstepsSystem.StepState state) => state switch

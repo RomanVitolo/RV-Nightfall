@@ -46,6 +46,8 @@ namespace Modules.Multiplayer.Bridge.World
         /// <summary>The component this entity replicates.</summary>
         public MonoBehaviour Target => m_saveable;
 
+        internal override ISaveable SaveTarget => m_target;
+
         private void Awake()
         {
             m_target = m_saveable as ISaveable;

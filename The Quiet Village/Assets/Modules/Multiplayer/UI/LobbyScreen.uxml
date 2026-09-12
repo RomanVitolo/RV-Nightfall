@@ -10,6 +10,13 @@
             <ui:TextField name="player-name" label="Your name" class="mp-field mp-name-field" />
         </ui:VisualElement>
 
+        <!-- Why the last room ended, when the player did not end it themselves. -->
+        <ui:VisualElement name="ended-notice" class="mp-card mp-notice mp-hidden">
+            <ui:Label name="ended-notice-text" class="mp-notice-text" />
+            <ui:VisualElement class="mp-spacer" />
+            <ui:Button name="ended-notice-dismiss" text="Dismiss" class="mp-button" />
+        </ui:VisualElement>
+
         <!-- Room browser: shown while not in a room. -->
         <ui:VisualElement name="browser-view" class="mp-card">
             <ui:VisualElement class="mp-toolbar">
@@ -58,6 +65,8 @@
                 <ui:TextField name="create-name" label="Room name" class="mp-field" />
                 <ui:SliderInt name="create-max-players" label="Max players" class="mp-field" />
                 <ui:TextField name="create-password" label="Password (optional)" class="mp-field" />
+                <ui:DropdownField name="create-save" label="Start from" class="mp-field" />
+                <ui:Label name="create-save-hint" class="mp-muted" />
                 <ui:Label name="create-error" class="mp-error" />
                 <ui:VisualElement class="mp-actions">
                     <ui:Button name="create-cancel" text="Cancel" class="mp-button" />

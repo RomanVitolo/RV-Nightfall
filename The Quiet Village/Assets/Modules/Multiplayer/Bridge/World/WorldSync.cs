@@ -23,7 +23,7 @@ namespace Modules.Multiplayer.Bridge.World
     /// <see cref="WorldSyncEntity"/>. Rooms lock when the game starts, so there are no late joiners to catch
     /// up: every client loads the level fresh in the same scene event, and only changes need to travel.
     /// </remarks>
-    public class WorldSync : NetworkBehaviour
+    public partial class WorldSync : NetworkBehaviour
     {
         [Tooltip("Seconds after the level spawns during which local changes are not published. Rigidbodies " +
                  "settle and scripts initialise independently on every client, and none of that is a player action.")]
@@ -49,6 +49,27 @@ namespace Modules.Multiplayer.Bridge.World
         private readonly Dictionary<ulong, string> m_carried = new();
         private readonly Dictionary<ulong, Vector3> m_lastPositions = new();
 
+        // Server: which account each client plays as, so a save gives them back their own belongings.
+        private readonly Dictionary<ulong, string> m_accounts = new();
+
+        // Items dropped in the level and still lying there, for a save to record. Keyed by the pickup's key.
+        private readonly Dictionary<uint, LiveDrop> m_drops = new();
+
+        /// <summary>An item on the ground: what it is, and the pickup that will be gone once it is taken.</summary>
+        private readonly struct LiveDrop
+        {
+            public readonly string ReferenceGuid;
+            public readonly int Quantity;
+            public readonly SyncedPickup Pickup;
+
+            public LiveDrop(string referenceGuid, int quantity, SyncedPickup pickup)
+            {
+                ReferenceGuid = referenceGuid;
+                Quantity = quantity;
+                Pickup = pickup;
+            }
+        }
+
         /// <summary>Lock owner meaning nobody.</summary>
         public const ulong NoOwner = ulong.MaxValue;
 
@@ -72,6 +93,9 @@ namespace Modules.Multiplayer.Bridge.World
             RegisterSceneEntities();
 
             if (IsServer) NetworkManager.OnClientDisconnectCallback += HandleClientDisconnected;
+
+            // After the entities are registered: a resumed save is applied to them.
+            OnSavesSpawn();
         }
 
         public override void OnNetworkDespawn()
@@ -90,6 +114,12 @@ namespace Modules.Multiplayer.Bridge.World
             m_pendingDrops.Clear();
             m_carried.Clear();
             m_lastPositions.Clear();
+            m_accounts.Clear();
+            m_drops.Clear();
+            m_heldSpawns.Clear();
+
+            if (ReferenceEquals(Modules.Multiplayer.Scripts.Runtime.Flow.SpawnGate.Active, this))
+                Modules.Multiplayer.Scripts.Runtime.Flow.SpawnGate.Active = null;
         }
 
         private void Update()
@@ -437,13 +467,13 @@ namespace Modules.Multiplayer.Bridge.World
             if (!IsFromSelf(author))
             {
                 var copy = DroppedItems.CreateCopy(referenceGuid, quantity, position, rotation);
-                if (copy != null) RegisterDrop(copy, key, false, author);
+                if (copy != null) RegisterDrop(copy, key, false, author, referenceGuid, quantity);
                 return;
             }
 
             if (m_pendingDrops.Remove(request, out var dropped) && dropped != null)
             {
-                RegisterDrop(dropped, key, true, author);
+                RegisterDrop(dropped, key, true, author, referenceGuid, quantity);
                 return;
             }
 
@@ -451,7 +481,8 @@ namespace Modules.Multiplayer.Bridge.World
             DropGoneRpc(key + DroppedItems.PickupSlot);
         }
 
-        private void RegisterDrop(GameObject dropped, uint key, bool isAuthor, ulong author)
+        private void RegisterDrop(GameObject dropped, uint key, bool isAuthor, ulong author,
+            string referenceGuid, int quantity)
         {
             var entities = DroppedItems.AttachEntities(dropped);
             for (var i = 0; i < entities.Length; i++)
@@ -463,6 +494,9 @@ namespace Modules.Multiplayer.Bridge.World
                 m_entities[entityKey] = entity;
                 entity.Bind(this, entityKey);
             }
+
+            if (entities[DroppedItems.PickupSlot] is SyncedPickup pickup)
+                m_drops[key + DroppedItems.PickupSlot] = new LiveDrop(referenceGuid, quantity, pickup);
 
             if (entities[DroppedItems.MotionSlot] is not SyncedMotionEntity motion) return;
 

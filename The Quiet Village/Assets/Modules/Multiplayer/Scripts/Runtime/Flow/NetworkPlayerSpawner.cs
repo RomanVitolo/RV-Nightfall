@@ -94,6 +94,20 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
             if (!m_networkManager.ConnectedClients.TryGetValue(clientId, out var client)) return;
             if (client.PlayerObject != null) return;
 
+            // When the room is resuming a save, this client's world and belongings go first, and the spawn waits
+            // for them. Otherwise a player would appear in a level that still looks untouched, and be moved and
+            // handed their inventory a moment later.
+            var gate = SpawnGate.Active;
+            if (gate != null && gate.TryHold(clientId, () => Spawn(clientId))) return;
+
+            Spawn(clientId);
+        }
+
+        private void Spawn(ulong clientId)
+        {
+            if (!m_networkManager.ConnectedClients.TryGetValue(clientId, out var client) || client.PlayerObject != null)
+                return;
+
             // Spawned at the prefab's origin; the owner moves itself onto a spawn point on arrival
             // (HeroPlayerNetworkSetup), since only it runs the CharacterController that must be teleported.
             NetworkObject.InstantiateAndSpawn(m_playerPrefab, m_networkManager, clientId,

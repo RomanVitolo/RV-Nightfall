@@ -1,8 +1,11 @@
+using System.Collections;
 using Modules.Multiplayer.Bridge.World;
+using Newtonsoft.Json.Linq;
 using Modules.Multiplayer.Scripts.Runtime.Player;
 using Modules.Multiplayer.Scripts.Runtime.Sessions;
 using Unity.Cinemachine;
 using Unity.Collections;
+using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UHFPS.Runtime;
@@ -61,7 +64,12 @@ namespace Modules.Multiplayer.Bridge
             // The owner is inside this body; drawing it would fill the screen with its own chest.
             if (m_avatar != null) m_avatar.SetAvatarVisible(false);
 
-            MoveToSpawnPoint();
+            // What this player had when the game was saved, if the room is resuming one.
+            var world = FindAnyObjectByType<WorldSync>();
+            var savedPlayer = world != null ? world.TakeLocalPlayerSave() : null;
+
+            if (savedPlayer == null || !MoveToSavedPlace(savedPlayer)) MoveToSpawnPoint();
+
             BindPlayerCamera();
             BindScenePostProcessing();
             PublishDisplayName();
@@ -85,6 +93,44 @@ namespace Modules.Multiplayer.Bridge
             }
 
             presence.BindPlayer(gameObject);
+
+            // Their belongings, once the managers holding them have started: an inventory restored before then is
+            // overwritten by the items a new game begins with.
+            if (savedPlayer != null) StartCoroutine(RestoreSavedPlayer(savedPlayer));
+        }
+
+        /// <summary>Puts this player back where the save left them, instead of on a spawn point.</summary>
+        /// <returns><c>false</c> if the save has no place for them, e.g. they are new to it.</returns>
+        private bool MoveToSavedPlace(JToken savedPlayer)
+        {
+            if (!Saves.PlayerSaveState.TryGetTransform(savedPlayer, out var position, out _)) return false;
+
+            // As MoveToSpawnPoint does: the controller writes the transform back every Move().
+            var characterController = GetComponent<CharacterController>();
+            var wasEnabled = characterController != null && characterController.enabled;
+            if (wasEnabled) characterController.enabled = false;
+
+            transform.position = position;
+
+            if (wasEnabled) characterController.enabled = true;
+
+            var networkTransform = GetComponent<NetworkTransform>();
+            if (networkTransform != null && networkTransform.CanCommitToTransform)
+                networkTransform.Teleport(transform.position, transform.rotation, transform.localScale);
+
+            return true;
+        }
+
+        private IEnumerator RestoreSavedPlayer(JToken savedPlayer)
+        {
+            // End of frame: every Start has run by now, including the inventory's.
+            yield return null;
+
+            Saves.PlayerSaveState.Apply(gameObject, savedPlayer);
+
+            // The look direction is part of the save, and the presence manager owns it.
+            if (Saves.PlayerSaveState.TryGetTransform(savedPlayer, out var position, out var rotation))
+                LocalPlayerContext.Presence.SetPlayerTransform(position, rotation);
         }
 
         /// <summary>
@@ -350,6 +396,27 @@ namespace Modules.Multiplayer.Bridge
 
             if (actions != null && avatarAnimator != null)
                 gameObject.AddComponent<AvatarHeldItem>().Bind(actions, avatarAnimator, inventory);
+
+            ShowNameTag(avatarAnimator);
+        }
+
+        /// <summary>Hangs this player's name over their body for whoever is looking.</summary>
+        private void ShowNameTag(Animator avatarAnimator)
+        {
+            var health = GetComponent<PlayerHealthSync>();
+            if (health == null) return;
+
+            // The HUD's own font, so a name looks like the rest of the game rather than like default TMP.
+            var hudText = GetComponentInChildren<TMP_Text>(true);
+            var font = hudText != null ? hudText.font : TMP_Settings.defaultFontAsset;
+            if (font == null)
+            {
+                Debug.LogWarning($"{nameof(HeroPlayerNetworkSetup)}: no TextMeshPro font found, " +
+                                 "so player names will not be shown.", this);
+                return;
+            }
+
+            gameObject.AddComponent<AvatarNameTag>().Bind(this, health, avatarAnimator, font);
         }
 
         /// <summary>Silences the first-person arm, candle and item Animators on remote copies.</summary>

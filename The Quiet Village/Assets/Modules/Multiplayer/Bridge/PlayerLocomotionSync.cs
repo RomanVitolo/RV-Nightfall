@@ -70,6 +70,12 @@ namespace Modules.Multiplayer.Bridge
         private readonly NetworkVariable<float> m_lean =
             new(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+        // Crouching changes what the AI can see of a player, so the other clients have to know about it. Sent as
+        // the state rather than the pose: head bob rewrites the camera's position every frame, and replicating
+        // that would spend a stream of packets to say the same thing.
+        private readonly NetworkVariable<bool> m_crouching =
+            new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
         private static readonly int MoveXHash = Animator.StringToHash(MoveXParameter);
         private static readonly int MoveZHash = Animator.StringToHash(MoveZParameter);
         private static readonly int SpeedHash = Animator.StringToHash(SpeedParameter);
@@ -91,6 +97,43 @@ namespace Modules.Multiplayer.Bridge
 
         /// <summary>The camera holder, carrying this player's look on every client.</summary>
         public Transform LookTransform => m_lookTransform != null ? m_lookTransform : transform;
+
+        /// <summary>Replicated crouching state. Valid on every client.</summary>
+        public bool IsCrouching => m_crouching.Value;
+
+        public override void OnNetworkSpawn()
+        {
+            if (IsOwner) return;
+
+            // The pose this copy is already in when it arrives, then each change to it.
+            m_crouching.OnValueChanged += HandleCrouchingChanged;
+            ApplyPose(m_crouching.Value);
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            m_crouching.OnValueChanged -= HandleCrouchingChanged;
+        }
+
+        private void HandleCrouchingChanged(bool previous, bool current) => ApplyPose(current);
+
+        /// <summary>
+        /// Drops or raises this copy's head, the way UHFPS does for the player it belongs to.
+        /// </summary>
+        /// <remarks>
+        /// The camera holder is where the AI looks for a player's eyes, and it is what a spectator's camera
+        /// follows, so a crouching player whose copy stands would be seen over cover they are hiding behind.
+        /// The body itself keeps standing: the avatar's animation set has no crouch clips.
+        /// </remarks>
+        private void ApplyPose(bool crouching)
+        {
+            if (m_stateMachine == null || m_lookTransform == null) return;
+
+            var state = crouching ? m_stateMachine.CrouchingState : m_stateMachine.StandingState;
+            if (state == null) return;
+
+            m_lookTransform.localPosition = m_stateMachine.SetControllerState(state);
+        }
 
         private void Update()
         {
@@ -117,6 +160,9 @@ namespace Modules.Multiplayer.Bridge
             // The same read LeanMotion makes, so the remote body leans exactly when the owner's camera does.
             var lean = Quantize(Mathf.Clamp(InputManager.ReadInput<float>(Controls.LEAN), -1f, 1f));
             if (!Mathf.Approximately(lean, m_lean.Value)) m_lean.Value = lean;
+
+            var crouching = m_stateMachine.StateCrouched;
+            if (crouching != m_crouching.Value) m_crouching.Value = crouching;
         }
 
         private float LookYaw => m_lookTransform != null ? m_lookTransform.eulerAngles.y : transform.eulerAngles.y;

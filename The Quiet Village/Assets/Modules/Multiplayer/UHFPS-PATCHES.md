@@ -219,6 +219,12 @@ replicated state: server-authoritative health, and hiding/invisibility as each p
 Attack animations also play on clients, and their events reach the AI states there; `IAITarget.ApplyDamage`
 does nothing off the server, so only the host's attack lands.
 
+The AI still reads a player's eyes from their camera holder, which is why `PlayerLocomotionSync` replicates
+crouching: the holder's rotation travels on its own NetworkTransform, but its height does not, so a crouching
+player's copy would stand on the host and be seen over the cover they are hiding behind. Their body keeps
+standing — the avatar's animation set has no crouch clips — but their head, and what a zombie can see of it, is
+now in the right place.
+
 ## 7. One examiner per object (2 files, none new)
 
 | File | Change |
@@ -277,11 +283,15 @@ it follows the usual rule: the first taker gets it, and everyone else's copy is 
 
 ## Known gaps
 
-- **Save/load is untested and likely broken.** `SaveGameManager` now lives on the player prefab, so it
-  is instantiated once per player and disabled on all but the owner's copy. `Inventory` is
-  `ISaveableCustom` and moved too. It went onto the prefab only because it holds a reference to the
-  `SavingIcon` in the HUD — not because per-player saving is correct. Out of scope for this slice, and
-  the first thing to revisit if saving matters.
+- **Saving is the bridge's, not UHFPS's** (`Bridge/Saves/`, `WorldSync.Saves.cs`, no UHFPS changes).
+  UHFPS's own save path cannot work here: `SaveGameManager` moved onto the player prefab, and the world
+  saveables it saves are a list of scene objects paired to it in the editor, which a prefab cannot hold. So
+  the host saves the world keyed by World Sync ids instead, asks each client for its own player data, and
+  writes one file in UHFPS's folder format. Resuming is picked in the lobby; each client is sent the world
+  and its own belongings before its player spawns. Players are keyed by Unity account, so the same people get
+  their own things back and a newcomer starts empty-handed.
+  **Not saved:** NPCs, so zombies return to their posts alive when a save is resumed; and the pause menu's own
+  Save and Load, which are the host's button and the lobby respectively.
 - **World state is replicated, with limits.** Doors, pickups, dropped items, props, puzzles, switches, lights and NPCs sync
   (see above). Per-player triggers (cutscenes, dialogue, objectives, jumpscares) stay local by design. Events a
   saveable fires are not replayed on other clients; their effects arrive only through objects that replicate
