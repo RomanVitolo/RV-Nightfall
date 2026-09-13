@@ -5,7 +5,7 @@ using UHFPS.Input;
 using UHFPS.Tools;
 using TMPro;
 using ThunderWire.Attributes;
-using Modules.Multiplayer.Bridge;
+using QuietVillage.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {

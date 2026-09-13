@@ -6,7 +6,7 @@ using UHFPS.Input;
 using UHFPS.Tools;
 using UHFPS.Runtime.States;
 using static UHFPS.Runtime.States.HidingStateAsset;
-using Modules.Multiplayer.Bridge;
+using QuietVillage.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {

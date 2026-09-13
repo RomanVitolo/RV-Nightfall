@@ -1,7 +1,7 @@
 using UnityEngine;
 using UHFPS.Tools;
 using ThunderWire.Attributes;
-using Modules.Multiplayer.Bridge;
+using QuietVillage.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {

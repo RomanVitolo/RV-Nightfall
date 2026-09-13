@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Modules/Multiplayer/Scenes/LobbyScene.unity
+    path: Assets/QuietVillage/Scenes/LobbyScene.unity
     guid: 0273da6d128f2bf43961da0183453db4
   - enabled: 1
-    path: Assets/ThunderWire Studio/UHFPS/_Demo/Scenes/GameplayScene.unity
+    path: Assets/QuietVillage/Scenes/GameplayScene.unity
     guid: ccce3bb1d069b4948a32b2a90efff845
   - enabled: 1
-    path: Assets/Game/Levels/ForestVillage/ForestVillage.unity
+    path: Assets/QuietVillage/Scenes/ForestVillage.unity
     guid: fef9917d193db9e4f9b371b720c846df
   - enabled: 1
-    path: Assets/Game/Levels/CoastalTown/CoastalTown.unity
+    path: Assets/QuietVillage/Scenes/CoastalTown.unity
     guid: bfe8412ac9d7ad548b4f6b4434b90475
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: ae838b1c970aab641bb8e4643590df24, type: 2}

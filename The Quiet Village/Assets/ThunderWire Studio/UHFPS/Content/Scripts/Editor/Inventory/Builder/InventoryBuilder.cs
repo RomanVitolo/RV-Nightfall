@@ -157,11 +157,11 @@ namespace UHFPS.Editors
 
             // MULTIPLAYER PATCH: the player and its Inventory live on the prefab now, and
             // LocalPlayerContext is empty in edit mode, so resolve through the asset instead.
-            var playerRoot = Modules.Multiplayer.Bridge.EditorTools.PlayerAssetLookup.FindPlayerRoot();
+            var playerRoot = QuietVillage.Multiplayer.Bridge.EditorTools.PlayerAssetLookup.FindPlayerRoot();
             if (playerRoot != null)
                 playerItemsManager = playerRoot.GetComponentInChildren<PlayerItemsManager>(true);
 
-            var playerInventory = Modules.Multiplayer.Bridge.EditorTools.PlayerAssetLookup.FindInventory();
+            var playerInventory = QuietVillage.Multiplayer.Bridge.EditorTools.PlayerAssetLookup.FindInventory();
             if (playerInventory != null)
                 itemSlotSize = playerInventory.settings.cellSize;
         }

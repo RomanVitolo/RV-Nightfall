@@ -7,7 +7,7 @@ using UHFPS.Tools;
 using UHFPS.Scriptable;
 using Newtonsoft.Json.Linq;
 using static UHFPS.Scriptable.SurfaceDefinitionSet;
-using Modules.Multiplayer.Bridge;
+using QuietVillage.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {

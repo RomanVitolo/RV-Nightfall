@@ -1,0 +1,452 @@
+/* Shared by the lobby screen (LobbyScreen.uxml) and the in-game room panel (SessionOverlay.uxml). */
+
+/* ---- Lobby layout ------------------------------------------------------------------------------ */
+
+.mp-root {
+    flex-grow: 1;
+    padding: 48px 64px 32px 64px;
+    background-color: rgb(11, 12, 15);
+    color: rgb(220, 222, 226);
+    font-size: 18px;
+}
+
+.mp-header {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.mp-title {
+    font-size: 42px;
+    -unity-font-style: bold;
+    letter-spacing: 6px;
+    color: rgb(236, 236, 238);
+}
+
+.mp-subtitle {
+    font-size: 16px;
+    color: rgb(128, 133, 143);
+    letter-spacing: 2px;
+}
+
+.mp-card {
+    flex-grow: 1;
+    padding: 24px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(38, 41, 48);
+    background-color: rgb(20, 22, 27);
+}
+
+.mp-toolbar {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.mp-section-title {
+    font-size: 24px;
+    -unity-font-style: bold;
+}
+
+.mp-muted {
+    color: rgb(128, 133, 143);
+}
+
+.mp-spacer {
+    flex-grow: 1;
+}
+
+.mp-hidden {
+    display: none;
+}
+
+/* ---- Buttons and fields ------------------------------------------------------------------------ */
+
+.mp-button {
+    height: 40px;
+    margin: 0 0 0 8px;
+    padding: 0 20px;
+    border-width: 0;
+    border-radius: 6px;
+    background-color: rgb(40, 43, 50);
+    color: rgb(220, 222, 226);
+    font-size: 16px;
+}
+
+.mp-button:hover {
+    background-color: rgb(53, 57, 66);
+}
+
+.mp-button:disabled {
+    opacity: 0.4;
+}
+
+.mp-button--primary {
+    background-color: rgb(146, 36, 36);
+    color: rgb(255, 255, 255);
+}
+
+.mp-button--primary:hover {
+    background-color: rgb(178, 46, 46);
+}
+
+.mp-button--small {
+    height: 32px;
+    padding: 0 16px;
+    font-size: 15px;
+}
+
+.mp-field {
+    margin: 8px 0;
+}
+
+.mp-field .unity-base-field__label {
+    min-width: 170px;
+    color: rgb(170, 175, 185);
+}
+
+.mp-name-field {
+    width: 380px;
+}
+
+/* ---- Tables ------------------------------------------------------------------------------------ */
+
+.mp-table-header {
+    flex-direction: row;
+    padding: 8px 12px;
+    border-bottom-width: 1px;
+    border-color: rgb(38, 41, 48);
+    color: rgb(128, 133, 143);
+    font-size: 14px;
+}
+
+.mp-list {
+    flex-grow: 1;
+}
+
+.mp-row {
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    padding: 0 12px;
+    border-bottom-width: 1px;
+    border-color: rgb(30, 33, 39);
+}
+
+.mp-col-name {
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden;
+}
+
+.mp-col-players {
+    width: 110px;
+    -unity-text-align: middle-center;
+}
+
+.mp-col-status {
+    width: 140px;
+    -unity-text-align: middle-center;
+}
+
+.mp-col-action {
+    width: 130px;
+    align-items: flex-end;
+}
+
+.mp-empty {
+    padding: 48px;
+    -unity-text-align: middle-center;
+    color: rgb(128, 133, 143);
+}
+
+.mp-status--open {
+    color: rgb(118, 198, 138);
+}
+
+.mp-status--full {
+    color: rgb(220, 170, 90);
+}
+
+.mp-status--ingame {
+    color: rgb(204, 92, 92);
+}
+
+.mp-badge {
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background-color: rgb(40, 43, 50);
+    color: rgb(190, 192, 198);
+    font-size: 13px;
+}
+
+.mp-badge--host {
+    background-color: rgb(116, 86, 28);
+    color: rgb(255, 230, 170);
+}
+
+.mp-badge--you {
+    background-color: rgb(34, 68, 108);
+    color: rgb(190, 220, 255);
+}
+
+/* ---- Room view --------------------------------------------------------------------------------- */
+
+.mp-room-meta {
+    flex-direction: row;
+    align-items: center;
+    margin: 4px 0 20px 0;
+}
+
+.mp-room-level {
+    margin: 0 24px 0 8px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.mp-code {
+    margin-left: 8px;
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+    color: rgb(255, 255, 255);
+}
+
+.mp-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* ---- Messages, dialogs, busy ------------------------------------------------------------------- */
+
+.mp-error {
+    margin-top: 8px;
+    white-space: normal;
+    color: rgb(230, 112, 112);
+}
+
+.mp-status-bar {
+    min-height: 26px;
+    margin-top: 14px;
+}
+
+.mp-modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.72);
+}
+
+.mp-dialog {
+    width: 560px;
+    padding: 28px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(50, 54, 62);
+    background-color: rgb(20, 22, 27);
+}
+
+.mp-busy-label {
+    font-size: 22px;
+    color: rgb(255, 255, 255);
+}
+
+/* ---- Character screen -------------------------------------------------------------------------- */
+
+.mp-header-profile {
+    flex-direction: row;
+    align-items: center;
+}
+
+.mp-character-button {
+    min-width: 220px;
+}
+
+.mp-player-role {
+    margin-left: 12px;
+    color: rgb(128, 133, 143);
+    font-size: 15px;
+}
+
+.mp-character-screen {
+    width: 90%;
+    height: 86%;
+    max-width: 1600px;
+    padding: 28px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(50, 54, 62);
+    background-color: rgb(20, 22, 27);
+}
+
+.mp-character-body {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.mp-character-list {
+    width: 260px;
+    margin-right: 20px;
+}
+
+.mp-character-card {
+    height: auto;
+    margin: 0 0 8px 0;
+    padding: 12px 16px;
+    border-width: 1px;
+    border-radius: 6px;
+    border-color: rgb(38, 41, 48);
+    background-color: rgb(26, 28, 34);
+    -unity-text-align: middle-left;
+    align-items: flex-start;
+}
+
+.mp-character-card:hover {
+    background-color: rgb(36, 39, 46);
+}
+
+.mp-character-card--selected {
+    border-color: rgb(178, 46, 46);
+    background-color: rgb(44, 26, 28);
+}
+
+.mp-character-card-role {
+    font-size: 20px;
+    -unity-font-style: bold;
+    color: rgb(236, 236, 238);
+}
+
+.mp-character-preview {
+    flex-grow: 1;
+    border-radius: 6px;
+    background-color: rgb(14, 15, 19);
+    overflow: hidden;
+}
+
+.mp-character-preview-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.mp-character-preview-hint {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    -unity-text-align: middle-center;
+    font-size: 14px;
+}
+
+.mp-character-details {
+    width: 420px;
+    margin-left: 24px;
+}
+
+.mp-character-name .unity-base-field__label {
+    min-width: 80px;
+}
+
+.mp-character-role {
+    margin-top: 16px;
+    font-size: 34px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.mp-character-description {
+    margin-top: 10px;
+    white-space: normal;
+    color: rgb(200, 202, 208);
+}
+
+.mp-character-heading {
+    margin-top: 20px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: rgb(128, 133, 143);
+}
+
+.mp-character-line {
+    white-space: normal;
+    margin-bottom: 2px;
+}
+
+.mp-character-variants {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.mp-character-variant {
+    margin: 0 8px 8px 0;
+}
+
+.mp-character-variant--selected {
+    background-color: rgb(146, 36, 36);
+    color: rgb(255, 255, 255);
+}
+
+/* ---- In-game room panel ------------------------------------------------------------------------ */
+
+.mp-overlay-root {
+    flex-grow: 1;
+}
+
+.mp-overlay-hint {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: rgba(10, 10, 12, 0.6);
+    color: rgb(200, 202, 208);
+    font-size: 14px;
+}
+
+.mp-overlay-panel {
+    position: absolute;
+    top: 64px;
+    right: 24px;
+    width: 440px;
+    padding: 20px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: rgb(50, 54, 62);
+    background-color: rgba(18, 20, 24, 0.95);
+    color: rgb(220, 222, 226);
+    font-size: 17px;
+}
+
+.mp-player-row {
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 0;
+}
+
+/* The room ended without the player choosing it: said plainly, above everything else in the lobby. */
+.mp-notice {
+    flex-direction: row;
+    align-items: center;
+    border-left-width: 4px;
+    border-left-color: rgb(214, 106, 84);
+    background-color: rgba(214, 106, 84, 0.12);
+}
+
+.mp-notice-text {
+    color: rgb(240, 202, 194);
+    font-size: 15px;
+    white-space: normal;
+    flex-shrink: 1;
+}

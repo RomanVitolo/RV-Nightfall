@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19fef63f823197d42937b6cd7546153c, type: 3}
+  m_Name: CharacterCatalog
+  m_EditorClassIdentifier: QuietVillage.Multiplayer.Runtime::QuietVillage.Multiplayer.Characters.CharacterCatalog
+  m_bodyAnimator: {fileID: 9100000, guid: 5ea6bfe66d369014c90897a46164b986, type: 2}
+  m_characters:
+  - Id: builder
+    DisplayName: Sci-Fi Worker
+    Role: Builder
+    Description: Keeps the shelter standing. Every piece of scrap goes further in
+      a Builder's hands.
+    HumanoidAvatar: {fileID: 9000000, guid: 86eb1f60694d0724383c6c79e019d73b, type: 3}
+    BodyScale: 1
+    Variants:
+    - DisplayName: Standard
+      Prefab: {fileID: 8094326102054364015, guid: ccbd088c6736cd54eab6ae8e475cebc3, type: 3}
+    - DisplayName: Armoured
+      Prefab: {fileID: 5006548195107497151, guid: 7f0cad655b367b04c9392208d26b51bb, type: 3}
+    Perks:
+      BarricadeRepair: 1.5
+      Healing: 1
+      RunSpeed: 1
+      ExtraInventorySlots: 0
+    StartingItems:
+    - Title: Scrap
+      ItemGuid: 29901ad3ad2a4edf828062ef0684be91
+      Quantity: 2
+  - Id: medic
+    DisplayName: Field Medic
+    Role: Medic
+    Description: Patches the team up between nights. Medical supplies heal far more
+      when a Medic uses them.
+    HumanoidAvatar: {fileID: 9000000, guid: 1611e8e854f3486458d0bdb95b2bbb26, type: 3}
+    BodyScale: 1
+    Variants:
+    - DisplayName: Style 1
+      Prefab: {fileID: 6690401590486810092, guid: 3713a6f3d90137a47bab2d20197b5565, type: 3}
+    - DisplayName: Style 2
+      Prefab: {fileID: 4978307999956744205, guid: 025224d6832073f4183f4a6b2ab43794, type: 3}
+    - DisplayName: Style 3
+      Prefab: {fileID: 4050227907613175184, guid: d46fa2e8f1c32154bbcb4c9ee1bf169d, type: 3}
+    Perks:
+      BarricadeRepair: 1
+      Healing: 1.5
+      RunSpeed: 1
+      ExtraInventorySlots: 0
+    StartingItems:
+    - Title: First AID KIT
+      ItemGuid: 79d887af99bb41599d26603efb8d704f
+      Quantity: 1
+  - Id: scout
+    DisplayName: Head Hunter
+    Role: Scout
+    Description: First out and first back. Runs faster than anyone, and carries a
+      lockpick for what is locked.
+    HumanoidAvatar: {fileID: 9000000, guid: 84603b60deca2a046b657e498fbb655c, type: 3}
+    BodyScale: 1
+    Variants:
+    - DisplayName: Style 1
+      Prefab: {fileID: 4467510660939361324, guid: 9ea5a7d78f5d97948987ab872bf672c5, type: 3}
+    - DisplayName: Style 2
+      Prefab: {fileID: 1363529095786629966, guid: 4446ab1db5d0bb343b282c01432fa068, type: 3}
+    Perks:
+      BarricadeRepair: 1
+      Healing: 1
+      RunSpeed: 1.15
+      ExtraInventorySlots: 0
+    StartingItems:
+    - Title: Lockpick
+      ItemGuid: 9c45e9931ae9492dba1cf41854f95de0
+      Quantity: 1
+  - Id: scavenger
+    DisplayName: Seller
+    Role: Scavenger
+    Description: Brings back what the others leave behind. Starts with an extra row
+      of inventory space.
+    HumanoidAvatar: {fileID: 9000000, guid: 0279effe1f218d944bc06fcfd2721bb6, type: 3}
+    BodyScale: 1
+    Variants:
+    - DisplayName: Backpack
+      Prefab: {fileID: 4991622153715467940, guid: 22ee5f567719dba4ab2a967825808767, type: 3}
+    - DisplayName: Style 1
+      Prefab: {fileID: 8229476942116631522, guid: 7542941045363db4286d8784f0cdbcaa, type: 3}
+    - DisplayName: Style 2
+      Prefab: {fileID: 8716174595481093867, guid: b8f7727b02e0b8c4da58263d0740fe4f, type: 3}
+    - DisplayName: Style 3
+      Prefab: {fileID: 4129059552745083637, guid: ea981215b9c71194c8de20e39cf8dbd7, type: 3}
+    Perks:
+      BarricadeRepair: 1
+      Healing: 1
+      RunSpeed: 1
+      ExtraInventorySlots: 9
+    StartingItems: []

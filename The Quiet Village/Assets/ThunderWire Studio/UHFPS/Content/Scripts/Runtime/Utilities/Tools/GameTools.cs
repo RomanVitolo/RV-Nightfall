@@ -6,10 +6,12 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 using UHFPS.Runtime;
+// MULTIPLAYER PATCH: outside the editor block, since HandleDisposable uses LocalPlayerContext at runtime. Inside it,
+// player builds failed to compile.
+using QuietVillage.Multiplayer.Bridge;
 
 #if UNITY_EDITOR
 using UnityEditor;
-using Modules.Multiplayer.Bridge;
 #endif
 
 namespace UHFPS.Tools

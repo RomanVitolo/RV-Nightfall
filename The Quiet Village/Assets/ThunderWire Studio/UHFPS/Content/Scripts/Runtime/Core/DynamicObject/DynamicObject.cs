@@ -4,7 +4,7 @@ using UHFPS.Input;
 using UHFPS.Tools;
 using ThunderWire.Attributes;
 using Newtonsoft.Json.Linq;
-using Modules.Multiplayer.Bridge;
+using QuietVillage.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {

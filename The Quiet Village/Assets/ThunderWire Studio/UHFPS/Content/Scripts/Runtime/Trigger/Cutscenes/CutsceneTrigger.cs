@@ -4,7 +4,7 @@ using UnityEngine.Playables;
 using Unity.Cinemachine;
 using Newtonsoft.Json.Linq;
 using UHFPS.Tools;
-using Modules.Multiplayer.Bridge;
+using QuietVillage.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {
@@ -48,15 +48,12 @@ namespace UHFPS.Runtime
         public UnityEvent OnCutsceneStart;
         public UnityEvent OnCutsceneEnd;
 
-        private DialogueSystem dialogueSystem;
-        private CutsceneModule cutscene;
+        // MULTIPLAYER PATCH: both resolved on use instead of cached in Awake. The cutscene module and dialogue system live
+        // on the player prefab, so at level load the module lookup returned null for the whole session (no cutscene
+        // ever played) and DialogueSystem.Instance threw.
+        private DialogueSystem dialogueSystem => LocalPlayerContext.DialogueSystem;
+        private CutsceneModule cutscene => GameManager.Module<CutsceneModule>();
         private bool isPlayed;
-
-        private void Awake()
-        {
-            cutscene = GameManager.Module<CutsceneModule>();
-            dialogueSystem = DialogueSystem.Instance;
-        }
 
         private void Start()
         {
@@ -69,7 +66,8 @@ namespace UHFPS.Runtime
             if (TriggerType != TriggerTypeEnum.Trigger)
                 return;
 
-            if (other.CompareTag("Player"))
+            // MULTIPLAYER PATCH: cutscenes are per-player, so only this client's own body starts one here.
+            if (other.CompareTag("Player") && LocalPlayerContext.IsLocalPlayer(other))
                 TriggerCutscene();
         }
 
@@ -83,10 +81,14 @@ namespace UHFPS.Runtime
 
         public void TriggerCutscene()
         {
-            if (Cutscene == null || isPlayed || (WaitForDialogue && dialogueSystem.IsPlaying))
+            var module = cutscene;
+            var dialogue = dialogueSystem;
+
+            // MULTIPLAYER PATCH: nothing to play to before the player spawns; left unplayed so it can play later.
+            if (Cutscene == null || isPlayed || module == null || (WaitForDialogue && dialogue != null && dialogue.IsPlaying))
                 return;
 
-            cutscene.PlayCutscene(this);
+            module.PlayCutscene(this);
             OnCutsceneStart?.Invoke();
             isPlayed = true;
         }

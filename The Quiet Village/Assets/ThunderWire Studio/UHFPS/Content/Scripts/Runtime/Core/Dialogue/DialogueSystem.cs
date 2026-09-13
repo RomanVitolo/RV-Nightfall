@@ -265,9 +265,15 @@ namespace UHFPS.Runtime
                         binder.OnDialogueStart?.Invoke(currentAudio, dialogueBinderName);
                         break;
                     case DialogueBinderType.Subtitle:
-                        AudioClip subtitleClip = (AudioClip)parameters[0];
-                        string subtitleText = (string)parameters[1];
-                        binder.OnSubtitle?.Invoke(subtitleClip, subtitleText);
+                        // MULTIPLAYER PATCH: a subtitle event can arrive without parameters, and indexing them threw.
+                        // See Assets/QuietVillage/Docs/UHFPS-PATCHES.md.
+                        if (parameters != null)
+                        {
+                            AudioClip subtitleClip = (AudioClip)parameters[0];
+                            string subtitleText = (string)parameters[1];
+                            binder.OnSubtitle?.Invoke(subtitleClip, subtitleText);
+                        }
+
                         break;
                     case DialogueBinderType.Finish:
                         binder.OnSubtitleFinish?.Invoke();
@@ -304,25 +310,13 @@ namespace UHFPS.Runtime
 
             if (fadeDialoguePanel)
             {
-                if (!Mathf.Approximately(DialoguePanel.alpha, 1f))
-                {
-                    DialoguePanel.alpha = Mathf.MoveTowards(DialoguePanel.alpha, 1f, Time.deltaTime * FadeTime);
-                }
-                else
-                {
-                    DialoguePanel.alpha = 1f;
-                }
+                DialoguePanel.alpha = !Mathf.Approximately(DialoguePanel.alpha, 1f) 
+                    ? Mathf.MoveTowards(DialoguePanel.alpha, 1f, Time.deltaTime * FadeTime) : 1f;
             }
             else
             {
-                if (!Mathf.Approximately(DialoguePanel.alpha, 0f))
-                {
-                    DialoguePanel.alpha = Mathf.MoveTowards(DialoguePanel.alpha, 0f, Time.deltaTime * FadeTime);
-                }
-                else
-                {
-                    DialoguePanel.alpha = 0f;
-                }
+                DialoguePanel.alpha = !Mathf.Approximately(DialoguePanel.alpha, 0f) 
+                    ? Mathf.MoveTowards(DialoguePanel.alpha, 0f, Time.deltaTime * FadeTime) : 0f;
             }
         }
     }

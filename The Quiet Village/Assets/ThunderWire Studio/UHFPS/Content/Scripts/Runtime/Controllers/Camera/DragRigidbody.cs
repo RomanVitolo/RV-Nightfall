@@ -1,7 +1,7 @@
 using UnityEngine;
 using UHFPS.Input;
 using System;
-using Modules.Multiplayer.Bridge;
+using QuietVillage.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {

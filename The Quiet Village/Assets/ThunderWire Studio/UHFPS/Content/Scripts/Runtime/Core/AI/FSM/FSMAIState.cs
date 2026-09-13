@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UHFPS.Tools;
-using Modules.Multiplayer.Bridge;
+using QuietVillage.Multiplayer.Bridge;
 using static UnityEngine.Object;
 using static UHFPS.Runtime.NPCStateMachine;
 

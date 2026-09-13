@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using Newtonsoft.Json.Linq;
 using UHFPS.Tools;
 using ThunderWire.Attributes;
-using Modules.Multiplayer.Bridge;
+using QuietVillage.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {

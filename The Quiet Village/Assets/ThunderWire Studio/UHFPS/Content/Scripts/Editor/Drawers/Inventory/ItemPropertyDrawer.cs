@@ -24,7 +24,7 @@ namespace UHFPS.Editors
         {
             // MULTIPLAYER PATCH: Inventory lives on the player prefab now; LocalPlayerContext is empty
             // in edit mode, so resolve through the asset instead.
-            var playerInventory = Modules.Multiplayer.Bridge.EditorTools.PlayerAssetLookup.FindInventory();
+            var playerInventory = QuietVillage.Multiplayer.Bridge.EditorTools.PlayerAssetLookup.FindInventory();
             if (playerInventory != null)
             {
                 inventoryDatabase = playerInventory.inventoryDatabase;

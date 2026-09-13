@@ -1,5 +1,6 @@
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using QuietVillage.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {
@@ -16,17 +17,9 @@ namespace UHFPS.Runtime
 
         private bool isTriggered;
 
-        private ObjectiveManager objectiveManager;
-        private ObjectiveManager ObjectiveManager
-        {
-            get
-            {
-                if(objectiveManager == null)
-                    objectiveManager = ObjectiveManager.Instance;
-
-                return objectiveManager;
-            }
-        }
+        // MULTIPLAYER PATCH: this client's objectives, not ObjectiveManager.Instance. That lookup takes the first manager
+        // in the scene, which can be a teammate's switched-off copy, so an objective could go to nobody.
+        private ObjectiveManager ObjectiveManager => LocalPlayerContext.ObjectiveManager;
 
         public void InteractStart()
         {
@@ -42,7 +35,8 @@ namespace UHFPS.Runtime
             if (triggerType != TriggerType.Trigger || triggerType == TriggerType.Event || isTriggered)
                 return;
 
-            if (other.CompareTag("Player"))
+            // MULTIPLAYER PATCH: objectives are per-player, so only this client's own body triggers one.
+            if (other.CompareTag("Player") && LocalPlayerContext.IsLocalPlayer(other) && ObjectiveManager != null)
             {
                 TriggerObjective();
                 isTriggered = true;
@@ -51,6 +45,8 @@ namespace UHFPS.Runtime
 
         public void TriggerObjective()
         {
+            if (ObjectiveManager == null) return;
+
             if (objectiveType == ObjectiveType.New)
             {
                 ObjectiveManager.AddObjective(objectiveToAdd.ObjectiveKey, objectiveToAdd.SubObjectives);

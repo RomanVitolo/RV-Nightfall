@@ -67,7 +67,12 @@ namespace UHFPS.Runtime
 
         private void OnEnable()
         {
-            SaveGameManager.Instance.OnGameLoaded += () =>
+            // MULTIPLAYER PATCH: this player's own SaveGameManager, which moved onto the prefab beside this component.
+            // SaveGameManager.Instance took the first in the scene, so every copy subscribed to one player's manager.
+            var saveGameManager = GetComponent<SaveGameManager>();
+            if (saveGameManager == null) saveGameManager = SaveGameManager.Instance;
+
+            saveGameManager.OnGameLoaded += () =>
             {
                 // Executed only when loading game state
                 UnlockPlayer();
@@ -86,7 +91,7 @@ namespace UHFPS.Runtime
             // Freezing and cursor handling deliberately do NOT happen here. Awake runs on every
             // spawned copy of every player, and a remote copy of somebody else's player must not
             // seize this client's cursor. BindPlayer does that work, and only the owner calls it.
-            // See Assets/Modules/Multiplayer/UHFPS-PATCHES.md.
+            // See Assets/QuietVillage/Docs/UHFPS-PATCHES.md.
         }
 
         /// <summary>

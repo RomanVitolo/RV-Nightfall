@@ -11,7 +11,399 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3ff04d06-34b8-4941-91d0-80a1ed079c99" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../MULTIPLAYER-HANDOFF.md" beforeDir="false" afterPath="$PROJECT_DIR$/../MULTIPLAYER-HANDOFF.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.The Quiet Village/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.The Quiet Village/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Boundary.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Boundary.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Creature.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Creature.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_CreatureEyes.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_CreatureEyes.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Ground.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Ground.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_House.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_House.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Leaves.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Leaves.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Roof.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Roof.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Sea.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Sea.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Shelter.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Shelter.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Trunk.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Trunk.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Wood.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Art/Greybox/Greybox_Wood.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/CoastalTown.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/CoastalTown/CoastalTown.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/CoastalTown/CoastalTown.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/CoastalTown/NavMesh-CoastalTown.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/CoastalTown/NavMesh-CoastalTown.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/ForestVillage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/ForestVillage/ForestVillage.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/ForestVillage/ForestVillage.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/ForestVillage/NavMesh-ForestVillage.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/ForestVillage/NavMesh-ForestVillage.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/LevelCatalog.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Levels/LevelCatalog.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Health_FirstAidKit.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Health_FirstAidKit.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Health_HealingPotion.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Health_HealingPotion.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Health_MedicalHerb.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Health_MedicalHerb.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Health_MedicalOil.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Health_MedicalOil.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Key_01.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Key_01.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Key_02.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Key_02.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Key_03.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Key_03.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Key_04.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Key_04.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Misc_Gunpowder.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Misc_Gunpowder.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Misc_Lockpick.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Misc_Lockpick.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Misc_PistolFlashlight.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Misc_PistolFlashlight.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Misc_Scrap.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Misc_Scrap.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_PuzzleItem_Fuse.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_PuzzleItem_Fuse.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_PuzzleItem_KeycardGreen.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_PuzzleItem_KeycardGreen.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_PuzzleItem_KeycardRed.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_PuzzleItem_KeycardRed.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_PuzzleItem_MarbleBall.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_PuzzleItem_MarbleBall.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Reload_CamBattery.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Reload_CamBattery.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Reload_FlashBattery.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Reload_FlashBattery.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Reload_PistolAmmo.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_Reload_PistolAmmo.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_VHSTape.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/Drops/Drop_VHSTape.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/NightCreature.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Prefabs/NightCreature.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Editor/SettlementGreyboxBuilder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Editor/SettlementGreyboxBuilder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival/Barricade.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival/Barricade.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival/DayNightLighting.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival/DayNightLighting.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival/NightCreature.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival/NightCreature.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival/SurvivalDirector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival/SurvivalDirector.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival/SurvivalHud.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Survival/SurvivalHud.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Attack_01.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Attack_01.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Attack_02.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Attack_02.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Attack_03.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Attack_03.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Dead_01.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Dead_01.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Dead_02.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Dead_02.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Get_Hit.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Get_Hit.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Get_Hit_02.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Get_Hit_02.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Idle_01.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Idle_01.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Idle_02.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Idle_02.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Idle_03.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Idle_03.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Jump.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Jump.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Reload.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Reload.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Run.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Run.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Run_Back.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Run_Back.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Run_Fast.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Run_Fast.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Run_Left.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Run_Left.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Run_Right.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Run_Right.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Shot_01.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Shot_01.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Walk.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Walk.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Walk_Back.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Walk_Back.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Walk_Left.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Walk_Left.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Walk_Right.FBX" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/Defender@Walk_Right.FBX.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/WorkerAnimator.controller" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/WorkerAnimator.controller.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/WorkerUpperBody.mask" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Art/Animations/Worker/WorkerUpperBody.mask.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AI/IAITarget.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AI/IAITarget.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AI/NetworkedNpc.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AI/NetworkedNpc.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AI/PlayerAiTarget.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AI/PlayerAiTarget.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarAim.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarAim.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarHeldItem.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarHeldItem.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarHeldItemModels.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarHeldItemModels.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarHeldLight.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarHeldLight.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarNameTag.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarNameTag.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarSounds.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/AvatarSounds.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/AvatarAnimatorAssets.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/AvatarAnimatorAssets.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/DroppableItemsSetup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/DroppableItemsSetup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/HeldItemModelsSetup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/HeldItemModelsSetup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/HeroPlayerSetup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/HeroPlayerSetup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/LevelSetup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/LevelSetup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/LobbySetup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/LobbySetup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/PlayerAssetLookup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/PlayerAssetLookup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/WorldSyncSetup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Editor/WorldSyncSetup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/HeroPlayerNetworkSetup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/HeroPlayerNetworkSetup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/IItemDropSync.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/IItemDropSync.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/IPlayerHealthAuthority.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/IPlayerHealthAuthority.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/ISessionExit.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/ISessionExit.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/LocalPlayerContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/LocalPlayerContext.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/PlayerActionSync.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/PlayerActionSync.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/PlayerHealthSync.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/PlayerHealthSync.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/PlayerLocomotionSync.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/PlayerLocomotionSync.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/RemoteAvatarBinder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/RemoteAvatarBinder.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Saves.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Saves/MultiplayerSave.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Saves/MultiplayerSave.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Saves/MultiplayerSaveCatalog.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Saves/MultiplayerSaveCatalog.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Saves/MultiplayerSaveFile.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Saves/MultiplayerSaveFile.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Saves/PlayerSaveState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/Saves/PlayerSaveState.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/SceneGameReferences.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/SceneGameReferences.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/SessionDeathScreen.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/SessionDeathScreen.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/SessionMenus.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/SessionMenus.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/SpectatorCamera.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/SpectatorCamera.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/CarriedItems.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/CarriedItems.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/DroppedItems.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/DroppedItems.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/IExamineGate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/IExamineGate.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/IWorldSaveParticipant.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/IWorldSaveParticipant.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedDynamicObject.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedDynamicObject.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedExamineLock.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedExamineLock.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedHidingPlace.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedHidingPlace.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedMotionEntity.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedMotionEntity.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedPickup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedPickup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedRigidbody.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedRigidbody.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedSaveable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedSaveable.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedTransform.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/SyncedTransform.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/WorldSync.Saves.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/WorldSync.Saves.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/WorldSync.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/WorldSync.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/WorldSyncEntity.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Bridge/World/WorldSyncEntity.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Prefabs/LobbyUI.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Prefabs/LobbyUI.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Prefabs/MultiplayerRoot.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Prefabs/MultiplayerRoot.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Prefabs/NetworkedWorkerPlayer.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Prefabs/NetworkedWorkerPlayer.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Resources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Resources/AvatarHeldItemModels.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Resources/AvatarHeldItemModels.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scenes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scenes/LobbyScene.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scenes/LobbyScene.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow/ISpawnGate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow/ISpawnGate.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow/MultiplayerBootstrap.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow/MultiplayerBootstrap.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow/NetworkPlayerSpawner.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow/NetworkPlayerSpawner.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow/SessionFlow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow/SessionFlow.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow/SessionSceneGuard.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Flow/SessionSceneGuard.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Levels.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Levels/LevelCatalog.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Levels/LevelCatalog.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Modules.Multiplayer.Runtime.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Modules.Multiplayer.Runtime.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Player.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Player/PlayerSpawnPoints.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Player/PlayerSpawnPoints.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Saves.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Saves/ISaveCatalog.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Saves/ISaveCatalog.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Sessions.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Sessions/RoomTypes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Sessions/RoomTypes.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Sessions/SessionConnectionState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Sessions/SessionConnectionState.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Sessions/SessionService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/Sessions/SessionService.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/UI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/UI/LobbyScreen.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/UI/LobbyScreen.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/UI/SessionOverlay.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/Scripts/Runtime/UI/SessionOverlay.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UHFPS-PATCHES.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UHFPS-PATCHES.md.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/LobbyPanelSettings.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/LobbyPanelSettings.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/LobbyScreen.uxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/LobbyScreen.uxml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/Multiplayer.uss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/Multiplayer.uss.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/MultiplayerRuntimeTheme.tss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/MultiplayerRuntimeTheme.tss.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/OverlayPanelSettings.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/OverlayPanelSettings.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/SessionOverlay.uxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Modules/Multiplayer/UI/SessionOverlay.uxml.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Skybox Gradient (3).shader" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Skybox Gradient (3).shader.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Skybox Gradient.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Skybox Gradient.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/TMP/Normal/Normal/NotoSerif-Thin SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/TMP/Normal/Normal/NotoSerif-Thin SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Editor/Drawers/Inventory/ItemGuidDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Editor/Drawers/Inventory/ItemGuidDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Editor/Drawers/Inventory/ItemPropertyDrawer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Editor/Drawers/Inventory/ItemPropertyDrawer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Editor/Inventory/Builder/InventoryBuilder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Editor/Inventory/Builder/InventoryBuilder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Camera/DragRigidbody.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Camera/DragRigidbody.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Camera/ExamineController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Camera/ExamineController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Camera/InteractController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Camera/InteractController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Camera/ReticleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Camera/ReticleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Items/CameraItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Items/CameraItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Items/FlashlightItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Items/FlashlightItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Items/GunItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Items/GunItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Items/LanternItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Items/LanternItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Items/PlayerItemBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Items/PlayerItemBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Player/FSM/FSMPlayerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Player/FSM/FSMPlayerState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Player/PlayerHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Controllers/Player/PlayerHealth.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/AI/FSM/FSMAIState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/AI/FSM/FSMAIState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/AI/NPCHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/AI/NPCHealth.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/AI/NPCStateMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/AI/NPCStateMachine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Dialogue/DialogueBinder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Dialogue/DialogueBinder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Dialogue/DialogueEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Dialogue/DialogueEvents.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Dialogue/DialogueSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Dialogue/DialogueSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Dialogue/DialogueTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Dialogue/DialogueTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/DynamicObject/DynamicObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/DynamicObject/DynamicObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/DynamicObject/DynamicUnlock/Barricade/BarricadeObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/DynamicObject/DynamicUnlock/Barricade/BarricadeObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/DynamicObject/DynamicUnlock/DynamicBrokenFix.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/DynamicObject/DynamicUnlock/DynamicBrokenFix.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Game/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Game/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Game/PlayerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Game/PlayerManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Game/PlayerPresenceManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Game/PlayerPresenceManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Inventory/Behaviour/Inventory.ContextHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Inventory/Behaviour/Inventory.ContextHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Inventory/Behaviour/InventoryContainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Inventory/Behaviour/InventoryContainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Inventory/Event/InventoryUseEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Inventory/Event/InventoryUseEvents.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Inventory/Properties/ItemField.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Inventory/Properties/ItemField.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Objectives/ObjectiveTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Objectives/ObjectiveTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Options/OptionsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Options/OptionsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/PuzzleBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/PuzzleBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/PuzzleBaseBlend.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/PuzzleBaseBlend.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Fusebox/FuseboxPuzzle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Fusebox/FuseboxPuzzle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Keycard/KeycardPuzzle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Keycard/KeycardPuzzle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Lockpick/LockpickComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Lockpick/LockpickComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Lockpick/LockpickInteract.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Lockpick/LockpickInteract.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Maze/MazePuzzle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Maze/MazePuzzle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Padlock/PadlockPuzzle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Padlock/PadlockPuzzle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Safe/SafeBig/SafePuzzle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Core/Puzzle/Puzzles/Safe/SafeBig/SafePuzzle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/CCTV/CCTV_CameraSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/CCTV/CCTV_CameraSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Elevator/ElevatorEnterTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Elevator/ElevatorEnterTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Hiding/HideInteract.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Hiding/HideInteract.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Items/InteractableItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Items/InteractableItem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Other/CustomInteractEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Other/CustomInteractEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Other/LevelInteract.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Other/LevelInteract.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Other/TimedInteractEvent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/Other/TimedInteractEvent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/PowerGenerator/GeneratorFuelTank.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/PowerGenerator/GeneratorFuelTank.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/VHS/VCRPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Interact/VHS/VCRPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Misc/FlameFlicker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Misc/FlameFlicker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Misc/GlareEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Misc/GlareEffect.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/AutoPlayerParent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/AutoPlayerParent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/Cutscenes/CutscenePlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/Cutscenes/CutscenePlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/Cutscenes/CutsceneTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/Cutscenes/CutsceneTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/DynamicHeightTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/DynamicHeightTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/FeatureDisableTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/FeatureDisableTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/GhostHunting/ThermometerTemp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/GhostHunting/ThermometerTemp.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/HintTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/HintTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/JumpscareTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/JumpscareTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/LookAtTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Trigger/LookAtTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/UI/Options/OptionsEscapeEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/UI/Options/OptionsEscapeEvents.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Utilities/Tools/CanvasLootAtCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Utilities/Tools/CanvasLootAtCamera.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Utilities/Tools/GameTools.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/Content/Scripts/Runtime/Utilities/Tools/GameTools.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/_Demo/Scenes/GameplayScene.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ThunderWire Studio/UHFPS/_Demo/Scenes/GameplayScene.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-6000.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -178,6 +570,7 @@
       <workItem from="1788709014958" duration="193000" />
       <workItem from="1788990400359" duration="668000" />
       <workItem from="1789056019935" duration="597000" />
+      <workItem from="1789321625153" duration="3812000" />
     </task>
     <servers />
   </component>

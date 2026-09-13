@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UHFPS.Tools;
 using static UHFPS.Scriptable.InventoryDatabase;
-using Modules.Multiplayer.Bridge;
+using QuietVillage.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {

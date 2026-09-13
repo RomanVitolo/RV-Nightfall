@@ -2,10 +2,11 @@ using UnityEngine;
 using UHFPS.Scriptable;
 using Newtonsoft.Json.Linq;
 using static UHFPS.Scriptable.DialogueAsset;
+// MULTIPLAYER PATCH: outside the editor block; Update uses LocalPlayerContext at runtime, so player builds failed to compile.
+using QuietVillage.Multiplayer.Bridge;
 
 #if UNITY_EDITOR
 using UnityEditor;
-using Modules.Multiplayer.Bridge;
 #endif
 
 namespace UHFPS.Runtime
@@ -31,14 +32,11 @@ namespace UHFPS.Runtime
         public bool ResetDialogueWhenOut;
         public float LocalDialogueRange;
 
-        private DialogueSystem dialogueSystem;
+        // MULTIPLAYER PATCH: resolved on use instead of DialogueSystem.Instance in Awake. The dialogue system lives on the
+        // player prefab; at level load the singleton lookup threw, and later it could return a teammate's disabled copy.
+        private DialogueSystem dialogueSystem => LocalPlayerContext.DialogueSystem;
         private Transform playerTransform;
         private bool isTriggered;
-
-        private void Awake()
-        {
-            dialogueSystem = DialogueSystem.Instance;
-        }
 
         private void Start()
         {
@@ -85,7 +83,7 @@ namespace UHFPS.Runtime
 
             if(distance > LocalDialogueRange)
             {
-                dialogueSystem.StopDialogue();
+                dialogueSystem?.StopDialogue();
                 isTriggered = !ResetDialogueWhenOut;
             }
         }
@@ -95,7 +93,8 @@ namespace UHFPS.Runtime
             if (TriggerType != TriggerTypeEnum.Trigger)
                 return;
 
-            if (other.CompareTag("Player"))
+            // MULTIPLAYER PATCH: dialogue is per-player, so only this client's own body starts it here.
+            if (other.CompareTag("Player") && LocalPlayerContext.IsLocalPlayer(other))
                 TriggerDialogue();
         }
 
@@ -109,7 +108,8 @@ namespace UHFPS.Runtime
 
         public void TriggerDialogue()
         {
-            if (Dialogue == null || isTriggered || IsCompleted)
+            // MULTIPLAYER PATCH: no player yet means nothing to play it to; left untriggered so it can play later.
+            if (Dialogue == null || isTriggered || IsCompleted || dialogueSystem == null)
                 return;
 
             isTriggered = dialogueSystem.PlayDialogue(this);
