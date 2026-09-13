@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 345c0c985cd6a374085aa2a0d5149a9f
+timeCreated: 1581267122
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302151
+  packageName: 66 Creatures Super Mega (Pack)
+  packageVersion: 1.0
+  assetPath: Assets/Super_Mega_Creatures_Pack/Humanoid_Creatures_Pack/Materials/Creature_04.mat
+  uploadId: 707451

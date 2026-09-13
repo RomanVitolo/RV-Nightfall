@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3192df473a58ad14e9c338034a4c00e3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_StaggerBack01.controller
+  uploadId: 858968

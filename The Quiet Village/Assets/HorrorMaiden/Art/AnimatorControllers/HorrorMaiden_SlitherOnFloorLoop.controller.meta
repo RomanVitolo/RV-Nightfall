@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1c279627a4dedb844a416a60ab3d06b5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_SlitherOnFloorLoop.controller
+  uploadId: 858968

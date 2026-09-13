@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 04d8c518b4d7d864fbba62543562a959
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/Animations/FaceAnimations/FaceMaiden_Attack01.anim
+  uploadId: 858968

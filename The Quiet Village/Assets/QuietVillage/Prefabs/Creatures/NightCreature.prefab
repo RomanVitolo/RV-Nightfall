@@ -237,6 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::QuietVillage.Survival.NightCreature
   ShowTopMostFoldoutHeaderGroup: 1
   m_agent: {fileID: 7448474505310601859}
+  m_catalog: {fileID: 11400000, guid: 7d7d3d6b74670694fba2796859577170, type: 2}
   m_thinkInterval: 0.25
   m_playerReach: 1.7
   m_playerDamage: 25

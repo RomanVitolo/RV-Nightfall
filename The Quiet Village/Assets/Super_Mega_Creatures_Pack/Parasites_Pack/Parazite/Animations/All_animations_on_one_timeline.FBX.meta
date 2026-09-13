@@ -1,0 +1,204 @@
+fileFormatVersion: 2
+guid: 5ae8be3fd7a45624f84efd960d4670c1
+timeCreated: 1499246751
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Body_Mesh
+    100004: CATRigHub001
+    100006: CATRigHub002
+    100008: CATRigHub002Bone001
+    100010: CATRigHub002Bone001Bone001
+    100012: CATRigHub002Bone001Bone001Bone001
+    100014: CATRigHub002Bone002
+    100016: CATRigHub002Bone002Bone001
+    100018: CATRigHub002Bone002Bone001Bone001
+    100020: CATRigHub002Bone003
+    100022: CATRigHub002Bone003Bone001
+    100024: CATRigHub002Bone003Bone002
+    100026: CATRigHub002Bone003Bone003
+    100028: CATRigHub002Bone004
+    100030: CATRigHub002Bone004Bone001
+    100032: CATRigHub002Bone004Bone002
+    100034: CATRigHub002Bone004Bone003
+    100036: CATRigHub002Bone004Bone004
+    100038: CATRigHub002Bone004Bone005
+    100040: CATRigLArm1
+    100042: CATRigLArm2
+    100044: CATRigLArmCollarbone
+    100046: CATRigLArmDigit11
+    100048: CATRigLArmDigit12
+    100050: CATRigLArmDigit13
+    100052: CATRigLArmDigit21
+    100054: CATRigLArmDigit22
+    100056: CATRigLArmDigit23
+    100058: CATRigLArmDigit31
+    100060: CATRigLArmDigit32
+    100062: CATRigLArmDigit33
+    100064: CATRigLArmDigit41
+    100066: CATRigLArmDigit42
+    100068: CATRigLArmDigit43
+    100070: CATRigLArmDigit51
+    100072: CATRigLArmDigit52
+    100074: CATRigLArmDigit53
+    100076: CATRigLArmPalm
+    100078: CATRigLLeg1
+    100080: CATRigLLeg2
+    100082: CATRigLLegAnkle
+    100084: CATRigLLegDigit11
+    100086: CATRigLLegPlatform
+    100088: CATRigRArm1
+    100090: CATRigRArm2
+    100092: CATRigRArmCollarbone
+    100094: CATRigRArmPalm
+    100096: CATRigRLeg1
+    100098: CATRigRLeg2
+    100100: CATRigRLegAnkle
+    100102: CATRigRLegDigit11
+    100104: CATRigRLegPlatform
+    100106: CATRigSpine1
+    100108: CATRigSpine2
+    100110: Character001
+    100112: Character_group
+    100114: Eyes_mesh
+    100116: Jaw_mesh
+    400000: //RootNode
+    400002: Body_Mesh
+    400004: CATRigHub001
+    400006: CATRigHub002
+    400008: CATRigHub002Bone001
+    400010: CATRigHub002Bone001Bone001
+    400012: CATRigHub002Bone001Bone001Bone001
+    400014: CATRigHub002Bone002
+    400016: CATRigHub002Bone002Bone001
+    400018: CATRigHub002Bone002Bone001Bone001
+    400020: CATRigHub002Bone003
+    400022: CATRigHub002Bone003Bone001
+    400024: CATRigHub002Bone003Bone002
+    400026: CATRigHub002Bone003Bone003
+    400028: CATRigHub002Bone004
+    400030: CATRigHub002Bone004Bone001
+    400032: CATRigHub002Bone004Bone002
+    400034: CATRigHub002Bone004Bone003
+    400036: CATRigHub002Bone004Bone004
+    400038: CATRigHub002Bone004Bone005
+    400040: CATRigLArm1
+    400042: CATRigLArm2
+    400044: CATRigLArmCollarbone
+    400046: CATRigLArmDigit11
+    400048: CATRigLArmDigit12
+    400050: CATRigLArmDigit13
+    400052: CATRigLArmDigit21
+    400054: CATRigLArmDigit22
+    400056: CATRigLArmDigit23
+    400058: CATRigLArmDigit31
+    400060: CATRigLArmDigit32
+    400062: CATRigLArmDigit33
+    400064: CATRigLArmDigit41
+    400066: CATRigLArmDigit42
+    400068: CATRigLArmDigit43
+    400070: CATRigLArmDigit51
+    400072: CATRigLArmDigit52
+    400074: CATRigLArmDigit53
+    400076: CATRigLArmPalm
+    400078: CATRigLLeg1
+    400080: CATRigLLeg2
+    400082: CATRigLLegAnkle
+    400084: CATRigLLegDigit11
+    400086: CATRigLLegPlatform
+    400088: CATRigRArm1
+    400090: CATRigRArm2
+    400092: CATRigRArmCollarbone
+    400094: CATRigRArmPalm
+    400096: CATRigRLeg1
+    400098: CATRigRLeg2
+    400100: CATRigRLegAnkle
+    400102: CATRigRLegDigit11
+    400104: CATRigRLegPlatform
+    400106: CATRigSpine1
+    400108: CATRigSpine2
+    400110: Character001
+    400112: Character_group
+    400114: Eyes_mesh
+    400116: Jaw_mesh
+    4300000: Eyes_mesh
+    4300002: Jaw_mesh
+    4300004: Body_Mesh
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Body_Mesh
+    13700002: Eyes_mesh
+    13700004: Jaw_mesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302151
+  packageName: 66 Creatures Super Mega (Pack)
+  packageVersion: 1.0
+  assetPath: Assets/Super_Mega_Creatures_Pack/Parasites_Pack/Parazite/Animations/All_animations_on_one_timeline.FBX
+  uploadId: 707451

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f10b71a52710a9e4eaa7db3be341e19f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_MoveBrokenNeck01TurnLeft180.controller
+  uploadId: 858968

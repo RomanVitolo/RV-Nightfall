@@ -1,0 +1,176 @@
+fileFormatVersion: 2
+guid: 8a0299849f1c1f447a533b234f1e7720
+timeCreated: 1482737252
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Antenna1_L
+    100002: Antenna1_R
+    100004: Antenna2_L
+    100006: Antenna2_R
+    100008: Antenna3_L
+    100010: Antenna3_R
+    100012: BackLeg1_L
+    100014: BackLeg1_R
+    100016: BackLeg2_L
+    100018: BackLeg2_R
+    100020: BackLeg3_L
+    100022: BackLeg3_R
+    100024: BackLeg4_L
+    100026: BackLeg4_R
+    100028: Body
+    100030: Chest_M
+    100032: FrontLeg1_L
+    100034: FrontLeg1_R
+    100036: FrontLeg2_L
+    100038: FrontLeg2_R
+    100040: FrontLeg3_L
+    100042: FrontLeg3_R
+    100044: FrontLeg4_L
+    100046: FrontLeg4_R
+    100048: Hand1_L
+    100050: Hand1_R
+    100052: Hand2_L
+    100054: Hand2_R
+    100056: Hand3_L
+    100058: Hand3_R
+    100060: Hand4_L
+    100062: Hand4_R
+    100064: Hand5_L
+    100066: Hand5_R
+    100068: Head_M
+    100070: HeadEnd_M
+    100072: Jaw
+    100074: //RootNode
+    100076: Root_M
+    100078: Spine1_M
+    100080: Tail1_M
+    100082: Tail2_M
+    100084: Tail3_M
+    100086: Tail4_M
+    100088: Tail5_M
+    100090: Tail6_M
+    100092: Tail7_M
+    400000: Antenna1_L
+    400002: Antenna1_R
+    400004: Antenna2_L
+    400006: Antenna2_R
+    400008: Antenna3_L
+    400010: Antenna3_R
+    400012: BackLeg1_L
+    400014: BackLeg1_R
+    400016: BackLeg2_L
+    400018: BackLeg2_R
+    400020: BackLeg3_L
+    400022: BackLeg3_R
+    400024: BackLeg4_L
+    400026: BackLeg4_R
+    400028: Body
+    400030: Chest_M
+    400032: FrontLeg1_L
+    400034: FrontLeg1_R
+    400036: FrontLeg2_L
+    400038: FrontLeg2_R
+    400040: FrontLeg3_L
+    400042: FrontLeg3_R
+    400044: FrontLeg4_L
+    400046: FrontLeg4_R
+    400048: Hand1_L
+    400050: Hand1_R
+    400052: Hand2_L
+    400054: Hand2_R
+    400056: Hand3_L
+    400058: Hand3_R
+    400060: Hand4_L
+    400062: Hand4_R
+    400064: Hand5_L
+    400066: Hand5_R
+    400068: Head_M
+    400070: HeadEnd_M
+    400072: Jaw
+    400074: //RootNode
+    400076: Root_M
+    400078: Spine1_M
+    400080: Tail1_M
+    400082: Tail2_M
+    400084: Tail3_M
+    400086: Tail4_M
+    400088: Tail5_M
+    400090: Tail6_M
+    400092: Tail7_M
+    4300000: Body
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Body
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302151
+  packageName: 66 Creatures Super Mega (Pack)
+  packageVersion: 1.0
+  assetPath: Assets/Super_Mega_Creatures_Pack/Cretures_MegaPack/Creature_Nasty/Animation/Nasty@GetHit.fbx
+  uploadId: 707451

@@ -201,7 +201,7 @@ namespace QuietVillage.Gameplay.Survival
             m_phase.Value = phase;
 
             if (phase == SurvivalPhase.Night) SpawnCreatures();
-            else DespawnCreatures();
+            else DespawnCreatures(dieAtDawn: phase == SurvivalPhase.Dawn);
         }
 
         /// <summary>Host only: ends the current phase now. For testing a night without waiting out the day.</summary>
@@ -274,27 +274,68 @@ namespace QuietVillage.Gameplay.Survival
                 if (player != null && !player.IsDead) living++;
             }
 
+            var catalog = CreatureCatalogOf(m_creaturePrefab);
             var count = Mathf.Max(0, m_creaturesBase + m_creaturesPerPlayer * living);
             for (var i = 0; i < count; i++)
             {
                 var spawn = m_creatureSpawns[i % m_creatureSpawns.Length];
                 if (spawn == null) continue;
 
-                var creature = NetworkObject.InstantiateAndSpawn(m_creaturePrefab, NetworkManager,
-                    destroyWithScene: true, position: spawn.position, rotation: spawn.rotation);
+                var instance = Instantiate(m_creaturePrefab, spawn.position, spawn.rotation);
 
-                if (creature != null) m_creatures.Add(creature);
+                // Before spawning, so the body travels in the spawn and no client ever shows the placeholder first.
+                if (catalog != null && instance.TryGetComponent<NightCreature>(out var nightCreature))
+                    nightCreature.AssignBody(catalog.Pick(m_creaturesSpawned, m_testBody));
+
+                m_creaturesSpawned++;
+
+                var creature = instance.GetComponent<NetworkObject>();
+                creature.Spawn(destroyWithScene: true);
+                m_creatures.Add(creature);
             }
         }
 
-        private void DespawnCreatures()
+        /// <param name="dieAtDawn">True to let each creature play its death before it goes; false to remove them at once.</param>
+        private void DespawnCreatures(bool dieAtDawn)
         {
             foreach (var creature in m_creatures)
             {
-                if (creature != null && creature.IsSpawned) creature.Despawn();
+                if (creature == null || !creature.IsSpawned) continue;
+
+                if (dieAtDawn && creature.TryGetComponent<NightCreature>(out var nightCreature)) nightCreature.DieAtDawn();
+                else creature.Despawn();
             }
 
             m_creatures.Clear();
+        }
+
+        // Server: creatures spawned this level, so Cycle selection moves on across nights; and the host's test pick.
+        private int m_creaturesSpawned;
+        private int m_testBody = -1;
+
+        private static CreatureCatalog CreatureCatalogOf(GameObject prefab) =>
+            prefab != null && prefab.TryGetComponent<NightCreature>(out var creature) ? creature.Catalog : null;
+
+        /// <summary>
+        /// Host only: dresses every creature from now on in the next body in the catalog, enabled or not, and replaces the
+        /// ones out now. For trying bodies one after another without waiting for a new night.
+        /// </summary>
+        /// <returns>The body now in use, or <c>null</c> if the catalog has none.</returns>
+        public CreatureCatalog.Body CycleTestCreature()
+        {
+            if (!IsServer || !IsSpawned) return null;
+
+            var catalog = CreatureCatalogOf(m_creaturePrefab);
+            if (catalog == null) return null;
+
+            m_testBody = catalog.NextUsable(m_testBody);
+            if (m_phase.Value == SurvivalPhase.Night)
+            {
+                DespawnCreatures(dieAtDawn: false);
+                SpawnCreatures();
+            }
+
+            return catalog.At(m_testBody);
         }
 
         // ---- Barricades ------------------------------------------------------------------------------

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b17b6c06f90b6f24caf9ca9ac4d97bbf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_Jumpscare_CrouchedPeekABoo.controller
+  uploadId: 858968

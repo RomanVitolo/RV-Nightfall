@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6a91e34123b1b3d46b78e9f1a8b58c45
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_Jumpscare_RHandCallOver.controller
+  uploadId: 858968

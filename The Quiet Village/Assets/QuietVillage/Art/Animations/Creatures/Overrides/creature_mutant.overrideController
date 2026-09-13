@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: creature_mutant
+  m_Controller: {fileID: 9100000, guid: d536f492959edf2408b7824ee4f416ed, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: f4ec93960af7db9488f39411e3ac3757, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: cd70574b042bc1e4eb28b673fabce332, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: edeacbd11e2e1e14a8cb82336aab439f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2b4dad864b87b5d47baad134bd16f4ef, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 8442b7fedbe10fd43af2979ea2f64fb1, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 1eb729633b93c6a41965d8934227d94f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 80ddb1012c66a8346b729d4dcb00f8fd, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5abdd3cb6766e4c41b07ef9257e5f877, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: cf14c2d72db1284428eab5242c10224c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 37968508980c6414b905c99a13cfd93d, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 6176dab931f7f9140868fb4bf0d06fa4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9a3195eea7ffa1845b025adc9b698e61, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 8d9429fc44f05ab46a2f1dca7bd52fe0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f91370e3dda6e0c4db28c5b356939eb4, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: be809acf1cb421c438fd1290caa65d89, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7b69b722be8bad84a9a46ceea31a4eb5, type: 3}

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3a23e992b7b0ecf4880e2716a1c3df69
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_Idle_RiseOutOfGround01.controller
+  uploadId: 858968

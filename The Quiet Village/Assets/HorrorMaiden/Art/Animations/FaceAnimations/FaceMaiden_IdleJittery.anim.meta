@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d8c82919f0e16ba4ea5ea88ffc96261d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/Animations/FaceAnimations/FaceMaiden_IdleJittery.anim
+  uploadId: 858968

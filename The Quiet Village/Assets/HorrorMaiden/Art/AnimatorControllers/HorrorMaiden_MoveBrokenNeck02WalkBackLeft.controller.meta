@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d4ce5a7b773acbd4888a7ee0bae1dcce
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_MoveBrokenNeck02WalkBackLeft.controller
+  uploadId: 858968

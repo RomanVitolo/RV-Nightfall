@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e9cee3a073e5ec3489eaaeeb7f3f65bb
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/Materials/Head/GothHead.mat
+  uploadId: 858968

@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 83ded7fd4c5c3c54da3de86e243625ef
+timeCreated: 1581267160
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302151
+  packageName: 66 Creatures Super Mega (Pack)
+  packageVersion: 1.0
+  assetPath: Assets/Super_Mega_Creatures_Pack/Humanoid_Creatures_Pack/Prefabs/Creature_Humanoid_01.prefab
+  uploadId: 707451

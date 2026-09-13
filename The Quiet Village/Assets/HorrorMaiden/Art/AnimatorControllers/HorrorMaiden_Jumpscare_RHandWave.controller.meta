@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aef41d5da07915f4d8b636a71ecc1610
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_Jumpscare_RHandWave.controller
+  uploadId: 858968

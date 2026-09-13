@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dc0c4ae01449f04489d0f12425cc51f5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/Animations/FaceAnimations/FaceMaiden_Stagger03.anim
+  uploadId: 858968

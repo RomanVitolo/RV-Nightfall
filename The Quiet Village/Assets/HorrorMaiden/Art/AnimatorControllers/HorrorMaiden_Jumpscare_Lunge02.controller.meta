@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f47a58de028bc2043a7360364afd294a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_Jumpscare_Lunge02.controller
+  uploadId: 858968

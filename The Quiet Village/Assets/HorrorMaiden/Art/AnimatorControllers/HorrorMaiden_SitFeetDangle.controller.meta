@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 45782ac59fc9a144394bc1edd73c58ea
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_SitFeetDangle.controller
+  uploadId: 858968

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7ff196faeb856fc42964df549b427608
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/Animations/FaceAnimations/FaceMaiden_Blink.anim
+  uploadId: 858968

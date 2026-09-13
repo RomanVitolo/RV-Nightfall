@@ -1,0 +1,212 @@
+fileFormatVersion: 2
+guid: 2e9c8834ba328614ebf84a70980689eb
+timeCreated: 1480837417
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Ankle_L
+    100002: Ankle_R
+    100004: back
+    100006: Body
+    100008: Chest_M
+    100010: Elbow_L
+    100012: Elbow_R
+    100014: Eye_L
+    100016: Eye_R
+    100018: EyeEnd_L
+    100020: EyeEnd_R
+    100022: Eyes
+    100024: Head_M
+    100026: HeadEnd_M
+    100028: Hip_L
+    100030: Hip_R
+    100032: IndexFinger1_L
+    100034: IndexFinger1_R
+    100036: IndexFinger2_L
+    100038: IndexFinger2_R
+    100040: IndexFinger3_L
+    100042: IndexFinger3_R
+    100044: Jaw_down
+    100046: Jaw_M
+    100048: Jaw_up
+    100050: JawEnd_M
+    100052: Knee_L
+    100054: Knee_R
+    100056: left
+    100058: Neck1_M
+    100060: //RootNode
+    100062: PinkyFinger1_L
+    100064: PinkyFinger1_R
+    100066: PinkyFinger2_L
+    100068: PinkyFinger2_R
+    100070: PinkyFinger3_L
+    100072: PinkyFinger3_R
+    100074: Root_M
+    100076: Rump_L
+    100078: Rump_R
+    100080: Shoulder_L
+    100082: Shoulder_R
+    100084: Spine1_M
+    100086: Tail0_M
+    100088: Tail1_M
+    100090: Tail2_M
+    100092: Tail3_M
+    100094: Tail4_M
+    100096: Tail5_M
+    100098: Tail6_M
+    100100: Toes_L
+    100102: Toes_R
+    100104: ToesEnd_L
+    100106: ToesEnd_R
+    100108: transform1
+    100110: transform2
+    100112: transform6
+    100114: transform7
+    100116: transform8
+    100118: transform9
+    100120: Wrist_L
+    100122: Wrist_R
+    400000: Ankle_L
+    400002: Ankle_R
+    400004: back
+    400006: Body
+    400008: Chest_M
+    400010: Elbow_L
+    400012: Elbow_R
+    400014: Eye_L
+    400016: Eye_R
+    400018: EyeEnd_L
+    400020: EyeEnd_R
+    400022: Eyes
+    400024: Head_M
+    400026: HeadEnd_M
+    400028: Hip_L
+    400030: Hip_R
+    400032: IndexFinger1_L
+    400034: IndexFinger1_R
+    400036: IndexFinger2_L
+    400038: IndexFinger2_R
+    400040: IndexFinger3_L
+    400042: IndexFinger3_R
+    400044: Jaw_down
+    400046: Jaw_M
+    400048: Jaw_up
+    400050: JawEnd_M
+    400052: Knee_L
+    400054: Knee_R
+    400056: left
+    400058: Neck1_M
+    400060: //RootNode
+    400062: PinkyFinger1_L
+    400064: PinkyFinger1_R
+    400066: PinkyFinger2_L
+    400068: PinkyFinger2_R
+    400070: PinkyFinger3_L
+    400072: PinkyFinger3_R
+    400074: Root_M
+    400076: Rump_L
+    400078: Rump_R
+    400080: Shoulder_L
+    400082: Shoulder_R
+    400084: Spine1_M
+    400086: Tail0_M
+    400088: Tail1_M
+    400090: Tail2_M
+    400092: Tail3_M
+    400094: Tail4_M
+    400096: Tail5_M
+    400098: Tail6_M
+    400100: Toes_L
+    400102: Toes_R
+    400104: ToesEnd_L
+    400106: ToesEnd_R
+    400108: transform1
+    400110: transform2
+    400112: transform6
+    400114: transform7
+    400116: transform8
+    400118: transform9
+    400120: Wrist_L
+    400122: Wrist_R
+    4300000: Body
+    4300002: Jaw_down
+    4300004: Jaw_up
+    4300006: Eyes
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Body
+    13700002: Eyes
+    13700004: Jaw_down
+    13700006: Jaw_up
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302151
+  packageName: 66 Creatures Super Mega (Pack)
+  packageVersion: 1.0
+  assetPath: Assets/Super_Mega_Creatures_Pack/Cretures_MegaPack/Creature_Pangolin/Animation/Pangolin@Attack(3).fbx
+  uploadId: 707451

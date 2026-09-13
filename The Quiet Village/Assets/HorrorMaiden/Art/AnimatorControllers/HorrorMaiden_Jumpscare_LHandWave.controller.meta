@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4f9e8ab4dbc58fb47a3cf0230a93c667
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_Jumpscare_LHandWave.controller
+  uploadId: 858968

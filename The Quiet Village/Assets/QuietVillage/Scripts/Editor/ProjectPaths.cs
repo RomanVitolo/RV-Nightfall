@@ -39,6 +39,7 @@ namespace QuietVillage
         public const string RuntimeResources = Data + "/Resources";
         public const string LevelCatalog = Data + "/LevelCatalog.asset";
         public const string CharacterCatalog = Data + "/CharacterCatalog.asset";
+        public const string CreatureCatalog = Data + "/CreatureCatalog.asset";
 
         public const string Prefabs = Root + "/Prefabs";
         public const string PlayerPrefab = Prefabs + "/Player/NetworkedWorkerPlayer.prefab";
@@ -48,6 +49,7 @@ namespace QuietVillage
 
         public const string Art = Root + "/Art";
         public const string WorkerAnimations = Art + "/Animations/Worker";
+        public const string CreatureAnimations = Art + "/Animations/Creatures";
         public const string GreyboxMaterials = Art + "/Materials/Greybox";
 
         public const string MultiplayerUI = Root + "/UI/Multiplayer";

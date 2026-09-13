@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f53d337dee04e0041a2fe62a741ec404
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_MoveWalkJitteryForwardLeft.controller
+  uploadId: 858968

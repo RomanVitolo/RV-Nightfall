@@ -17,12 +17,18 @@ namespace QuietVillage.Gameplay.Survival
     /// barricades cut it short, break the nearest one. Players outside are therefore always the first to be hunted,
     /// which is what makes leaving the shelter at night a real risk.
     ///
-    /// A placeholder body and no sounds yet. It cannot be killed: the night is about holding out, not fighting.
+    /// Its body comes from <see cref="CreatureCatalog"/>: the director picks one before spawning, and it travels inside the
+    /// spawn (<see cref="OnSynchronize{T}"/>), so every client builds the right model at once. Without a catalog, or with
+    /// an unusable entry, it keeps the placeholder capsule. No sounds yet. It cannot be killed: the night is about
+    /// holding out, not fighting. At dawn it dies where it stands and is removed once the death has played.
     /// </remarks>
     [RequireComponent(typeof(NetworkObject), typeof(NavMeshAgent))]
     public class NightCreature : NetworkBehaviour
     {
         [SerializeField] private NavMeshAgent m_agent;
+
+        [Tooltip("Bodies the director can dress this creature in. Empty keeps the placeholder capsule.")]
+        [SerializeField] private CreatureCatalog m_catalog;
 
         [Tooltip("Seconds between choosing what to go for.")]
         [SerializeField] private float m_thinkInterval = 0.25f;
@@ -46,6 +52,23 @@ namespace QuietVillage.Gameplay.Survival
         private NavMeshPath m_path;
         private float m_nextThinkAt;
         private float m_nextAttackAt;
+        private float m_attackEndsAt;
+        private int m_attackCount;
+
+        // Which catalog body this creature wears; fixed at spawn, -1 for the placeholder.
+        private int m_bodyIndex = -1;
+        private CreatureBody m_body;
+
+        private readonly NetworkVariable<bool> m_dying =
+            new(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+        public CreatureCatalog Catalog => m_catalog;
+
+        /// <summary>The body it wears, or <c>null</c> for the placeholder.</summary>
+        public CreatureCatalog.Body Body => m_catalog != null ? m_catalog.At(m_bodyIndex) : null;
+
+        /// <summary>True once dawn has come for it; it no longer hunts and is about to be removed.</summary>
+        public bool IsDying => m_dying.Value;
 
         private void Awake()
         {
@@ -54,8 +77,29 @@ namespace QuietVillage.Gameplay.Survival
             m_wallMask = LayerMask.GetMask("Default", "Interact", "Ground");
         }
 
+        /// <summary>Server, before spawning: picks the body every client will build.</summary>
+        public void AssignBody(int bodyIndex)
+        {
+            if (IsSpawned)
+            {
+                Debug.LogWarning($"{nameof(NightCreature)}: a body can only be assigned before the creature spawns.", this);
+                return;
+            }
+
+            m_bodyIndex = bodyIndex;
+        }
+
+        protected override void OnSynchronize<T>(ref BufferSerializer<T> serializer)
+        {
+            serializer.SerializeValue(ref m_bodyIndex);
+        }
+
         public override void OnNetworkSpawn()
         {
+            BuildBody();
+            m_dying.OnValueChanged += HandleDyingChanged;
+            if (m_dying.Value) HandleDyingChanged(false, true);
+
             if (m_agent == null) return;
 
             // The agent would pull this copy along its own path, against the position NetworkTransform delivers.
@@ -65,14 +109,74 @@ namespace QuietVillage.Gameplay.Survival
                 return;
             }
 
+            var body = Body;
+            if (body != null) m_agent.speed = body.MoveSpeed;
+
             // Netcode places a spawned object after its components wake, and the agent has already bound itself to
             // the NavMesh nearest the origin by then, which can be inside the shelter. Move it to where it spawned.
             m_agent.Warp(transform.position);
+
+            // Held back while the entrance plays, so a creature rising from the ground does not glide off mid-rise.
+            if (body != null && body.HasEntrance) m_nextThinkAt = Time.time + EntranceHold;
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            m_dying.OnValueChanged -= HandleDyingChanged;
+        }
+
+        private const float EntranceHold = 1.5f;
+
+        private void BuildBody()
+        {
+            var body = Body;
+            if (body == null) return;
+
+            m_body = GetComponent<CreatureBody>();
+            if (m_body == null) m_body = gameObject.AddComponent<CreatureBody>();
+
+            if (!m_body.Build(body))
+            {
+                Debug.LogWarning($"{nameof(NightCreature)}: could not build body '{body.Id}'; showing the placeholder.", this);
+                return;
+            }
+
+            m_body.PlayEntrance();
+        }
+
+        /// <summary>Server: ends this creature's night. It stops, plays its death, and is removed after it.</summary>
+        public void DieAtDawn()
+        {
+            if (!IsServer || !IsSpawned || m_dying.Value) return;
+
+            m_dying.Value = true;
+            if (m_agent != null && m_agent.isOnNavMesh) m_agent.ResetPath();
+
+            var body = Body;
+            var delay = body != null ? body.DeathDuration : 0f;
+            if (delay <= 0f) NetworkObject.Despawn();
+            else StartCoroutine(DespawnAfter(delay));
+        }
+
+        private System.Collections.IEnumerator DespawnAfter(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+
+            if (IsSpawned) NetworkObject.Despawn();
+        }
+
+        private void HandleDyingChanged(bool previous, bool current)
+        {
+            if (m_body != null) m_body.SetDead(current);
         }
 
         private void Update()
         {
-            if (!IsServer || !IsSpawned || m_agent == null || Time.time < m_nextThinkAt) return;
+            if (!IsServer || !IsSpawned || m_dying.Value || m_agent == null || Time.time < m_nextThinkAt) return;
+
+            // Standing its ground mid-swing: the blow is timed to the clip, and sliding after a player looks like skating.
+            if (Time.time < m_attackEndsAt) return;
+            if (m_agent.isOnNavMesh && m_agent.isStopped) m_agent.isStopped = false;
 
             m_nextThinkAt = Time.time + m_thinkInterval;
 
@@ -111,7 +215,20 @@ namespace QuietVillage.Gameplay.Survival
 
                 if (Vector3.Distance(transform.position, player.transform.position) <= m_playerReach
                     && CanAttack() && HasClearReach(player.transform.position))
-                    Attack(() => player.ApplyServerDamage(m_playerDamage), m_playerAttackInterval);
+                {
+                    FaceTowards(player.transform.position);
+
+                    // Checked again when the blow lands: a player who stepped out of reach or around a corner mid-swing
+                    // was dodged, not hit.
+                    Attack(() =>
+                    {
+                        if (player == null || player.IsDead) return;
+                        if (Vector3.Distance(transform.position, player.transform.position) > m_playerReach * DodgeMargin) return;
+                        if (!HasClearReach(player.transform.position)) return;
+
+                        player.ApplyServerDamage(m_playerDamage);
+                    }, m_playerAttackInterval);
+                }
 
                 return;
             }
@@ -184,10 +301,44 @@ namespace QuietVillage.Gameplay.Survival
         // Level geometry, and barricades while standing. Not players, NPCs or this body.
         private int m_wallMask;
 
+        // A little slack on reach when the blow lands, so a swing is not whiffed by a player merely shuffling in place.
+        private const float DodgeMargin = 1.3f;
+
+        /// <summary>Swings for everyone to see, and lands the blow when the body's clip says it connects.</summary>
         private void Attack(System.Action hit, float interval)
         {
             m_nextAttackAt = Time.time + interval;
-            hit();
+
+            var body = Body;
+            var hitDelay = body != null ? body.AttackHitDelay : 0f;
+            var duration = body != null ? Mathf.Max(body.AttackDuration, hitDelay) : 0f;
+
+            if (duration > 0f)
+            {
+                m_attackEndsAt = Time.time + duration;
+                if (m_agent.isOnNavMesh) m_agent.isStopped = true;
+            }
+
+            // Cycled rather than random, so consecutive swings visibly differ.
+            PlayAttackRpc((byte)(m_attackCount++ % CreatureBody.AttackVariants));
+
+            if (hitDelay <= 0f) hit();
+            else StartCoroutine(LandAfter(hit, hitDelay));
+        }
+
+        private System.Collections.IEnumerator LandAfter(System.Action hit, float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+
+            // Dawn can come mid-swing; a dying creature hits nothing.
+            if (IsSpawned && !m_dying.Value) hit();
+        }
+
+        /// <summary>Plays a swing on every copy of this creature, the host's included.</summary>
+        [Rpc(SendTo.Everyone)]
+        private void PlayAttackRpc(byte variant)
+        {
+            if (m_body != null) m_body.PlayAttack(variant);
         }
 
         private void FaceTowards(Vector3 point)

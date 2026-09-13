@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4d4bb5b2be07e3246a28cfc96b46d647
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_MoveWalkElegant01BackLeft.controller
+  uploadId: 858968

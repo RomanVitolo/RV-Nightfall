@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 421a73c03d137874f8eb3f495d8f5d35
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_Jumpscare_RSidePeek.controller
+  uploadId: 858968

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1d62622f0ed902c4d8915ad795ff1ed6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_AttackInPlace02.controller
+  uploadId: 858968

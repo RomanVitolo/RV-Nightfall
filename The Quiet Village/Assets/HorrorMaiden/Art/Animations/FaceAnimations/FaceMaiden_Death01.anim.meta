@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b5437a0ca94958440926d8f8b56d2a5f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/Animations/FaceAnimations/FaceMaiden_Death01.anim
+  uploadId: 858968

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 805bea16dafa05f4c8ec8e603c49f7bf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_Jumpscare_ReachFromBelow01.controller
+  uploadId: 858968

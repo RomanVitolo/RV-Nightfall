@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 73e599e1f63ce984a817977bbe5ad648
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/AnimatorControllers/HorrorMaiden_Idle_GetUp02.controller
+  uploadId: 858968

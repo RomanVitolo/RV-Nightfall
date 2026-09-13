@@ -1,0 +1,242 @@
+fileFormatVersion: 2
+guid: 8b62c49a22ba224428f428faa8c11297
+timeCreated: 1499846041
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Body_mesh
+    100004: CATRigHub001
+    100006: CATRigHub001Bone001
+    100008: CATRigHub001Bone001Bone001
+    100010: CATRigHub001Bone001Bone001Bone001
+    100012: CATRigHub001Bone001Bone001Bone001Bone001
+    100014: CATRigHub001Bone001Bone001Bone001Bone001Bone001
+    100016: CATRigHub001Bone001Bone001Bone001Bone001Bone001Bone001
+    100018: CATRigHub001Bone001Bone001Bone001Bone001Bone001Bone001Bone001
+    100020: CATRigHub001Bone001Bone001Bone001Bone001Bone002
+    100022: CATRigHub001Bone001Bone001Bone001Bone002
+    100024: CATRigHub001Bone001Bone001Bone001Bone002Bone001
+    100026: CATRigHub001Bone001Bone001Bone001Bone003
+    100028: CATRigHub001Bone001Bone001Bone001Bone004
+    100030: CATRigHub001Bone001Bone001Bone001Bone004Bone001
+    100032: CATRigHub001Bone001Bone001Bone001Bone005
+    100034: CATRigHub001Bone001Bone001Bone001Bone006
+    100036: CATRigHub001Bone001Bone001Bone001Bone006Bone001
+    100038: CATRigHub001Bone001Bone001Bone001Bone007
+    100040: CATRigHub001Bone001Bone001Bone001Bone008
+    100042: CATRigHub001Bone001Bone001Bone001Bone008Bone001
+    100044: CATRigHub001Bone001Bone001Bone001Bone009
+    100046: CATRigHub002
+    100048: CATRigHub002Bone001
+    100050: CATRigHub002Bone001Bone001
+    100052: CATRigHub002Bone001Bone001Bone001Bone001Bone001Bone001
+    100054: CATRigHub002Bone001Bone001Bone001Bone001Bone001Bone001Bone001
+    100056: CATRigHub002Bone001Bone001Bone001Bone002Bone001
+    100058: CATRigHub002Bone001Bone001Bone001Bone004Bone001
+    100060: CATRigHub002Bone001Bone001Bone001Bone006Bone001
+    100062: CATRigHub002Bone001Bone001Bone001Bone008Bone001
+    100064: CATRigHub002Bone001Bone002
+    100066: CATRigHub002Bone001Bone003
+    100068: CATRigHub002Bone001Bone004
+    100070: CATRigHub002Bone001Bone005
+    100072: CATRigHub002Bone001Bone006
+    100074: CATRigLArm1
+    100076: CATRigLArm2
+    100078: CATRigLArmCollarbone
+    100080: CATRigLArmDigit11
+    100082: CATRigLArmDigit12
+    100084: CATRigLArmDigit13
+    100086: CATRigLArmDigit21
+    100088: CATRigLArmDigit22
+    100090: CATRigLArmDigit23
+    100092: CATRigLArmDigit31
+    100094: CATRigLArmDigit32
+    100096: CATRigLArmDigit33
+    100098: CATRigLArmDigit41
+    100100: CATRigLArmDigit42
+    100102: CATRigLArmDigit43
+    100104: CATRigLArmDigit51
+    100106: CATRigLArmDigit52
+    100108: CATRigLArmDigit53
+    100110: CATRigLArmIKTarget
+    100112: CATRigLArmPalm
+    100114: CATRigRArm1
+    100116: CATRigRArm2
+    100118: CATRigRArmCollarbone
+    100120: CATRigRArmDigit11
+    100122: CATRigRArmDigit12
+    100124: CATRigRArmDigit13
+    100126: CATRigRArmDigit21
+    100128: CATRigRArmDigit22
+    100130: CATRigRArmDigit23
+    100132: CATRigRArmDigit31
+    100134: CATRigRArmDigit32
+    100136: CATRigRArmDigit33
+    100138: CATRigRArmDigit41
+    100140: CATRigRArmDigit42
+    100142: CATRigRArmDigit43
+    100144: CATRigRArmDigit51
+    100146: CATRigRArmDigit52
+    100148: CATRigRArmDigit53
+    100150: CATRigRArmIKTarget
+    100152: CATRigRArmPalm
+    100154: CATRigSpine1
+    100156: CATRigSpine2
+    100158: Character001
+    400000: //RootNode
+    400002: Body_mesh
+    400004: CATRigHub001
+    400006: CATRigHub001Bone001
+    400008: CATRigHub001Bone001Bone001
+    400010: CATRigHub001Bone001Bone001Bone001
+    400012: CATRigHub001Bone001Bone001Bone001Bone001
+    400014: CATRigHub001Bone001Bone001Bone001Bone001Bone001
+    400016: CATRigHub001Bone001Bone001Bone001Bone001Bone001Bone001
+    400018: CATRigHub001Bone001Bone001Bone001Bone001Bone001Bone001Bone001
+    400020: CATRigHub001Bone001Bone001Bone001Bone001Bone002
+    400022: CATRigHub001Bone001Bone001Bone001Bone002
+    400024: CATRigHub001Bone001Bone001Bone001Bone002Bone001
+    400026: CATRigHub001Bone001Bone001Bone001Bone003
+    400028: CATRigHub001Bone001Bone001Bone001Bone004
+    400030: CATRigHub001Bone001Bone001Bone001Bone004Bone001
+    400032: CATRigHub001Bone001Bone001Bone001Bone005
+    400034: CATRigHub001Bone001Bone001Bone001Bone006
+    400036: CATRigHub001Bone001Bone001Bone001Bone006Bone001
+    400038: CATRigHub001Bone001Bone001Bone001Bone007
+    400040: CATRigHub001Bone001Bone001Bone001Bone008
+    400042: CATRigHub001Bone001Bone001Bone001Bone008Bone001
+    400044: CATRigHub001Bone001Bone001Bone001Bone009
+    400046: CATRigHub002
+    400048: CATRigHub002Bone001
+    400050: CATRigHub002Bone001Bone001
+    400052: CATRigHub002Bone001Bone001Bone001Bone001Bone001Bone001
+    400054: CATRigHub002Bone001Bone001Bone001Bone001Bone001Bone001Bone001
+    400056: CATRigHub002Bone001Bone001Bone001Bone002Bone001
+    400058: CATRigHub002Bone001Bone001Bone001Bone004Bone001
+    400060: CATRigHub002Bone001Bone001Bone001Bone006Bone001
+    400062: CATRigHub002Bone001Bone001Bone001Bone008Bone001
+    400064: CATRigHub002Bone001Bone002
+    400066: CATRigHub002Bone001Bone003
+    400068: CATRigHub002Bone001Bone004
+    400070: CATRigHub002Bone001Bone005
+    400072: CATRigHub002Bone001Bone006
+    400074: CATRigLArm1
+    400076: CATRigLArm2
+    400078: CATRigLArmCollarbone
+    400080: CATRigLArmDigit11
+    400082: CATRigLArmDigit12
+    400084: CATRigLArmDigit13
+    400086: CATRigLArmDigit21
+    400088: CATRigLArmDigit22
+    400090: CATRigLArmDigit23
+    400092: CATRigLArmDigit31
+    400094: CATRigLArmDigit32
+    400096: CATRigLArmDigit33
+    400098: CATRigLArmDigit41
+    400100: CATRigLArmDigit42
+    400102: CATRigLArmDigit43
+    400104: CATRigLArmDigit51
+    400106: CATRigLArmDigit52
+    400108: CATRigLArmDigit53
+    400110: CATRigLArmIKTarget
+    400112: CATRigLArmPalm
+    400114: CATRigRArm1
+    400116: CATRigRArm2
+    400118: CATRigRArmCollarbone
+    400120: CATRigRArmDigit11
+    400122: CATRigRArmDigit12
+    400124: CATRigRArmDigit13
+    400126: CATRigRArmDigit21
+    400128: CATRigRArmDigit22
+    400130: CATRigRArmDigit23
+    400132: CATRigRArmDigit31
+    400134: CATRigRArmDigit32
+    400136: CATRigRArmDigit33
+    400138: CATRigRArmDigit41
+    400140: CATRigRArmDigit42
+    400142: CATRigRArmDigit43
+    400144: CATRigRArmDigit51
+    400146: CATRigRArmDigit52
+    400148: CATRigRArmDigit53
+    400150: CATRigRArmIKTarget
+    400152: CATRigRArmPalm
+    400154: CATRigSpine1
+    400156: CATRigSpine2
+    400158: Character001
+    4300000: Body_mesh
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Body_mesh
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 0
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 302151
+  packageName: 66 Creatures Super Mega (Pack)
+  packageVersion: 1.0
+  assetPath: Assets/Super_Mega_Creatures_Pack/Parasites_Pack/Parazite_slider/Animations/All_animations_on_one_timeline.FBX
+  uploadId: 707451

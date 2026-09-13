@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 736f90cfaa60dd442ba82dc59828252e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Art/Animations/FaceAnimations/FaceMaiden_Idle_Zombie.anim
+  uploadId: 858968

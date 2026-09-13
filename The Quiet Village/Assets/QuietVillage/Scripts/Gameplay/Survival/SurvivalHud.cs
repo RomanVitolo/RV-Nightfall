@@ -14,7 +14,8 @@ namespace QuietVillage.Gameplay.Survival
     /// the replicated clock and this player's own inventory; it sends nothing.
     ///
     /// The host can press F8 to end the current phase. It is for testing a night without waiting out the day, and
-    /// goes through the director like any host decision, so every client sees the same skip.
+    /// goes through the director like any host decision, so every client sees the same skip. F9 switches every creature
+    /// to the next body in the creature catalog, for trying bodies out one after another.
     ///
     /// Added by <see cref="SurvivalDirector"/> on every client when it spawns.
     /// </remarks>
@@ -52,8 +53,19 @@ namespace QuietVillage.Gameplay.Survival
             m_clock.text = ClockText();
             m_supplies.text = SuppliesText();
 
-            if (m_director.IsServer && Keyboard.current != null && Keyboard.current.f8Key.wasPressedThisFrame)
-                m_director.SkipPhase();
+            if (!m_director.IsServer || Keyboard.current == null) return;
+
+            if (Keyboard.current.f8Key.wasPressedThisFrame) m_director.SkipPhase();
+
+            if (Keyboard.current.f9Key.wasPressedThisFrame)
+            {
+                var body = m_director.CycleTestCreature();
+                var gameManager = LocalPlayerContext.GameManager;
+                if (gameManager != null)
+                    gameManager.ShowHintMessage(body != null
+                        ? $"Creatures now: {(string.IsNullOrEmpty(body.DisplayName) ? body.Id : body.DisplayName)}"
+                        : "No creature bodies set up. Run Tools > Quiet Village > Creatures > Set Up Creatures.", 3f);
+            }
         }
 
         private string ClockText()

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9729d49d7fcaba447906c8e6a84674cd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360304
+  packageName: Horror Maiden
+  packageVersion: 1.0
+  assetPath: Assets/HorrorMaiden/Scripts/RamsterZCameraController.cs
+  uploadId: 858968
