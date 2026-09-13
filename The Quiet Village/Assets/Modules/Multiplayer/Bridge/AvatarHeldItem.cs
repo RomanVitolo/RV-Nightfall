@@ -1,5 +1,6 @@
 using UHFPS.Runtime;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Modules.Multiplayer.Bridge
 {
@@ -11,21 +12,17 @@ namespace Modules.Multiplayer.Bridge
     /// that belong in front of a camera rather than on a body. Its pickup model is used instead, the same object that
     /// lies on the floor before anyone takes it, so the body carries a clean prop at world scale.
     ///
-    /// The item they hold is a player-item index, and the database says which inventory item equips that index, which
-    /// in turn names the pickup model. Nothing new is replicated: <see cref="PlayerActionSync"/> already publishes the
-    /// index for the light and the sounds.
+    /// The item they hold is a player-item index, and <see cref="AvatarHeldItemModels"/> says which prop and grip
+    /// belong to that index. Nothing new is replicated: <see cref="PlayerActionSync"/> already publishes the index
+    /// for the light and the sounds, so every client resolves the same prop locally.
     ///
     /// Remote copies only: <see cref="HeroPlayerNetworkSetup"/> adds it to bodies this client does not own.
     /// </remarks>
     public class AvatarHeldItem : MonoBehaviour
     {
-        // First guesses at how a prop sits in the hand: the pickup models have no common grip, and this cannot be
-        // judged without playing. Tune here if something is held through its own barrel.
-        private static readonly Vector3 GripPosition = new(0f, 0f, 0.04f);
-        private static readonly Vector3 GripRotation = new(0f, 90f, 90f);
-
         private PlayerActionSync m_actions;
         private Inventory m_database;
+        private AvatarHeldItemModels m_models;
         private Transform m_hand;
 
         private GameObject m_model;
@@ -40,10 +37,16 @@ namespace Modules.Multiplayer.Bridge
             m_actions = actions;
             m_database = database;
             m_hand = avatar != null ? avatar.GetBoneTransform(HumanBodyBones.RightHand) : null;
+            m_models = Resources.Load<AvatarHeldItemModels>(AvatarHeldItemModels.ResourcePath);
 
             if (m_hand == null)
                 Debug.LogWarning($"{nameof(AvatarHeldItem)}: the body has no right hand bone, so held items " +
                                  "will not be shown. Is the avatar rig still Humanoid?", this);
+
+            if (m_models == null)
+                Debug.LogWarning($"{nameof(AvatarHeldItem)}: no {nameof(AvatarHeldItemModels)} asset in Resources, " +
+                                 "so teammates only show items the inventory database gives a pickup model. " +
+                                 "Run Tools > Multiplayer > Set Up Held Item Models.", this);
         }
 
         private void Update()
@@ -67,57 +70,90 @@ namespace Modules.Multiplayer.Bridge
             if (m_model != null) Destroy(m_model);
             m_model = null;
 
-            var pickup = PickupModelFor(item);
-            if (pickup == null) return;
+            if (item == null) return;
 
-            m_model = Instantiate(pickup, m_hand);
-            m_model.name = $"HeldItem ({pickup.name})";
-            m_model.transform.SetLocalPositionAndRotation(GripPosition, Quaternion.Euler(GripRotation));
+            var itemIndex = m_actions.EquippedItemIndex;
+            GameObject source;
+            Vector3 gripPosition;
+            Vector3 gripRotation;
 
-            StripToVisuals(m_model);
+            if (m_models != null && m_models.TryGet(itemIndex, out var entry))
+            {
+                source = entry.Model;
+                gripPosition = entry.GripPosition;
+                gripRotation = entry.GripRotation;
+            }
+            else
+            {
+                source = DatabaseModelFor(itemIndex);
+                gripPosition = AvatarHeldItemModels.DefaultGripPosition;
+                gripRotation = AvatarHeldItemModels.DefaultGripRotation;
+            }
+
+            if (source == null) return;
+
+            m_model = CopyVisuals(source.transform, m_hand, m_hand.gameObject.layer);
+            m_model.name = $"HeldItem ({source.name})";
+            m_model.transform.SetLocalPositionAndRotation(gripPosition, Quaternion.Euler(gripRotation));
+            m_model.transform.localScale = UndoParentScale(source.transform.localScale, m_hand.lossyScale);
         }
 
         /// <summary>
-        /// Leaves the model with nothing but its looks. A pickup carries a rigidbody, colliders and the interaction
-        /// that puts it in an inventory; in a hand all of that would be picked up, walked into, or fall out.
+        /// Rebuilds a prefab as bare meshes, without instantiating it.
         /// </summary>
-        private static void StripToVisuals(GameObject model)
+        /// <remarks>
+        /// Instantiating a pickup would run its <c>Awake</c> and <c>OnEnable</c> before anything could strip it: an
+        /// <c>InteractableItem</c> that registers itself, a rigidbody that falls out of the hand, colliders the player
+        /// walks into, a second light next to the one <see cref="AvatarHeldLight"/> already shines. Copying only mesh
+        /// and material means none of that ever exists.
+        ///
+        /// The copies take the body's layer, so the prop is lit and culled exactly like the hand holding it.
+        /// </remarks>
+        private static GameObject CopyVisuals(Transform source, Transform parent, int layer)
         {
-            foreach (var behaviour in model.GetComponentsInChildren<MonoBehaviour>(true))
+            var copy = new GameObject(source.name) { layer = layer };
+            copy.transform.SetParent(parent, false);
+            copy.transform.SetLocalPositionAndRotation(source.localPosition, source.localRotation);
+            copy.transform.localScale = source.localScale;
+
+            var sourceFilter = source.GetComponent<MeshFilter>();
+            var sourceRenderer = source.GetComponent<MeshRenderer>();
+            if (sourceFilter != null && sourceFilter.sharedMesh != null && sourceRenderer != null && sourceRenderer.enabled)
             {
-                if (behaviour != null) Destroy(behaviour);
+                copy.AddComponent<MeshFilter>().sharedMesh = sourceFilter.sharedMesh;
+
+                var renderer = copy.AddComponent<MeshRenderer>();
+                renderer.sharedMaterials = sourceRenderer.sharedMaterials;
+                renderer.shadowCastingMode = ShadowCastingMode.On;
             }
 
-            foreach (var collider in model.GetComponentsInChildren<Collider>(true))
+            foreach (Transform child in source)
             {
-                if (collider != null) Destroy(collider);
+                if (child.gameObject.activeSelf) CopyVisuals(child, copy.transform, layer);
             }
 
-            // After its colliders: a rigidbody removed first would leave them briefly loose in the world.
-            foreach (var body in model.GetComponentsInChildren<Rigidbody>(true))
-            {
-                if (body != null) Destroy(body);
-            }
-
-            // A pickup's own light would double the one the bridge already shines for a held flashlight.
-            foreach (var light in model.GetComponentsInChildren<Light>(true))
-            {
-                if (light != null) Destroy(light);
-            }
-
-            foreach (var audioSource in model.GetComponentsInChildren<AudioSource>(true))
-            {
-                if (audioSource != null) Destroy(audioSource);
-            }
+            return copy;
         }
 
-        /// <summary>The floor model of the inventory item that equips this player item, or <c>null</c> if it has none.</summary>
-        private GameObject PickupModelFor(PlayerItemBehaviour item)
-        {
-            if (item == null || m_database == null || m_database.inventoryDatabase == null) return null;
+        /// <summary>
+        /// The local scale that gives a prop its prefab size under a scaled parent.
+        /// </summary>
+        /// <remarks>
+        /// Imported rigs often carry scale on their bones (a centimetre FBX puts 100 or 0.01 on the armature), and a
+        /// prop parented under that without correction is shown microscopic or the size of a car.
+        /// </remarks>
+        private static Vector3 UndoParentScale(Vector3 scale, Vector3 parentScale) => new(
+            Mathf.Approximately(parentScale.x, 0f) ? scale.x : scale.x / parentScale.x,
+            Mathf.Approximately(parentScale.y, 0f) ? scale.y : scale.y / parentScale.y,
+            Mathf.Approximately(parentScale.z, 0f) ? scale.z : scale.z / parentScale.z);
 
-            var itemIndex = m_actions.EquippedItemIndex;
-            if (itemIndex < 0) return null;
+        /// <summary>
+        /// The floor model UHFPS's own database names for this player item, or <c>null</c> if it names none.
+        /// </summary>
+        /// <remarks>Fallback for items missing from <see cref="AvatarHeldItemModels"/>, e.g. ones added since it was built.</remarks>
+        private GameObject DatabaseModelFor(int itemIndex)
+        {
+            if (itemIndex < 0 || m_database == null || m_database.inventoryDatabase == null) return null;
 
             foreach (var section in m_database.inventoryDatabase.Sections)
             {

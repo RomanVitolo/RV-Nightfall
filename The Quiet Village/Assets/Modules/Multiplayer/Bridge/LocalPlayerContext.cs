@@ -27,6 +27,7 @@ namespace Modules.Multiplayer.Bridge
         private static Inventory s_inventory;
         private static PlayerPresenceManager s_presence;
         private static PlayerManager s_playerManager;
+        private static JumpscareManager s_jumpscareManager;
 
         /// <summary>Raised when a local player becomes available, for code that started earlier.</summary>
         public static event Action Ready;
@@ -44,6 +45,17 @@ namespace Modules.Multiplayer.Bridge
         public static PlayerPresenceManager Presence => s_presence != null ? s_presence : null;
 
         public static PlayerManager PlayerManager => s_playerManager != null ? s_playerManager : null;
+
+        /// <summary>Plays jumpscares on this client's screen, or <c>null</c> before the player spawns.</summary>
+        public static JumpscareManager JumpscareManager => s_jumpscareManager != null ? s_jumpscareManager : null;
+
+        /// <summary>Whether a collider or component belongs to this client's player, rather than a teammate's body.</summary>
+        /// <remarks>
+        /// For world triggers whose effect is this client's alone, such as a jumpscare. A remote copy's collider is
+        /// normally off, but a teammate's body entering a trigger must never play its effect on this screen.
+        /// </remarks>
+        public static bool IsLocalPlayer(Component component) =>
+            component != null && s_player != null && component.transform.IsChildOf(s_player.transform);
 
         /// <summary>This client's camera, or <c>null</c> before the player spawns.</summary>
         public static Camera PlayerCamera
@@ -118,6 +130,7 @@ namespace Modules.Multiplayer.Bridge
             s_inventory = localPlayer.GetComponentInChildren<Inventory>(true);
             s_presence = localPlayer.GetComponentInChildren<PlayerPresenceManager>(true);
             s_playerManager = localPlayer.GetComponentInChildren<PlayerManager>(true);
+            s_jumpscareManager = localPlayer.GetComponentInChildren<JumpscareManager>(true);
 
             WarnIfMissing(s_gameManager, nameof(GameManager));
             WarnIfMissing(s_inventory, nameof(Inventory));
@@ -135,6 +148,7 @@ namespace Modules.Multiplayer.Bridge
             s_inventory = null;
             s_presence = null;
             s_playerManager = null;
+            s_jumpscareManager = null;
         }
 
         private static void WarnIfMissing(Component component, string name)

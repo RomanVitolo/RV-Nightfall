@@ -60,6 +60,59 @@ namespace Modules.Multiplayer.Bridge.World
         /// <summary>True while a resumed save is still being applied, so players wait before spawning.</summary>
         internal bool IsResuming => ResumedSave != null;
 
+        // Server: game systems outside World Sync that join the save.
+        private readonly List<IWorldSaveParticipant> m_participants = new();
+
+        /// <summary>Server: includes a participant's state in every save from now on.</summary>
+        public void RegisterSaveParticipant(IWorldSaveParticipant participant)
+        {
+            if (participant != null && !m_participants.Contains(participant)) m_participants.Add(participant);
+        }
+
+        public void UnregisterSaveParticipant(IWorldSaveParticipant participant) => m_participants.Remove(participant);
+
+        /// <summary>A participant's entry in the save this room resumed, for it to restore as it spawns.</summary>
+        /// <remarks>
+        /// Static, read from the held save rather than from this level's WorldSync, so a participant spawning before or
+        /// after WorldSync gets the same answer.
+        /// </remarks>
+        /// <returns><c>false</c> for a new game, or a save without this participant.</returns>
+        public static bool TryGetResumedState(string saveKey, out JToken state)
+        {
+            state = null;
+            var save = ResumedSave;
+            return save != null && !string.IsNullOrEmpty(saveKey)
+                                && save.Participants.TryGetValue(saveKey, out state) && state != null;
+        }
+
+        /// <summary>
+        /// Server: the health a client's player had when the resumed game was saved.
+        /// </summary>
+        /// <remarks>
+        /// Health is decided by the server, so the saved value has to start there. The owner also restores it into its
+        /// local UHFPS health with the rest of its save slice; were the server not given it, the owner's HUD would show the
+        /// saved value until the first hit put back the server's starting health.
+        /// </remarks>
+        /// <returns><c>false</c> for a new game, or a player new to the save.</returns>
+        internal bool TryGetSavedHealth(ulong clientId, out int health)
+        {
+            health = 0;
+            var save = ResumedSave;
+            if (!IsServer || save == null) return false;
+
+            var account = clientId == NetworkManager.LocalClientId
+                ? LocalAccountId()
+                : m_accounts.TryGetValue(clientId, out var known) ? known : null;
+
+            if (string.IsNullOrEmpty(account) || !save.Players.TryGetValue(account, out var slice)) return false;
+
+            var saved = slice?["localData"]?["health"];
+            if (saved == null || saved.Type != JTokenType.Integer && saved.Type != JTokenType.Float) return false;
+
+            health = (int)saved;
+            return true;
+        }
+
         // ---- Resuming ---------------------------------------------------------------------------------
 
         private void OnSavesSpawn()
@@ -302,6 +355,14 @@ namespace Modules.Multiplayer.Bridge.World
             var save = new MultiplayerSave { World = CaptureWorldState() };
             foreach (var player in m_gathered) save.Players[player.Key] = player.Value;
             foreach (var drop in LiveDrops()) save.Drops.Add(drop);
+
+            foreach (var participant in m_participants)
+            {
+                if (participant == null || string.IsNullOrEmpty(participant.SaveKey)) continue;
+
+                var state = participant.CaptureSaveState();
+                if (state != null) save.Participants[participant.SaveKey] = state;
+            }
 
             save.TimePlayed = (ResumedSave?.TimePlayed ?? 0f) + Time.timeSinceLevelLoad;
 

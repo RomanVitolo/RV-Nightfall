@@ -30,6 +30,9 @@ namespace Modules.Multiplayer.Bridge.Saves
         /// <summary>Items lying in the level when the game was saved.</summary>
         public readonly List<DroppedItem> Drops = new();
 
+        /// <summary>State of game systems outside World Sync, keyed by <see cref="World.IWorldSaveParticipant.SaveKey"/>.</summary>
+        public readonly Dictionary<string, JToken> Participants = new();
+
         /// <summary>One item on the ground: what it is, how many, and where it lies.</summary>
         public struct DroppedItem
         {
@@ -59,13 +62,20 @@ namespace Modules.Multiplayer.Bridge.Saves
                 });
             }
 
+            var participants = new JObject();
+            foreach (var participant in Participants)
+            {
+                if (participant.Value != null) participants[participant.Key] = participant.Value;
+            }
+
             return new JObject
             {
                 ["id"] = saveId,
                 ["timePlayed"] = TimePlayed,
                 ["worldState"] = World ?? new JObject(),
                 ["players"] = players,
-                ["drops"] = drops
+                ["drops"] = drops,
+                ["participants"] = participants
             };
         }
 
@@ -82,6 +92,15 @@ namespace Modules.Multiplayer.Bridge.Saves
                 foreach (var player in players)
                 {
                     save.Players[player.Key] = player.Value;
+                }
+            }
+
+            // Absent from saves made before participants existed; those resume with every participant's defaults.
+            if (state["participants"] is JObject participants)
+            {
+                foreach (var participant in participants)
+                {
+                    save.Participants[participant.Key] = participant.Value;
                 }
             }
 

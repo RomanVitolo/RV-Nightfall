@@ -41,6 +41,7 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
         private const string SessionType = "the-quiet-village";
 
         private const string DisplayNameProperty = "displayName";
+        private const string LevelProperty = "level";
         private const int QueryPageSize = 50;
 
         private ISession m_session;
@@ -85,6 +86,17 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
             : string.Empty;
 
         public string RoomName => m_session != null ? m_session.Name : string.Empty;
+
+        /// <summary>Scene name of the level the host chose for this room, or empty if none was set.</summary>
+        /// <remarks>
+        /// A room property rather than something the host keeps to itself, so everyone waiting sees where they are
+        /// going. The host is still the only one who loads it: Netcode's scene event takes every client along.
+        /// </remarks>
+        public string RoomLevel =>
+            m_session?.Properties != null && m_session.Properties.TryGetValue(LevelProperty, out var property)
+                                          && property != null
+                ? property.Value ?? string.Empty
+                : string.Empty;
 
         /// <summary>Code other players can type to join this room. Empty until connected.</summary>
         public string JoinCode => m_session != null ? m_session.Code : string.Empty;
@@ -203,7 +215,9 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
 
         /// <summary>Creates a room and becomes its host.</summary>
         /// <param name="password">Empty for an open room.</param>
-        public async Task CreateRoomAsync(string displayName, string roomName, int maxPlayers, string password)
+        /// <param name="level">Scene name of the level to play, published as <see cref="RoomLevel"/>.</param>
+        public async Task CreateRoomAsync(string displayName, string roomName, int maxPlayers, string password,
+            string level = null)
         {
             if (IsBusy || IsConnected) return;
 
@@ -229,7 +243,8 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
                     MaxPlayers = Mathf.Clamp(maxPlayers, MinRoomSize, MaxRoomSize),
                     IsPrivate = false,
                     Password = string.IsNullOrEmpty(password) ? null : password,
-                    PlayerProperties = PlayerPropertiesFor(displayName)
+                    PlayerProperties = PlayerPropertiesFor(displayName),
+                    SessionProperties = RoomPropertiesFor(level)
                 }.WithRelayNetwork();
 
                 AttachSession(await MultiplayerService.Instance.CreateSessionAsync(options));
@@ -341,6 +356,17 @@ namespace Modules.Multiplayer.Scripts.Runtime.Sessions
                 Debug.LogError($"{nameof(SessionService)} — {LastError}", this);
                 return false;
             }
+        }
+
+        private static Dictionary<string, SessionProperty> RoomPropertiesFor(string level)
+        {
+            var properties = new Dictionary<string, SessionProperty>();
+
+            // Member visibility, like names: only people in the room need to know where it is headed.
+            if (!string.IsNullOrEmpty(level))
+                properties[LevelProperty] = new SessionProperty(level, VisibilityPropertyOptions.Member);
+
+            return properties;
         }
 
         private static Dictionary<string, PlayerProperty> PlayerPropertiesFor(string displayName)

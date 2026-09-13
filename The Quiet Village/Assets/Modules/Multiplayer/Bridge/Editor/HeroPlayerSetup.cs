@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Modules.Multiplayer.Bridge;
 using Modules.Multiplayer.Scripts.Runtime.Player;
@@ -102,13 +103,16 @@ namespace Modules.Multiplayer.Bridge.EditorTools
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
 
-            ResetSpawnPoints();
+            var scenePath = LevelSetup.OpenLevelScenePath("Reset Player Spawn Points");
+            if (scenePath == null) return;
+
+            ResetSpawnPoints(scenePath);
         }
 
-        /// <summary>Command-line form of <see cref="ResetSpawnPointsFromMenu"/>.</summary>
+        /// <summary>Command-line form of <see cref="ResetSpawnPointsFromMenu"/>, for <c>-levelScene &lt;path&gt;</c>.</summary>
         public static void ResetSpawnPointsFromCommandLine()
         {
-            var succeeded = ResetSpawnPoints();
+            var succeeded = ResetSpawnPoints(LevelSetup.CommandLineScenePath());
 
             if (Application.isBatchMode) EditorApplication.Exit(succeeded ? 0 : 1);
         }
@@ -294,12 +298,12 @@ namespace Modules.Multiplayer.Bridge.EditorTools
             Undo.DestroyObjectImmediate(component);
         }
 
-        private static bool ResetSpawnPoints()
+        private static bool ResetSpawnPoints(string scenePath)
         {
-            var scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
             if (!scene.IsValid())
             {
-                Debug.LogError($"Reset Spawn Points: could not open {ScenePath}.");
+                Debug.LogError($"Reset Spawn Points: could not open {scenePath}.");
                 return false;
             }
 
@@ -744,7 +748,7 @@ namespace Modules.Multiplayer.Bridge.EditorTools
         /// Matched by name once, at author time. If the scene renames them, re-point the two fields in
         /// the Inspector — the runtime only reads the serialized references, never the names.
         /// </remarks>
-        private static void ConfigureSceneReferences(StringBuilder report)
+        internal static void ConfigureSceneReferences(StringBuilder report)
         {
             if (Object.FindFirstObjectByType<SceneGameReferences>(FindObjectsInactive.Include) != null)
             {
@@ -785,7 +789,7 @@ namespace Modules.Multiplayer.Bridge.EditorTools
         /// <summary>
         /// Creates spawn points on walkable ground, since the prefab's own origin is empty space.
         /// </summary>
-        private static void ConfigureSpawnPoints(StringBuilder report)
+        internal static void ConfigureSpawnPoints(StringBuilder report)
         {
             if (Object.FindFirstObjectByType<PlayerSpawnPoints>(FindObjectsInactive.Include) != null)
             {
@@ -858,7 +862,13 @@ namespace Modules.Multiplayer.Bridge.EditorTools
                 var candidates = RaycastFloorCandidates();
                 if (candidates.Count == 0) return results;
 
-                var centre = candidates[candidates.Count / 2];
+                // The hit nearest the middle of everything hit. Not the middle of the list: the grid is ordered row by
+                // row, so its middle entry sits at one edge of the level.
+                var average = Vector3.zero;
+                foreach (var candidate in candidates) average += candidate;
+                average /= candidates.Count;
+
+                var centre = candidates.OrderBy(candidate => Vector3.SqrMagnitude(candidate - average)).First();
                 for (var i = 0; i < count; i++)
                 {
                     var angle = i * Mathf.PI * 2f / count;
@@ -966,7 +976,7 @@ namespace Modules.Multiplayer.Bridge.EditorTools
         /// <summary>
         /// Removes the unpacked HEROPLAYER copy and clears the now-dangling presence reference.
         /// </summary>
-        private static void RemoveScenePlayer(StringBuilder report)
+        internal static void RemoveScenePlayer(StringBuilder report)
         {
             foreach (var playerManager in Object.FindObjectsByType<PlayerManager>(
                          FindObjectsInactive.Include, FindObjectsSortMode.None))

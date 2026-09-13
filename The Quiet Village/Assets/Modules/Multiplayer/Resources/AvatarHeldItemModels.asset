@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1046fbadb6576646b76a2261e0f6ba7, type: 3}
+  m_Name: AvatarHeldItemModels
+  m_EditorClassIdentifier: Assembly-CSharp::Modules.Multiplayer.Bridge.AvatarHeldItemModels
+  m_entries:
+  - Title: Camcorder
+    PlayerItemIndex: 0
+    Model: {fileID: 5287173957645129232, guid: cfc20b17f9cfc3e4aa8832a94bf7d5d0, type: 3}
+    GripPosition: {x: 0, y: 0, z: 0.04}
+    GripRotation: {x: 0, y: 90, z: 90}
+  - Title: Lighter
+    PlayerItemIndex: 1
+    Model: {fileID: 2848419488284247375, guid: 80687c51cef548b4e802b26c71ca2cb9, type: 3}
+    GripPosition: {x: 0, y: 0, z: 0.04}
+    GripRotation: {x: 0, y: 90, z: 90}
+  - Title: Candle
+    PlayerItemIndex: 2
+    Model: {fileID: 3867298722869997882, guid: 23c77a1b51031d642ba5a0cff68e503f, type: 3}
+    GripPosition: {x: 0, y: 0, z: 0.04}
+    GripRotation: {x: 0, y: 90, z: 90}
+  - Title: Pistol
+    PlayerItemIndex: 3
+    Model: {fileID: 5630879139653032930, guid: 949f1bf0326b303498dbccffae64d28a, type: 3}
+    GripPosition: {x: 0, y: 0, z: 0.04}
+    GripRotation: {x: 0, y: 90, z: 90}
+  - Title: Flashlight
+    PlayerItemIndex: 4
+    Model: {fileID: 4774218951923926093, guid: 9fd6ae20373da1a45b5044bf1e4348bf, type: 3}
+    GripPosition: {x: 0, y: 0, z: 0.04}
+    GripRotation: {x: 0, y: 90, z: 90}
+  - Title: Lantern
+    PlayerItemIndex: 5
+    Model: {fileID: 2920495483211321875, guid: a08209674139cfd46bb2f6c4b6297c7c, type: 3}
+    GripPosition: {x: 0, y: 0, z: 0.04}
+    GripRotation: {x: 0, y: 90, z: 90}
+  - Title: Axe
+    PlayerItemIndex: 6
+    Model: {fileID: 5197867031315965539, guid: b0f29def8563d5e408fb613d63f831a1, type: 3}
+    GripPosition: {x: 0, y: 0, z: 0.04}
+    GripRotation: {x: 0, y: 90, z: 90}
+  - Title: Pocket Knife
+    PlayerItemIndex: 7
+    Model: {fileID: 1068086958013405658, guid: 25c5bc74684d6db4786625e7c33b8fd6, type: 3}
+    GripPosition: {x: 0, y: 0, z: 0.04}
+    GripRotation: {x: 0, y: 90, z: 90}
+  - Title: Thermometer
+    PlayerItemIndex: 8
+    Model: {fileID: 2009994651534844118, guid: 787424f55358c0b4bbff050b720c040d, type: 3}
+    GripPosition: {x: 0, y: 0, z: 0.04}
+    GripRotation: {x: 0, y: 90, z: 90}
+  - Title: EMF Meter
+    PlayerItemIndex: 9
+    Model: {fileID: 6477842331385231235, guid: aa61d70dbb6644844ae75d240491c548, type: 3}
+    GripPosition: {x: 0, y: 0, z: 0.04}
+    GripRotation: {x: 0, y: 90, z: 90}

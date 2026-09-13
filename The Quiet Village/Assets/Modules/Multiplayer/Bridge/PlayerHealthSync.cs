@@ -77,6 +77,13 @@ namespace Modules.Multiplayer.Bridge
             if (IsServer)
             {
                 var start = m_playerHealth != null ? (int)m_playerHealth.StartHealth : m_maxHealth;
+
+                // A resumed game starts each player at the health they were saved with. The client's account reached
+                // the host before this spawn, which the save's spawn gate waits for. At least 1: a save made after
+                // someone died must not resume them as a corpse with nothing to spectate.
+                var world = FindAnyObjectByType<World.WorldSync>();
+                if (world != null && world.TryGetSavedHealth(OwnerClientId, out var saved)) start = Mathf.Max(1, saved);
+
                 m_health.Value = Mathf.Clamp(start, 0, m_maxHealth);
             }
 

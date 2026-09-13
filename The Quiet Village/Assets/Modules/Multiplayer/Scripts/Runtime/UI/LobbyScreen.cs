@@ -58,6 +58,7 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
         private Button m_joinCodeButton;
 
         private Label m_roomName;
+        private Label m_roomLevel;
         private Label m_roomPlayers;
         private Label m_roomCode;
         private Label m_roomPassword;
@@ -71,6 +72,9 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
         private SliderInt m_createMaxPlayers;
         private TextField m_createPassword;
         private Label m_createError;
+        private DropdownField m_createLevel;
+        private Label m_createLevelHint;
+        private readonly List<string> m_levelScenes = new();
         private DropdownField m_createSave;
         private Label m_createSaveHint;
         private readonly List<SaveEntry> m_saves = new();
@@ -193,6 +197,12 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
             m_joinCodeButton = root.Q<Button>("join-code-button");
 
             m_roomName = root.Q<Label>("room-name");
+
+            // Not required: an older LobbyScreen.uxml without level controls still plays the first level.
+            m_roomLevel = root.Q<Label>("room-level");
+            m_createLevel = root.Q<DropdownField>("create-level");
+            m_createLevelHint = root.Q<Label>("create-level-hint");
+
             m_roomPlayers = root.Q<Label>("room-players");
             m_roomCode = root.Q<Label>("room-code");
             m_roomPassword = root.Q<Label>("room-password");
@@ -284,6 +294,10 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
             m_joinConfirm.clicked += ConfirmJoin;
 
             m_nameField.RegisterCallback<FocusOutEvent>(_ => SaveDisplayName());
+
+            // A save decides its own level, so picking one moves and locks the level picker to match.
+            m_createSave?.RegisterValueChangedCallback(_ => RefreshLevelPicker());
+            m_createLevel?.RegisterValueChangedCallback(_ => RefreshLevelPicker());
         }
 
         private void Subscribe()
@@ -400,6 +414,11 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
             m_playerList.Rebuild();
 
             m_roomName.text = m_sessions.RoomName;
+            if (m_roomLevel != null)
+                m_roomLevel.text = m_flow != null && !string.IsNullOrEmpty(m_flow.RoomLevel)
+                    ? m_flow.DisplayNameOf(m_flow.RoomLevel)
+                    : string.Empty;
+
             m_roomPlayers.text = $"{m_sessions.PlayerCount} / {m_sessions.MaxPlayers} players";
             m_roomCode.text = m_sessions.JoinCode;
             SetHidden(m_roomPassword, !m_sessions.HasPassword);
@@ -582,6 +601,7 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
             m_createPassword.value = string.Empty;
             m_createError.text = string.Empty;
 
+            FillLevelPicker();
             _ = RefreshSavesAsync();
 
             SetHidden(m_createDialog, false);
@@ -615,10 +635,11 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
             m_saves.AddRange(saves);
 
             var choices = new List<string> { NewGameChoice };
-            foreach (var save in m_saves) choices.Add(save.Label);
+            foreach (var save in m_saves) choices.Add($"{LevelName(save.Level)}  ·  {save.Label}");
 
             m_createSave.choices = choices;
             m_createSave.index = 0;
+            RefreshLevelPicker();
 
             if (m_createSaveHint != null)
                 m_createSaveHint.text = m_saves.Count > 0
@@ -626,11 +647,98 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
                     : "No saved games yet.";
         }
 
+        /// <summary>Lists the catalog's levels in the picker, keeping the one already chosen if it is still there.</summary>
+        private void FillLevelPicker()
+        {
+            if (m_createLevel == null) return;
+
+            var previous = SelectedPickerLevel();
+
+            m_levelScenes.Clear();
+            var names = new List<string>();
+
+            var catalog = m_flow != null ? m_flow.Levels : null;
+            if (catalog != null)
+            {
+                foreach (var level in catalog.Levels)
+                {
+                    if (level == null || string.IsNullOrEmpty(level.SceneName)) continue;
+
+                    m_levelScenes.Add(level.SceneName);
+                    names.Add(catalog.DisplayNameOf(level.SceneName));
+                }
+            }
+
+            m_createLevel.choices = names;
+            var index = m_levelScenes.IndexOf(previous);
+            m_createLevel.index = index >= 0 ? index : m_levelScenes.Count > 0 ? 0 : -1;
+
+            RefreshLevelPicker();
+        }
+
+        /// <summary>Follows the chosen save's level when there is one, and describes the level either way.</summary>
+        private void RefreshLevelPicker()
+        {
+            if (m_createLevel == null) return;
+
+            var save = ChosenSave();
+            if (save.HasValue)
+            {
+                var index = m_levelScenes.IndexOf(save.Value.Level);
+                if (index >= 0) m_createLevel.SetValueWithoutNotify(m_createLevel.choices[index]);
+            }
+
+            // The save's level is not the host's to change: its world only fits the level it was made in.
+            m_createLevel.SetEnabled(!save.HasValue);
+
+            if (m_createLevelHint == null) return;
+
+            var level = ChosenLevel();
+            var catalogLevel = m_flow != null && m_flow.Levels != null ? m_flow.Levels.Find(level) : null;
+
+            m_createLevelHint.text = save.HasValue && catalogLevel == null
+                ? $"This save was made in '{level}', which is no longer in the level list."
+                : catalogLevel != null ? catalogLevel.Description ?? string.Empty
+                : string.Empty;
+        }
+
+        /// <summary>The save picked in the dialog, or <c>null</c> for a new game.</summary>
+        private SaveEntry? ChosenSave()
+        {
+            var chosen = m_createSave != null ? m_createSave.index - 1 : -1;
+            return chosen >= 0 && chosen < m_saves.Count ? m_saves[chosen] : null;
+        }
+
+        private string SelectedPickerLevel()
+        {
+            if (m_createLevel == null) return string.Empty;
+
+            var index = m_createLevel.index;
+            return index >= 0 && index < m_levelScenes.Count ? m_levelScenes[index] : string.Empty;
+        }
+
+        /// <summary>The level the room will play: the save's own, or the one picked.</summary>
+        private string ChosenLevel()
+        {
+            var save = ChosenSave();
+            if (save.HasValue) return save.Value.Level;
+
+            var picked = SelectedPickerLevel();
+            if (!string.IsNullOrEmpty(picked)) return picked;
+
+            // No picker in this layout: the flow's own default.
+            return m_flow != null ? m_flow.RoomLevel : string.Empty;
+        }
+
+        private string LevelName(string sceneName) =>
+            m_flow != null ? m_flow.DisplayNameOf(sceneName) : sceneName;
+
         private void ConfirmCreate()
         {
             if (m_sessions == null) return;
 
             var invalid = SessionService.ValidateRoomSettings(m_createName.value, m_createPassword.value);
+            if (invalid == null && m_flow != null) invalid = m_flow.ValidateLevel(ChosenLevel());
             if (invalid != null)
             {
                 m_createError.text = invalid;
@@ -646,14 +754,15 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
         private async Task CreateRoomAsync()
         {
             var catalog = SaveCatalog.Active;
-            var chosen = m_createSave != null ? m_createSave.index - 1 : -1;
+            var save = ChosenSave();
+            var level = ChosenLevel();
 
             if (catalog != null)
             {
-                if (chosen >= 0 && chosen < m_saves.Count)
+                if (save.HasValue)
                 {
                     // Read now, in the lobby: a damaged save should not be found halfway into starting a game.
-                    if (!await catalog.ResumeAsync(m_saves[chosen].Folder))
+                    if (!await catalog.ResumeAsync(save.Value.Folder))
                     {
                         m_message = "That save could not be read, so it was not loaded.";
                         RefreshAll();
@@ -667,7 +776,7 @@ namespace Modules.Multiplayer.Scripts.Runtime.UI
             }
 
             await m_sessions.CreateRoomAsync(DisplayName, m_createName.value, m_createMaxPlayers.value,
-                m_createPassword.value);
+                m_createPassword.value, level);
         }
 
         /// <param name="room">The listed room needing a password, or <c>null</c> to join by code.</param>

@@ -1,3 +1,4 @@
+using Modules.Multiplayer.Scripts.Runtime.Levels;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -20,8 +21,8 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
         [Tooltip("Networked player prefab. Must be registered in the NetworkManager's prefab list.")]
         [SerializeField] private GameObject m_playerPrefab;
 
-        [Tooltip("Players are only spawned when this scene finishes loading.")]
-        [SerializeField] private string m_gameplaySceneName = "GameplayScene";
+        [Tooltip("Players are only spawned when one of these levels finishes loading.")]
+        [SerializeField] private LevelCatalog m_levels;
 
         private NetworkSceneManager m_hookedSceneManager;
 
@@ -33,6 +34,13 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
             {
                 Debug.LogError(
                     $"{nameof(NetworkPlayerSpawner)}: the player prefab is missing or has no NetworkObject; nobody will spawn. " +
+                    "Re-run Tools > Multiplayer > Set Up Lobby.", this);
+            }
+
+            if (m_levels == null)
+            {
+                Debug.LogError(
+                    $"{nameof(NetworkPlayerSpawner)}: no {nameof(LevelCatalog)} assigned, so no level spawns players. " +
                     "Re-run Tools > Multiplayer > Set Up Lobby.", this);
             }
         }
@@ -81,7 +89,8 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
         {
             if (sceneEvent == null || !m_networkManager.IsServer) return;
             if (sceneEvent.SceneEventType != SceneEventType.LoadComplete) return;
-            if (sceneEvent.SceneName != m_gameplaySceneName) return;
+            // Any level, not only the one the room started in: a restart reloads whichever is being played.
+            if (m_levels == null || !m_levels.Contains(sceneEvent.SceneName)) return;
 
             SpawnPlayerFor(sceneEvent.ClientId);
         }

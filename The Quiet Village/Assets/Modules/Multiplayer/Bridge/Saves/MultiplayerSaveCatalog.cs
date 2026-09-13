@@ -41,8 +41,9 @@ namespace Modules.Multiplayer.Bridge.Saves
                     ? $"{(int)save.TimePlayed.TotalHours}h {save.TimePlayed.Minutes}m"
                     : $"{save.TimePlayed.Minutes}m";
 
+                // The label leaves the level out: the lobby names it from the level list, which knows its display name.
                 entries.Add(new SaveEntry(save.Foldername,
-                    $"{save.Scene}  ·  {save.TimeSaved:yyyy-MM-dd HH:mm}  ·  {played} played"));
+                    $"{save.TimeSaved:yyyy-MM-dd HH:mm}  ·  {played} played", save.Scene));
             }
 
             return entries;

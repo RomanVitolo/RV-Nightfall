@@ -45,6 +45,8 @@
                 <ui:Label name="room-players" class="mp-muted" />
             </ui:VisualElement>
             <ui:VisualElement class="mp-room-meta">
+                <ui:Label text="Level" class="mp-muted" />
+                <ui:Label name="room-level" class="mp-room-level" />
                 <ui:Label text="Room code" class="mp-muted" />
                 <ui:Label name="room-code" class="mp-code" />
                 <ui:Label name="room-password" text="Password protected" class="mp-badge" />
@@ -67,6 +69,8 @@
                 <ui:TextField name="create-password" label="Password (optional)" class="mp-field" />
                 <ui:DropdownField name="create-save" label="Start from" class="mp-field" />
                 <ui:Label name="create-save-hint" class="mp-muted" />
+                <ui:DropdownField name="create-level" label="Level" class="mp-field" />
+                <ui:Label name="create-level-hint" class="mp-muted" />
                 <ui:Label name="create-error" class="mp-error" />
                 <ui:VisualElement class="mp-actions">
                     <ui:Button name="create-cancel" text="Cancel" class="mp-button" />

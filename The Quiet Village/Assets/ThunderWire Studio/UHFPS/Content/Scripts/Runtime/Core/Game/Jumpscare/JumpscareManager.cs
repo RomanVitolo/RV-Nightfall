@@ -66,16 +66,19 @@ namespace UHFPS.Runtime
         {
             playerPresence = GetComponent<PlayerPresenceManager>();
             gameManager = GetComponent<GameManager>();
-
-            playerManager = playerPresence.PlayerManager;
-            lookController = playerPresence.LookController;
-
-            jumpscareDirect = playerManager.GetComponent<JumpscareDirect>();
-            fearTentacles = gameManager.GetStack<FearTentacles>();
         }
 
         private void Start()
         {
+            // MULTIPLAYER PATCH: moved from Awake. On the player prefab, PlayerPresenceManager's Awake (which sets its
+            // Player) may run after this one, and the post-processing volume behind GetStack is only assigned in
+            // OnNetworkSpawn. Start follows both. Remote copies are disabled, so they never resolve these at all.
+            playerManager = playerPresence.PlayerManager;
+            lookController = playerPresence.LookController;
+
+            jumpscareDirect = playerManager.GetComponent<JumpscareDirect>();
+            fearTentacles = gameManager.GlobalPPVolume != null ? gameManager.GetStack<FearTentacles>() : null;
+
             wobbleMotion = playerManager.MotionController.GetDefaultMotion<WobbleMotion>();
         }
 
@@ -131,7 +134,8 @@ namespace UHFPS.Runtime
             }
 
             // Fear / Tentacles
-            if (jumpscare.InfluenceFear)
+            // MULTIPLAYER PATCH: skipped rather than thrown when the scene gave the player no post-processing volume.
+            if (jumpscare.InfluenceFear && fearTentacles != null)
             {
                 fearTentacles.TentaclesPosition.value = Mathf.Lerp(0f, 0.2f, jumpscare.TentaclesIntensity);
                 fearTentacles.TentaclesSpeed.value = jumpscare.TentaclesSpeed;

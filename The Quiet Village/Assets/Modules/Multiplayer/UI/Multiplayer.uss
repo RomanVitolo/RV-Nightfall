@@ -203,6 +203,12 @@
     margin: 4px 0 20px 0;
 }
 
+.mp-room-level {
+    margin: 0 24px 0 8px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
 .mp-code {
     margin-left: 8px;
     -unity-font-style: bold;

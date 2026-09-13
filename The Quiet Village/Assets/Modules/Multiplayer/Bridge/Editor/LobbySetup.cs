@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Modules.Multiplayer.Scripts.Runtime.Flow;
+using Modules.Multiplayer.Scripts.Runtime.Levels;
 using Modules.Multiplayer.Scripts.Runtime.Sessions;
 using Modules.Multiplayer.Scripts.Runtime.UI;
 using Unity.Netcode;
@@ -56,9 +57,7 @@ namespace Modules.Multiplayer.Bridge.EditorTools
 
         private static readonly Color LobbyBackground = new(0.043f, 0.047f, 0.059f);
 
-        private static string LobbySceneName => Path.GetFileNameWithoutExtension(LobbyScenePath);
-
-        private static string GameplaySceneName => Path.GetFileNameWithoutExtension(HeroPlayerSetup.ScenePath);
+        internal static string LobbySceneName => Path.GetFileNameWithoutExtension(LobbyScenePath);
 
         [MenuItem("Tools/Multiplayer/Set Up Lobby")]
         private static void RunFromMenu()
@@ -140,8 +139,9 @@ namespace Modules.Multiplayer.Bridge.EditorTools
 
             EnsurePanelSettings(LobbyPanelSettingsPath, theme, 0, report);
             var overlayPanel = EnsurePanelSettings(OverlayPanelSettingsPath, theme, OverlaySortingOrder, report);
+            var levels = LevelSetup.EnsureCatalog(report);
 
-            if (BuildRootPrefab(playerPrefab, overlayPanel, overlayUxml, report) == null)
+            if (BuildRootPrefab(playerPrefab, overlayPanel, overlayUxml, levels, report) == null)
             {
                 Debug.LogError($"Lobby Setup aborted.\n{report}");
                 return false;
@@ -209,8 +209,8 @@ namespace Modules.Multiplayer.Bridge.EditorTools
 
         // ---- Persistent root -------------------------------------------------------------------------
 
-        private static GameObject BuildRootPrefab(
-            GameObject playerPrefab, PanelSettings overlayPanel, VisualTreeAsset overlayUxml, StringBuilder report)
+        private static GameObject BuildRootPrefab(GameObject playerPrefab, PanelSettings overlayPanel,
+            VisualTreeAsset overlayUxml, LevelCatalog levels, StringBuilder report)
         {
             if (AssetDatabase.LoadAssetAtPath<GameObject>(RootPrefabPath) == null)
             {
@@ -239,12 +239,12 @@ namespace Modules.Multiplayer.Bridge.EditorTools
                 var flow = HeroPlayerSetup.GetOrAddComponent<SessionFlow>(root);
                 HeroPlayerSetup.AssignSerializedReference(flow, "m_sessions", sessions);
                 AssignString(flow, "m_lobbySceneName", LobbySceneName);
-                AssignString(flow, "m_gameplaySceneName", GameplaySceneName);
+                HeroPlayerSetup.AssignSerializedReference(flow, "m_levels", levels);
 
                 var spawner = HeroPlayerSetup.GetOrAddComponent<NetworkPlayerSpawner>(root);
                 HeroPlayerSetup.AssignSerializedReference(spawner, "m_networkManager", networkManager);
                 HeroPlayerSetup.AssignSerializedReference(spawner, "m_playerPrefab", playerPrefab);
-                AssignString(spawner, "m_gameplaySceneName", GameplaySceneName);
+                HeroPlayerSetup.AssignSerializedReference(spawner, "m_levels", levels);
 
                 var document = HeroPlayerSetup.GetOrAddComponent<UIDocument>(root);
                 AssignDocument(document, overlayPanel, overlayUxml);
@@ -472,25 +472,7 @@ namespace Modules.Multiplayer.Bridge.EditorTools
                 return false;
             }
 
-            foreach (var networkManager in Object.FindObjectsByType<NetworkManager>(FindObjectsInactive.Include))
-            {
-                RemoveOwnedObject(networkManager.gameObject, report, typeof(NetworkManager), typeof(UnityTransport));
-            }
-
-            foreach (var sessions in Object.FindObjectsByType<SessionService>(FindObjectsInactive.Include))
-            {
-                // The retired SessionDebugUI shows up here as a missing script, which is expected.
-                RemoveOwnedObject(sessions.gameObject, report, typeof(SessionService));
-            }
-
-            var guard = Object.FindAnyObjectByType<SessionSceneGuard>(FindObjectsInactive.Include);
-            if (guard == null)
-            {
-                guard = new GameObject("SessionSceneGuard").AddComponent<SessionSceneGuard>();
-                report.AppendLine("Added SessionSceneGuard to GameplayScene.");
-            }
-
-            AssignString(guard, "m_lobbySceneName", LobbySceneName);
+            LevelSetup.ConfigureSessionObjects(scene.name, report);
 
             EditorSceneManager.MarkSceneDirty(scene);
             if (!EditorSceneManager.SaveScene(scene))
@@ -500,38 +482,6 @@ namespace Modules.Multiplayer.Bridge.EditorTools
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// Deletes a GameObject this tooling created, or only its known components if anything else lives on it.
-        /// </summary>
-        private static void RemoveOwnedObject(GameObject target, StringBuilder report, params Type[] ownedTypes)
-        {
-            if (target == null) return;
-
-            var foreign = target.transform.childCount > 0;
-            var owned = new List<Component>();
-
-            foreach (var component in target.GetComponents<Component>())
-            {
-                // Null is a missing script: something deleted from the project, not someone's live work.
-                if (component == null || component is Transform) continue;
-
-                if (ownedTypes.Any(type => type.IsInstanceOfType(component))) owned.Add(component);
-                else foreign = true;
-            }
-
-            if (!foreign)
-            {
-                report.AppendLine($"Removed '{target.name}' from GameplayScene; it now lives on MultiplayerRoot.");
-                Object.DestroyImmediate(target);
-                return;
-            }
-
-            // Something else shares the object; take only what this tooling put there.
-            GameObjectUtility.RemoveMonoBehavioursWithMissingScript(target);
-            foreach (var component in owned) Object.DestroyImmediate(component);
-            report.AppendLine($"Removed network components from '{target.name}', which also holds other components.");
         }
 
         // ---- Build settings --------------------------------------------------------------------------
@@ -556,10 +506,7 @@ namespace Modules.Multiplayer.Bridge.EditorTools
 
             EditorBuildSettings.scenes = scenes.ToArray();
 
-            if (!scenes.Any(entry => entry.path == HeroPlayerSetup.ScenePath && entry.enabled))
-            {
-                report.AppendLine($"WARNING: {HeroPlayerSetup.ScenePath} is not enabled in Build Settings; the host cannot load it.");
-            }
+            LevelSetup.ReportLevelsMissingFromBuild(report);
         }
 
         // ---- Helpers ---------------------------------------------------------------------------------

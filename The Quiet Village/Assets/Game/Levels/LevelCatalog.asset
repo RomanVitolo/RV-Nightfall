@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 612cc173dfcd9f14180adb72cb8c0769, type: 3}
+  m_Name: LevelCatalog
+  m_EditorClassIdentifier: Modules.Multiplayer.Runtime::Modules.Multiplayer.Scripts.Runtime.Levels.LevelCatalog
+  m_levels:
+  - DisplayName: Forest Village
+    SceneName: ForestVillage
+    Description: A chapel in a clearing, cottages in the trees. Four openings to
+      hold.
+  - DisplayName: Coastal Town
+    SceneName: CoastalTown
+    Description: A harbour warehouse with five ways in. Fewer trees, more creatures,
+      a longer night.
+  - DisplayName: UHFPS Demo
+    SceneName: GameplayScene
+    Description: The template's demo level, for testing systems.

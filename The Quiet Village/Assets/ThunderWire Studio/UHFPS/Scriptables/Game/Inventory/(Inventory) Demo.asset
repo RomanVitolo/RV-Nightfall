@@ -506,14 +506,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: ad2689bf3d9781c4d987816a8af5b48a, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 0a9d09215397592468f133edb5b293e6
+        Object: {fileID: 5522183703697249953, guid: 0a9d09215397592468f133edb5b293e6, type: 3}
       Settings:
         isUsable: 1
         isStackable: 1
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -552,14 +552,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: 599331f07ca38f74792556254a78fe15, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 920d54a5bb1dce44299711618eedf257
+        Object: {fileID: 6409888149119487242, guid: 920d54a5bb1dce44299711618eedf257, type: 3}
       Settings:
         isUsable: 1
         isStackable: 1
         isExaminable: 0
         isCombinable: 1
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -619,14 +619,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: f2734ea81e9dcd741870851508bd3592, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: e9acc8e5126be654f97ff35d01de4aac
+        Object: {fileID: 1646213709028446905, guid: e9acc8e5126be654f97ff35d01de4aac, type: 3}
       Settings:
         isUsable: 1
         isStackable: 1
         isExaminable: 0
         isCombinable: 1
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -685,14 +685,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: 72e0a50274940f24e9f97a26002c9a46, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 9e0aaa7e45361e94ab3219c0e9994217
+        Object: {fileID: 2731442235968661566, guid: 9e0aaa7e45361e94ab3219c0e9994217, type: 3}
       Settings:
         isUsable: 1
         isStackable: 1
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -735,14 +735,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: a7e637b8b4a1f904d920a7105e3f87c2, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: f924118bb87f69f42b8b4fe0674669a0
+        Object: {fileID: 417046599401898065, guid: f924118bb87f69f42b8b4fe0674669a0, type: 3}
       Settings:
         isUsable: 0
         isStackable: 1
         isExaminable: 0
         isCombinable: 1
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 0
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -801,14 +801,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: a1b524b63b24e2e489bcd255d778a348, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 6ab3fe656fdd831478ecd1a4fd65be76
+        Object: {fileID: 34675544826094002, guid: 6ab3fe656fdd831478ecd1a4fd65be76, type: 3}
       Settings:
         isUsable: 0
         isStackable: 1
         isExaminable: 0
         isCombinable: 1
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 0
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -933,14 +933,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: 6e58a3349bfbf664f9cac314f2c04b18, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: ec8b2057c425a994882fdadcad186783
+        Object: {fileID: 1379677563031031235, guid: ec8b2057c425a994882fdadcad186783, type: 3}
       Settings:
         isUsable: 0
         isStackable: 1
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 0
         canBindShortcut: 0
         alwaysShowQuantity: 1
@@ -983,14 +983,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: f0e654fa74c042f41bb077085b17b0cf, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 73101bb1da2addf489cce2faf1080de9
+        Object: {fileID: 1642856538580786074, guid: 73101bb1da2addf489cce2faf1080de9, type: 3}
       Settings:
         isUsable: 0
         isStackable: 0
         isExaminable: 0
         isCombinable: 1
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 0
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1053,14 +1053,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: 5bbd29b842d27754596feeb5f711b24a, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 94a55e84b07cb954789153c07159b224
+        Object: {fileID: 7227261237699464450, guid: 94a55e84b07cb954789153c07159b224, type: 3}
       Settings:
         isUsable: 0
         isStackable: 0
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1098,14 +1098,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: af115a1c0c170204f8bde12e8c626416, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 2084c0c32090aee47b7f8dfd3575cdc8
+        Object: {fileID: 5847047267420656518, guid: 2084c0c32090aee47b7f8dfd3575cdc8, type: 3}
       Settings:
         isUsable: 0
         isStackable: 0
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1143,14 +1143,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: 17b81cd23576da14699ba19b583cd910, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 558c5434150565949abebae549b41009
+        Object: {fileID: 8222363679094110386, guid: 558c5434150565949abebae549b41009, type: 3}
       Settings:
         isUsable: 0
         isStackable: 0
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1188,14 +1188,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: 7944d3858274a354fbf45199a2681de7, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 4662f86922cabed428ceae0329767889
+        Object: {fileID: 4865958657882946311, guid: 4662f86922cabed428ceae0329767889, type: 3}
       Settings:
         isUsable: 0
         isStackable: 0
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1282,14 +1282,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: 03830137119a4c74bb36000faee0dfeb, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: fb6e3597198450049a2c1d424d8964b8
+        Object: {fileID: 2682226906765119883, guid: fb6e3597198450049a2c1d424d8964b8, type: 3}
       Settings:
         isUsable: 0
         isStackable: 1
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 0
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1327,14 +1327,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: 2eb70c48ee788e840b4f64fcc4df4cad, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 58b795bf2f2a1d64d969a6d8bb4b174d
+        Object: {fileID: 2432006534585004925, guid: 58b795bf2f2a1d64d969a6d8bb4b174d, type: 3}
       Settings:
         isUsable: 0
         isStackable: 1
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 0
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1419,14 +1419,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: 536374a5adf6d2d48a1f7fc84f1c60b5, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 68e1143d63ed6db469308fa2c26172bb
+        Object: {fileID: 5511683121552054579, guid: 68e1143d63ed6db469308fa2c26172bb, type: 3}
       Settings:
         isUsable: 0
         isStackable: 0
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 0
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1465,14 +1465,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: ad0e8064004559d42bf4fc0f706648cb, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 70f07bb2635420f4282242ddee7f7c1b
+        Object: {fileID: 6179587374966423523, guid: 70f07bb2635420f4282242ddee7f7c1b, type: 3}
       Settings:
         isUsable: 0
         isStackable: 0
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 0
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1509,14 +1509,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: e1c7e22c95805a8458fef07138e95615, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 43a159565f501c8408573f94ed5e2b5b
+        Object: {fileID: 3633903631660536589, guid: 43a159565f501c8408573f94ed5e2b5b, type: 3}
       Settings:
         isUsable: 0
         isStackable: 0
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 0
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1604,14 +1604,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: f3474bb55214e0947a61edabc822e6d8, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: daefb082fea37ca4cb8772ec5d7cfd96
+        Object: {fileID: 1223765039363834615, guid: daefb082fea37ca4cb8772ec5d7cfd96, type: 3}
       Settings:
         isUsable: 0
         isStackable: 0
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1653,14 +1653,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: d8b1febfc96a01f4b856070d3ceebd44, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: 282f3817772e6804ab4cfe41bbaa2080
+        Object: {fileID: 6113724457444953046, guid: 282f3817772e6804ab4cfe41bbaa2080, type: 3}
       Settings:
         isUsable: 0
         isStackable: 1
         isExaminable: 0
         isCombinable: 1
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0
@@ -1718,14 +1718,14 @@ MonoBehaviour:
       FlipDirection: 0
       Icon: {fileID: 21300000, guid: cdd9523cd2fa1454b8705c9a9c661c5a, type: 3}
       ItemObject:
-        GUID: 
-        Object: {fileID: 0}
+        GUID: a2e26abb75fb2db4b80c8f2da6b835a2
+        Object: {fileID: 2798368941960934332, guid: a2e26abb75fb2db4b80c8f2da6b835a2, type: 3}
       Settings:
         isUsable: 0
         isStackable: 1
         isExaminable: 0
         isCombinable: 0
-        isDroppable: 0
+        isDroppable: 1
         isDiscardable: 1
         canBindShortcut: 0
         alwaysShowQuantity: 0

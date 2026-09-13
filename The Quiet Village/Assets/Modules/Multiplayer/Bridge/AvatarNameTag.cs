@@ -42,12 +42,14 @@ namespace Modules.Multiplayer.Bridge
             var head = avatar != null ? avatar.GetBoneTransform(HumanBodyBones.Head) : null;
             var height = head != null ? head.position.y - transform.position.y + HeadClearance : FallbackHeight;
 
-            var holder = new GameObject("NameTag");
+            // Created with its RectTransform up front: TextMeshPro requires one, and adding it to a plain object
+            // makes Unity swap the Transform out and destroy it, leaving any reference taken before that dead.
+            var holder = new GameObject("NameTag", typeof(RectTransform));
             holder.transform.SetParent(transform, false);
             holder.transform.localPosition = new Vector3(0f, height, 0f);
-            m_anchor = holder.transform;
 
             m_label = holder.AddComponent<TextMeshPro>();
+            m_anchor = m_label.transform;
             m_label.font = font;
             m_label.fontSize = 1.6f;
             m_label.alignment = TextAlignmentOptions.Center;
@@ -57,7 +59,7 @@ namespace Modules.Multiplayer.Bridge
 
         private void LateUpdate()
         {
-            if (m_label == null) return;
+            if (m_label == null || m_anchor == null) return;
 
             // Following the head bone every frame would bob the name with their walk; it hangs off the body
             // instead, which is steady.

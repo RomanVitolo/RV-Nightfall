@@ -117,6 +117,7 @@ namespace Modules.Multiplayer.Bridge.World
             m_accounts.Clear();
             m_drops.Clear();
             m_heldSpawns.Clear();
+            m_participants.Clear();
 
             if (ReferenceEquals(Modules.Multiplayer.Scripts.Runtime.Flow.SpawnGate.Active, this))
                 Modules.Multiplayer.Scripts.Runtime.Flow.SpawnGate.Active = null;

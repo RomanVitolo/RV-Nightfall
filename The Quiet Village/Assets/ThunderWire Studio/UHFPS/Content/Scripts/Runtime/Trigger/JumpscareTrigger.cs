@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using Newtonsoft.Json.Linq;
 using ThunderWire.Attributes;
 using UHFPS.Tools;
+using Modules.Multiplayer.Bridge;
 
 namespace UHFPS.Runtime
 {
@@ -61,23 +62,21 @@ namespace UHFPS.Runtime
         private bool jumpscareEnded;
         private bool triggerEntered;
 
-        private JumpscareManager jumpscareManager;
+        // MULTIPLAYER PATCH: resolved on use instead of cached in Awake. The manager lives on the player prefab, which
+        // Netcode spawns after this Awakes, and Singleton lookup could return a teammate's disabled copy anyway.
+        private JumpscareManager jumpscareManager => LocalPlayerContext.JumpscareManager;
 
         // --------------------------------------------------------------------
         // UNITY METHODS
         // --------------------------------------------------------------------
-
-        private void Awake()
-        {
-            jumpscareManager = JumpscareManager.Instance;
-        }
 
         private void OnTriggerEnter(Collider other)
         {
             if (TriggerType == TriggerTypeEnum.Event)
                 return;
 
-            if (!other.CompareTag("Player"))
+            // MULTIPLAYER PATCH: jumpscares are per-player, so only this client's own body sets them off here.
+            if (!other.CompareTag("Player") || !LocalPlayerContext.IsLocalPlayer(other))
                 return;
 
             if (jumpscareStarted || triggerEntered)
@@ -100,7 +99,7 @@ namespace UHFPS.Runtime
             if (TriggerType == TriggerTypeEnum.Event)
                 return;
 
-            if (!other.CompareTag("Player"))
+            if (!other.CompareTag("Player") || !LocalPlayerContext.IsLocalPlayer(other))
                 return;
 
             if (jumpscareStarted || !triggerEntered)
@@ -126,6 +125,11 @@ namespace UHFPS.Runtime
             if (jumpscareStarted)
                 return;
 
+            // MULTIPLAYER PATCH: an Event jumpscare can fire before this client's player has spawned. Left unstarted,
+            // so the event can play it again once there is a screen to play it on.
+            if (jumpscareManager == null)
+                return;
+
             jumpscareStarted = true;
             OnJumpscareStarted?.Invoke();
 
@@ -147,7 +151,7 @@ namespace UHFPS.Runtime
         /// </summary>
         public void TriggerJumpscareEnded()
         {
-            if (!EndJumpscareManually)
+            if (!EndJumpscareManually || jumpscareManager == null)
                 return;
 
             jumpscareManager.EndJumpscareEffect();

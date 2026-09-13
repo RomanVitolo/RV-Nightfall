@@ -14,7 +14,7 @@ using Object = UnityEngine.Object;
 namespace Modules.Multiplayer.Bridge.EditorTools
 {
     /// <summary>
-    /// Makes GameplayScene's interactable objects replicate: adds the level's <see cref="WorldSync"/> and a
+    /// Makes a level's interactable objects replicate: adds the level's <see cref="WorldSync"/> and a
     /// sync entity to every object that needs one, each with a stable id.
     /// </summary>
     /// <remarks>
@@ -22,6 +22,9 @@ namespace Modules.Multiplayer.Bridge.EditorTools
     /// <see cref="SyncedDynamicObject"/>, physics props <see cref="SyncedRigidbody"/>, and every other shared
     /// saveable a <see cref="SyncedSaveable"/>. Idempotent — re-run it after adding objects to the level. An
     /// entity a designer has disabled is left disabled, which is how a single object is opted out.
+    ///
+    /// From the menu it works on the open level. Ids are GlobalObjectIds, which include the scene's own GUID, so
+    /// each level's ids are its own and a save from one level never matches objects in another.
     /// </remarks>
     public static class WorldSyncSetup
     {
@@ -55,28 +58,33 @@ namespace Modules.Multiplayer.Bridge.EditorTools
 
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
 
-            Execute();
+            var scenePath = LevelSetup.OpenLevelScenePath("World Sync Setup");
+            if (scenePath == null) return;
+
+            Execute(scenePath);
         }
 
         /// <summary>Entry point for <c>-executeMethod</c>, so this can run headlessly.</summary>
+        /// <remarks>Sets up the scene named by <c>-levelScene &lt;path&gt;</c>, or GameplayScene without one.</remarks>
         public static void RunFromCommandLine()
         {
-            var succeeded = Execute();
+            var succeeded = Execute(LevelSetup.CommandLineScenePath());
 
             if (Application.isBatchMode) EditorApplication.Exit(succeeded ? 0 : 1);
         }
 
-        private static bool Execute()
+        /// <summary>Sets up World Sync in one level scene, which is opened, saved and left open.</summary>
+        internal static bool Execute(string scenePath)
         {
-            var scene = EditorSceneManager.OpenScene(HeroPlayerSetup.ScenePath, OpenSceneMode.Single);
+            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
             if (!scene.IsValid())
             {
-                Debug.LogError($"World Sync Setup: could not open {HeroPlayerSetup.ScenePath}.");
+                Debug.LogError($"World Sync Setup: could not open {scenePath}.");
                 return false;
             }
 
-            var report = new StringBuilder();
-            EnsureWorldSyncObject(report);
+            var report = new StringBuilder($"{scene.name}:\n");
+            EnsureWorldSyncObject(scene.name, report);
 
             var added = new Dictionary<string, int>();
             AddPickups(added);
@@ -99,11 +107,11 @@ namespace Modules.Multiplayer.Bridge.EditorTools
             EditorSceneManager.MarkSceneDirty(scene);
             if (!EditorSceneManager.SaveScene(scene))
             {
-                Debug.LogError($"World Sync Setup: could not save {HeroPlayerSetup.ScenePath}.\n{report}");
+                Debug.LogError($"World Sync Setup: could not save {scenePath}.\n{report}");
                 return false;
             }
 
-            if (!VerifyNetworkObjectHashes(report))
+            if (!VerifyNetworkObjectHashes(scenePath, report))
             {
                 Debug.LogError($"World Sync Setup aborted.\n{report}");
                 return false;
@@ -115,7 +123,7 @@ namespace Modules.Multiplayer.Bridge.EditorTools
 
         // ---- WorldSync -------------------------------------------------------------------------------
 
-        private static void EnsureWorldSyncObject(StringBuilder report)
+        private static void EnsureWorldSyncObject(string sceneName, StringBuilder report)
         {
             var worldSync = Object.FindAnyObjectByType<WorldSync>(FindObjectsInactive.Include);
             if (worldSync == null)
@@ -123,7 +131,7 @@ namespace Modules.Multiplayer.Bridge.EditorTools
                 var host = new GameObject(WorldSyncObjectName);
                 host.AddComponent<NetworkObject>();
                 worldSync = host.AddComponent<WorldSync>();
-                report.AppendLine("Created WorldSync in GameplayScene.");
+                report.AppendLine($"Created WorldSync in {sceneName}.");
             }
 
             var networkObject = worldSync.GetComponent<NetworkObject>();
@@ -142,11 +150,11 @@ namespace Modules.Multiplayer.Bridge.EditorTools
         /// and Netcode then cannot match the object between host and clients. The only proof is reading it back
         /// from a fresh load of the file. Covers WorldSync and every networked NPC.
         /// </remarks>
-        private static bool VerifyNetworkObjectHashes(StringBuilder report)
+        private static bool VerifyNetworkObjectHashes(string scenePath, StringBuilder report)
         {
             for (var attempt = 0; attempt < 2; attempt++)
             {
-                var scene = EditorSceneManager.OpenScene(HeroPlayerSetup.ScenePath, OpenSceneMode.Single);
+                var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
                 var networkObjects = Object.FindObjectsByType<NetworkObject>(FindObjectsInactive.Include);
 
                 if (Object.FindAnyObjectByType<WorldSync>(FindObjectsInactive.Include) == null)

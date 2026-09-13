@@ -177873,7 +177873,27 @@ MonoBehaviour:
   m_Animator: {fileID: 7249163587773523614}
   TransitionStateInfoList: []
   AnimatorParameterEntries:
-    ParameterEntries: []
+    ParameterEntries:
+    - name: Idle
+      NameHash: 2081823275
+      Synchronize: 1
+      ParameterType: 4
+    - name: Patrol
+      NameHash: 207038023
+      Synchronize: 1
+      ParameterType: 4
+    - name: Walk
+      NameHash: 765711723
+      Synchronize: 1
+      ParameterType: 4
+    - name: Run
+      NameHash: 1748754976
+      Synchronize: 1
+      ParameterType: 4
+    - name: Attack
+      NameHash: 1080829965
+      Synchronize: 1
+      ParameterType: 9
   AnimatorParametersExpanded: 0
 --- !u!114 &7249163587773523618
 MonoBehaviour:
@@ -178006,7 +178026,27 @@ MonoBehaviour:
   m_Animator: {fileID: 7249163589109102098}
   TransitionStateInfoList: []
   AnimatorParameterEntries:
-    ParameterEntries: []
+    ParameterEntries:
+    - name: Idle
+      NameHash: 2081823275
+      Synchronize: 1
+      ParameterType: 4
+    - name: Patrol
+      NameHash: 207038023
+      Synchronize: 1
+      ParameterType: 4
+    - name: Walk
+      NameHash: 765711723
+      Synchronize: 1
+      ParameterType: 4
+    - name: Run
+      NameHash: 1748754976
+      Synchronize: 1
+      ParameterType: 4
+    - name: Attack
+      NameHash: 1080829965
+      Synchronize: 1
+      ParameterType: 9
   AnimatorParametersExpanded: 0
 --- !u!114 &7249163589109102102
 MonoBehaviour:

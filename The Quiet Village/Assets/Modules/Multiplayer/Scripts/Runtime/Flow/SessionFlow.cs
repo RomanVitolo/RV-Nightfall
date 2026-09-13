@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Modules.Multiplayer.Scripts.Runtime.Levels;
 using Modules.Multiplayer.Scripts.Runtime.Sessions;
 using Unity.Netcode;
 using UnityEngine;
@@ -8,15 +9,19 @@ using UnityEngine.SceneManagement;
 namespace Modules.Multiplayer.Scripts.Runtime.Flow
 {
     /// <summary>
-    /// Moves the room between the lobby and the level: starts the game for everyone, and brings players
+    /// Moves the room between the lobby and its level: starts the game for everyone, and brings players
     /// back when the room ends under them.
     /// </summary>
     /// <remarks>
     /// Authority: host. Only the host starts the game, and it does so through Netcode's scene manager, so
     /// every connected client loads the level in the same scene event instead of each deciding on its own.
-    /// That shared start is the point of the waiting room: doors, pickups and puzzles are not replicated
-    /// yet, so a fresh level loaded by everyone at once is the only moment all worlds are known to match.
-    /// The room is locked first for the same reason — nobody may arrive after that moment.
+    /// That shared start is the point of the waiting room: a fresh level loaded by everyone at once is the only
+    /// moment all worlds are known to match. The room is locked first for the same reason — nobody may arrive
+    /// after that moment.
+    ///
+    /// Which level is the room's own <see cref="SessionService.RoomLevel"/>, chosen when it was created, so the
+    /// players waiting see the same answer the host loads. Anything in <see cref="LevelCatalog"/> counts as a
+    /// level; nothing else does.
     ///
     /// Lives on the persistent multiplayer root next to <see cref="SessionService"/>, because it has to
     /// outlive the lobby scene it starts from.
@@ -28,8 +33,8 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
         [Tooltip("Scene holding the lobby screen. Must be in Build Settings.")]
         [SerializeField] private string m_lobbySceneName = "LobbyScene";
 
-        [Tooltip("Level the host starts. Must be in Build Settings: Netcode loads scenes by build entry.")]
-        [SerializeField] private string m_gameplaySceneName = "GameplayScene";
+        [Tooltip("Every level a room can play. Each must be in Build Settings: Netcode loads scenes by build entry.")]
+        [SerializeField] private LevelCatalog m_levels;
 
         /// <summary>Raised when <see cref="IsStarting"/> changes.</summary>
         public event Action StartingChanged;
@@ -40,12 +45,37 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
         /// <summary>Why the last start failed; empty if it did not.</summary>
         public string LastStartError { get; private set; } = string.Empty;
 
-        public bool IsInGameplay => SceneManager.GetActiveScene().name == m_gameplaySceneName;
+        /// <summary>The levels a room can be played in, or <c>null</c> if the root was not set up with them.</summary>
+        public LevelCatalog Levels => m_levels;
+
+        /// <summary>True while any level is the active scene.</summary>
+        public bool IsInGameplay => IsLevel(SceneManager.GetActiveScene().name);
 
         public bool IsInLobby => SceneManager.GetActiveScene().name == m_lobbySceneName;
 
         public bool CanStartGame => m_sessions != null && m_sessions.IsConnected && m_sessions.IsHost
                                     && IsInLobby && !IsStarting;
+
+        /// <summary>The scene this room will load: the level it was created with, or the catalog's first.</summary>
+        /// <remarks>
+        /// The fallback covers a room made before levels existed, or by a build that did not send one. A level the
+        /// room names but the catalog no longer lists is returned as-is, so starting reports it instead of quietly
+        /// taking everyone somewhere else.
+        /// </remarks>
+        public string RoomLevel
+        {
+            get
+            {
+                var chosen = m_sessions != null ? m_sessions.RoomLevel : string.Empty;
+                if (!string.IsNullOrEmpty(chosen)) return chosen;
+
+                var fallback = m_levels != null ? m_levels.Default : null;
+                return fallback != null ? fallback.SceneName : string.Empty;
+            }
+        }
+
+        /// <summary>True if the scene is one of the catalog's levels.</summary>
+        public bool IsLevel(string sceneName) => m_levels != null && m_levels.Contains(sceneName);
 
         private void Awake()
         {
@@ -54,7 +84,12 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
             {
                 Debug.LogError($"{nameof(SessionFlow)} has no {nameof(SessionService)}; the lobby cannot start games.", this);
                 enabled = false;
+                return;
             }
+
+            if (m_levels == null || m_levels.Default == null)
+                Debug.LogError($"{nameof(SessionFlow)}: no {nameof(LevelCatalog)} with a level assigned, so no game can " +
+                               "start. Run Tools > Multiplayer > Set Up Lobby.", this);
         }
 
         private void OnEnable()
@@ -69,7 +104,7 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
             SceneManager.activeSceneChanged -= HandleActiveSceneChanged;
         }
 
-        /// <summary>Host only: locks the room and loads the level on every connected client.</summary>
+        /// <summary>Host only: locks the room and loads its level on every connected client.</summary>
         /// <returns><c>true</c> if the level load started.</returns>
         public async Task<bool> StartGameAsync()
         {
@@ -79,6 +114,15 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
             if (networkManager == null || !networkManager.IsServer || networkManager.SceneManager == null)
             {
                 LastStartError = "The network session is not running as host.";
+                return false;
+            }
+
+            // Checked before the room locks, so a bad level leaves it open for another try.
+            var level = RoomLevel;
+            var invalid = ValidateLevel(level);
+            if (invalid != null)
+            {
+                LastStartError = invalid;
                 return false;
             }
 
@@ -93,12 +137,12 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
                     return false;
                 }
 
-                var status = networkManager.SceneManager.LoadScene(m_gameplaySceneName, LoadSceneMode.Single);
+                var status = networkManager.SceneManager.LoadScene(level, LoadSceneMode.Single);
                 if (status == SceneEventProgressStatus.Started) return true;
 
                 // Reopen the room so players can still join the game that did not start.
                 await m_sessions.SetRoomLockedAsync(false);
-                LastStartError = $"Could not load {m_gameplaySceneName} ({status}). Is it in Build Settings?";
+                LastStartError = $"Could not load {DisplayNameOf(level)} ({status}).";
                 return false;
             }
             finally
@@ -125,12 +169,13 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
         }
 
         /// <summary>
-        /// Host only: reloads the level for every player in the room, e.g. once everyone has died.
+        /// Host only: reloads the level being played for every player in the room, e.g. once everyone has died.
         /// </summary>
         /// <remarks>
-        /// Through Netcode's scene manager, like the first start, so every client reloads in the same scene event.
-        /// Players are spawned with the scene and destroyed with it, and each comes back fresh when its client
-        /// finishes loading (NetworkPlayerSpawner).
+        /// The active scene rather than <see cref="RoomLevel"/>: restarting means this level again, whatever the room
+        /// was first created with. Through Netcode's scene manager, like the first start, so every client reloads in
+        /// the same scene event. Players are spawned with the scene and destroyed with it, and each comes back fresh
+        /// when its client finishes loading (NetworkPlayerSpawner).
         /// </remarks>
         /// <returns><c>true</c> if the reload started.</returns>
         public bool RestartLevel()
@@ -139,12 +184,33 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
             if (!IsInGameplay || networkManager == null || !networkManager.IsServer || networkManager.SceneManager == null)
                 return false;
 
-            var status = networkManager.SceneManager.LoadScene(m_gameplaySceneName, LoadSceneMode.Single);
+            var level = SceneManager.GetActiveScene().name;
+            var status = networkManager.SceneManager.LoadScene(level, LoadSceneMode.Single);
             if (status == SceneEventProgressStatus.Started) return true;
 
-            Debug.LogError($"{nameof(SessionFlow)}: could not restart {m_gameplaySceneName} ({status}).", this);
+            Debug.LogError($"{nameof(SessionFlow)}: could not restart {level} ({status}).", this);
             return false;
         }
+
+        /// <summary>Why a level cannot be started, or <c>null</c> if it can.</summary>
+        public string ValidateLevel(string sceneName)
+        {
+            if (m_levels == null) return "No levels are set up. Run Tools > Multiplayer > Set Up Lobby.";
+            if (string.IsNullOrEmpty(sceneName)) return "This room has no level to play.";
+
+            if (!m_levels.Contains(sceneName))
+                return $"'{sceneName}' is not in the level list, so it cannot be played. Was it removed?";
+
+            if (!Application.CanStreamedLevelBeLoaded(sceneName))
+                return $"{DisplayNameOf(sceneName)} is not in Build Settings. Run Tools > Multiplayer > Levels > " +
+                       "Set Up Open Scene As Level on it.";
+
+            return null;
+        }
+
+        /// <summary>The lobby name of a level scene, or the scene name if the catalog does not know it.</summary>
+        public string DisplayNameOf(string sceneName) =>
+            m_levels != null ? m_levels.DisplayNameOf(sceneName) : sceneName;
 
         private void SetStarting(bool starting)
         {
@@ -158,7 +224,7 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
         {
             if (state != SessionConnectionState.Disconnected && state != SessionConnectionState.Error) return;
 
-            // Only pull players out of the level. Anywhere else they chose to be, including UHFPS's own
+            // Only pull players out of a level. Anywhere else they chose to be, including UHFPS's own
             // main menu, and this must not override that.
             if (IsInGameplay) ReturnToLobby();
         }
@@ -183,7 +249,7 @@ namespace Modules.Multiplayer.Scripts.Runtime.Flow
         private void HandleActiveSceneChanged(Scene previous, Scene next)
         {
             if (m_sessions == null || !m_sessions.IsConnected) return;
-            if (next.name == m_lobbySceneName || next.name == m_gameplaySceneName) return;
+            if (next.name == m_lobbySceneName || IsLevel(next.name)) return;
 
             _ = m_sessions.LeaveSessionAsync();
         }

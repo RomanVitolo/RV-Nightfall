@@ -9,13 +9,17 @@ namespace Modules.Multiplayer.Scripts.Runtime.Saves
         /// <summary>Folder the save lives in; what the lobby hands back to resume it.</summary>
         public readonly string Folder;
 
-        /// <summary>What to show in the list, e.g. the level and when it was saved.</summary>
+        /// <summary>What to show in the list, e.g. when it was saved and for how long it has been played.</summary>
         public readonly string Label;
 
-        public SaveEntry(string folder, string label)
+        /// <summary>Scene name of the level the save was made in; resuming it has to load that level.</summary>
+        public readonly string Level;
+
+        public SaveEntry(string folder, string label, string level)
         {
             Folder = folder;
             Label = label;
+            Level = level;
         }
     }
 

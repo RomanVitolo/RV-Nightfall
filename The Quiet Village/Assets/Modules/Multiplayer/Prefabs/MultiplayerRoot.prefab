@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Modules.Multiplayer.Runtime::Modules.Multiplayer.Scripts.Runtime.Flow.SessionFlow
   m_sessions: {fileID: 9051147558210066612}
   m_lobbySceneName: LobbyScene
-  m_gameplaySceneName: GameplayScene
+  m_levels: {fileID: 11400000, guid: 6aac22f0a4ffdea43866dd3dd427dcf5, type: 2}
 --- !u!114 &1898961534476654707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Modules.Multiplayer.Runtime::Modules.Multiplayer.Scripts.Runtime.Flow.NetworkPlayerSpawner
   m_networkManager: {fileID: 2407008383002846645}
   m_playerPrefab: {fileID: 7045460603748671119, guid: a533294243505164bb322ecb51528d18, type: 3}
-  m_gameplaySceneName: GameplayScene
+  m_levels: {fileID: 11400000, guid: 6aac22f0a4ffdea43866dd3dd427dcf5, type: 2}
 --- !u!114 &4341958918723315349
 MonoBehaviour:
   m_ObjectHideFlags: 0

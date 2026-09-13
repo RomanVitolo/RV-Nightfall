@@ -1,13 +1,13 @@
 # UHFPS source patches for multiplayer
 
-UHFPS is third-party code. A package update **will overwrite** these edits. **65 of its .cs files** are
+UHFPS is third-party code. A package update **will overwrite** these edits. **67 of its .cs files** are
 now modified. Find what survived an update with:
 
 ```bash
 grep -rl "MULTIPLAYER PATCH\|LocalPlayerContext" "Assets/ThunderWire Studio" --include=*.cs | wc -l
 ```
 
-That must report **65**. A lower number means an update reverted some of them.
+That must report **67**. A lower number means an update reverted some of them.
 
 ## Why these exist
 
@@ -280,6 +280,40 @@ creates the same object at the same pose, and each copy gets the components Set 
 (`SyncedPickup`, `SyncedRigidbody`, `SyncedExamineLock`). The copies are held still until the dropper's physics
 stream moves them, so the item falls once, as the dropper saw it, and lands in the same place for everyone. Taking
 it follows the usual rule: the first taker gets it, and everyone else's copy is destroyed.
+
+## 11. Jumpscares played on the local player (2 files, new)
+
+| File | Change |
+|---|---|
+| `Trigger/JumpscareTrigger.cs` | `jumpscareManager` resolved on use from `LocalPlayerContext.JumpscareManager` instead of `JumpscareManager.Instance` in `Awake`. Trigger enter/exit also require `LocalPlayerContext.IsLocalPlayer(other)`. `TriggerJumpscare` returns without marking the jumpscare started while there is no local player; `TriggerJumpscareEnded` does the same. |
+| `Core/Game/Jumpscare/JumpscareManager.cs` | Player references (`playerManager`, `lookController`, `jumpscareDirect`, `fearTentacles`) resolved in `Start` instead of `Awake`. The fear effect is skipped when there is no post-processing volume. |
+
+Walking into a jumpscare threw a `NullReferenceException`. The trigger cached `JumpscareManager.Instance` in `Awake`,
+at level load, but the manager moved onto the player prefab (section 1) and did not exist yet. Even after the player
+spawned, `Singleton` lookup takes the first manager it finds, which may be a teammate's disabled copy.
+
+The manager had the same kind of ordering problem on its own object. Its `Awake` read `PlayerPresenceManager.Player`,
+which that component sets in its own `Awake` (no guaranteed order between them). It also read the fear effect from
+`GameManager.GlobalPPVolume`, which `HeroPlayerNetworkSetup` only assigns in `OnNetworkSpawn`. `Start` runs after both.
+Remote copies have the manager disabled, so their `Start` never runs.
+
+Jumpscares stay per-player by design: only the player who enters the trigger sees it. The local-player check keeps a
+teammate's body from setting one off on this screen. The `JumpscareManager` accessor and `IsLocalPlayer` live in the
+bridge's `LocalPlayerContext`.
+
+## UHFPS data assets changed (no code, not in the patch count)
+
+A UHFPS update that replaces these assets reverts the change; re-run the tool named.
+
+| Asset | Change | Tool |
+|---|---|---|
+| `Scriptables/Game/Inventory/(Inventory) Demo.asset` | 20 more items get an `ItemObject` and `isDroppable` (every non-player item with a pickup prefab; only Petrol Oil and Fuel Canister had them). | **Tools > Multiplayer > Set Up Droppable Items** |
+| `Scriptables/Game/Object References.asset` | Lists each new drop prefab (`Assets/Game/Prefabs/Drops/Drop_*.prefab`, variants of the pickup prefabs with a Rigidbody), under its asset GUID. | same |
+
+Why: dropping by hand, and the bridge's drops on death (`CarriedItems`) and disconnect (`WorldSync`), all need the item's
+drop object, found by GUID through Object References, and `Inventory.DropItem` refuses one without a Rigidbody. With the
+demo data a dead or departed player's keys, puzzle items and scrap disappeared with them. Player items (flashlight, weapons,
+tools) stay non-droppable: UHFPS's item controllers do not expect an equipped item to leave the inventory.
 
 ## Known gaps
 
