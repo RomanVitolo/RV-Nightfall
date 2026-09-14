@@ -1,0 +1,341 @@
+fileFormatVersion: 2
+guid: 2b1aa53a13caa094386b401233c344fe
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: CandleFlame_0
+  - first:
+      213: 21300002
+    second: CandleFlame_1
+  - first:
+      213: 21300004
+    second: CandleFlame_2
+  - first:
+      213: 21300006
+    second: CandleFlame_3
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  cookieLightType: 1
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CandleFlame_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4d22488f6e09884f82e3a1e6ab9d138
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CandleFlame_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3aa8b3b0bcc4a64080524846562c006
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CandleFlame_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 408579de29c37d546895de0a0fea5180
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CandleFlame_3
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f13d1ee3a24fbb4ebd0e4da5e3d650a
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline:
+    - - {x: -65, y: -10}
+      - {x: -79, y: -21}
+      - {x: -79, y: -128}
+      - {x: -50, y: -128}
+      - {x: -50, y: -37}
+      - {x: -52, y: -10}
+    - - {x: 80, y: -13}
+      - {x: 64, y: -13}
+      - {x: 50, y: -48}
+      - {x: 50, y: -128}
+      - {x: 77, y: -128}
+      - {x: 82, y: -123}
+      - {x: 82, y: -14}
+    - - {x: -53, y: 115}
+      - {x: -66, y: 115}
+      - {x: -78, y: 84}
+      - {x: -78, y: -2}
+      - {x: -57, y: -2}
+      - {x: -53, y: -1}
+      - {x: -50, y: 1}
+      - {x: -50, y: 81}
+      - {x: -51, y: 114}
+    - - {x: 64, y: 127}
+      - {x: 56, y: 121}
+      - {x: 49, y: 68}
+      - {x: 49, y: -2}
+      - {x: 77, y: -2}
+      - {x: 77, y: 120}
+      - {x: 72, y: 127}
+    physicsShape:
+    - - {x: -57, y: -14}
+      - {x: -59, y: -12}
+      - {x: -65, y: -12}
+      - {x: -72, y: -24}
+      - {x: -74, y: -43}
+      - {x: -78, y: -97}
+      - {x: -78, y: -126}
+      - {x: -76, y: -128}
+      - {x: -52, y: -128}
+      - {x: -51, y: -121}
+      - {x: -51, y: -89}
+      - {x: -52, y: -66}
+    - - {x: 80, y: -47}
+      - {x: 79, y: -26}
+      - {x: 76, y: -18}
+      - {x: 72, y: -14}
+      - {x: 69, y: -14}
+      - {x: 66, y: -15}
+      - {x: 62, y: -25}
+      - {x: 54, y: -53}
+      - {x: 52, y: -66}
+      - {x: 51, y: -77}
+      - {x: 51, y: -108}
+      - {x: 50, y: -109}
+      - {x: 50, y: -122}
+      - {x: 51, y: -128}
+      - {x: 74, y: -128}
+      - {x: 77, y: -122}
+      - {x: 80, y: -88}
+    - - {x: -51, y: 48}
+      - {x: -50, y: 48}
+      - {x: -50, y: 72}
+      - {x: -55, y: 112}
+      - {x: -60, y: 114}
+      - {x: -63, y: 114}
+      - {x: -67, y: 106}
+      - {x: -74, y: 68}
+      - {x: -76, y: 51}
+      - {x: -78, y: 31}
+      - {x: -78, y: -1}
+      - {x: -77, y: -2}
+      - {x: -71, y: -2}
+      - {x: -63, y: 1}
+      - {x: -54, y: -1}
+      - {x: -50, y: 10}
+      - {x: -50, y: 25}
+    - - {x: 72, y: 125}
+      - {x: 70, y: 126}
+      - {x: 64, y: 126}
+      - {x: 61, y: 118}
+      - {x: 54, y: 62}
+      - {x: 50, y: 22}
+      - {x: 50, y: 3}
+      - {x: 52, y: -1}
+      - {x: 75, y: -1}
+      - {x: 76, y: 1}
+      - {x: 76, y: 50}
+      - {x: 74, y: 84}
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      CandleFlame_2: 21300004
+      CandleFlame_3: 21300006
+      CandleFlame_1: 21300002
+      CandleFlame_0: 21300000
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Textures/CandleFlame.png
+  uploadId: 907194

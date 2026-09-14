@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f6702de4e39abc34ea265a62c4648cb6
+timeCreated: 1537910731
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Materials/AngelStatue-150k2.mat
+  uploadId: 907194

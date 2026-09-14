@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 869b28ed3d131a44da9fcd18d44f12d2
+timeCreated: 1533903487
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Materials/CemeteryGround.mat
+  uploadId: 907194

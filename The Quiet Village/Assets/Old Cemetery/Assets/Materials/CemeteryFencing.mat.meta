@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 2e358bf45dcb8324194c09ae14227c20
+timeCreated: 1533914643
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Materials/CemeteryFencing.mat
+  uploadId: 907194

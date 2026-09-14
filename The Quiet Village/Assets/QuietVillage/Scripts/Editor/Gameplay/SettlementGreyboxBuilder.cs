@@ -32,7 +32,7 @@ namespace QuietVillage.Gameplay.EditorTools
     /// Everything is plain primitives with flat-coloured materials. Replace them freely; only the barricade objects
     /// and the director carry behaviour.
     /// </remarks>
-    public static class SettlementGreyboxBuilder
+    public static partial class SettlementGreyboxBuilder
     {
         private const string ArtFolder = ProjectPaths.GreyboxMaterials;
         private const string PrefabFolder = ProjectPaths.CreaturePrefabs;
@@ -106,18 +106,23 @@ namespace QuietVillage.Gameplay.EditorTools
             public int CreaturesBase;
             public int CreaturesPerPlayer;
 
+            /// <summary>Dresses the level as an old cemetery; <c>null</c> keeps the plain greybox.</summary>
+            public CemeteryStyle Cemetery;
+
             public string ScenePath => $"{LevelSetup.ScenesFolder}/{SceneName}.unity";
         }
 
         /// <summary>
-        /// First settlement: a chapel in a clearing, cottages in the woods. Trees hide the approach, so the night is
-        /// about hearing creatures before seeing them.
+        /// First settlement: a chapel in a clearing of a wooded graveyard, crypts among dead trees. Trees and fog hide
+        /// the approach, so the night is about hearing creatures before seeing them.
         /// </summary>
+        /// <remarks>The scene keeps its original name: levels are identified by it, and saves are keyed to it.</remarks>
         private static Layout ForestVillage() => new()
         {
             SceneName = "ForestVillage",
-            DisplayName = "Forest Village",
-            Description = "A chapel in a clearing, cottages in the trees. Four openings to hold.",
+            DisplayName = "Hollow Chapel Cemetery",
+            Description = "A chapel in a wooded graveyard, crypts among the dead trees. Four openings to hold.",
+            Cemetery = HollowChapelStyle(),
             Seed = 1701,
             ShelterCentre = Vector3.zero,
             ShelterYaw = 0f,
@@ -146,14 +151,16 @@ namespace QuietVillage.Gameplay.EditorTools
         };
 
         /// <summary>
-        /// Second settlement: rows of houses by the sea and a warehouse with more ways in. Open sightlines, so the
-        /// creatures are seen coming, but there are more of them, five openings, and a longer night.
+        /// Second settlement: a seaside cemetery in the rain, rows of family crypts and a chapel with more ways in. Open
+        /// sightlines, so the creatures are seen coming, but there are more of them, five openings, and a longer night.
         /// </summary>
+        /// <remarks>The scene keeps its original name: levels are identified by it, and saves are keyed to it.</remarks>
         private static Layout CoastalTown() => new()
         {
             SceneName = "CoastalTown",
-            DisplayName = "Coastal Town",
-            Description = "A harbour warehouse with five ways in. Fewer trees, more creatures, a longer night.",
+            DisplayName = "Saltmarsh Cemetery",
+            Description = "A seaside cemetery in the rain: a chapel with five ways in, open grave rows, more creatures, a longer night.",
+            Cemetery = SaltmarshStyle(),
             Seed = 4242,
             ShelterCentre = new Vector3(14f, 0f, -16f),
             ShelterYaw = 90f,
@@ -259,21 +266,27 @@ namespace QuietVillage.Gameplay.EditorTools
             var barricades = BuildShelter(layout, layoutRoot, materials);
             var houseCount = BuildHouses(layout, layoutRoot, materials, scrapPrefab);
             var looseScrap = PlaceLooseScrap(layout, layoutRoot, scrapPrefab);
-            BuildTrees(layout, layoutRoot, materials);
+            if (layout.Cemetery == null) BuildTrees(layout, layoutRoot, materials);
             BuildBoundary(layout, layoutRoot, materials);
 
             var creatureSpawns = BuildCreatureSpawns();
-            BuildPlayerSpawns(layout);
+            var playerSpawns = BuildPlayerSpawns(layout);
             BuildDirector(layout, creaturePrefab, creatureSpawns, report);
 
             report.AppendLine($"Shelter with {barricades} barricade openings, {houseCount} houses, " +
-                              $"{houseCount * layout.ScrapPerHouse + looseScrap} scrap, {layout.TreeCount} trees.");
+                              $"{houseCount * layout.ScrapPerHouse + looseScrap} scrap.");
+
+            // Before the bake: graves, fences and trees are what creatures have to path round.
+            if (layout.Cemetery != null) DressAsCemetery(layout, layoutRoot, creatureSpawns, playerSpawns, report);
+            else report.AppendLine($"{layout.TreeCount} trees.");
 
             if (!BakeNavMesh(scene.name, LevelSetup.NavMeshFolder, report))
             {
                 Debug.LogError($"Greybox aborted.\n{report}");
                 return false;
             }
+
+            if (layout.Cemetery != null) CheckCemeteryPaths(layoutRoot, creatureSpawns, playerSpawns, report);
 
             EditorSceneManager.MarkSceneDirty(scene);
             if (!EditorSceneManager.SaveScene(scene))
@@ -294,7 +307,7 @@ namespace QuietVillage.Gameplay.EditorTools
         private static void ClearGenerated()
         {
             var scene = EditorSceneManager.GetActiveScene();
-            var names = new[] { LayoutRootName, DirectorName, NavMeshName, CreatureSpawnsName, SpawnPointsName };
+            var names = new[] { LayoutRootName, DirectorName, NavMeshName, CreatureSpawnsName, SpawnPointsName, WeatherName };
 
             foreach (var root in scene.GetRootGameObjects())
             {
@@ -608,7 +621,7 @@ namespace QuietVillage.Gameplay.EditorTools
         }
 
         /// <summary>Players start just outside the shelter's front, facing out into the settlement.</summary>
-        private static void BuildPlayerSpawns(Layout layout)
+        private static Transform[] BuildPlayerSpawns(Layout layout)
         {
             var root = new GameObject(SpawnPointsName);
             var spawnPoints = root.AddComponent<PlayerSpawnPoints>();
@@ -621,6 +634,7 @@ namespace QuietVillage.Gameplay.EditorTools
             var serialized = new SerializedObject(spawnPoints);
             var list = serialized.FindProperty("m_spawnPoints");
             list.arraySize = SessionMaxPlayers;
+            var points = new Transform[SessionMaxPlayers];
 
             for (var i = 0; i < SessionMaxPlayers; i++)
             {
@@ -629,9 +643,11 @@ namespace QuietVillage.Gameplay.EditorTools
                 point.position = origin + across * ((i - (SessionMaxPlayers - 1) * 0.5f) * 1.5f) + Vector3.up * 0.2f;
                 point.rotation = Quaternion.LookRotation(front);
                 list.GetArrayElementAtIndex(i).objectReferenceValue = point;
+                points[i] = point;
             }
 
             serialized.ApplyModifiedPropertiesWithoutUndo();
+            return points;
         }
 
         private static int SessionMaxPlayers => QuietVillage.Multiplayer.Sessions.SessionService.MaxRoomSize;
@@ -670,6 +686,7 @@ namespace QuietVillage.Gameplay.EditorTools
 
             var lightingSerialized = new SerializedObject(lighting);
             lightingSerialized.FindProperty("m_sun").objectReferenceValue = sun;
+            if (layout.Cemetery != null) ApplyCemeteryWeather(layout.Cemetery, lightingSerialized);
             lightingSerialized.ApplyModifiedPropertiesWithoutUndo();
 
             if (creaturePrefab == null) report.AppendLine("WARNING: no creature prefab assigned; nights will be empty.");

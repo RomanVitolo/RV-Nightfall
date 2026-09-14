@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: faf911a3ba8ea1746918093a9f7dab5d
+timeCreated: 1537981417
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Demo/Main Camera.controller
+  uploadId: 907194

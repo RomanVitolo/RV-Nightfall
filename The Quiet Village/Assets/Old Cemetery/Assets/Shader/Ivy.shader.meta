@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 2a3000bbfcc93834c894b95090ad36c8
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Shader/Ivy.shader
+  uploadId: 907194

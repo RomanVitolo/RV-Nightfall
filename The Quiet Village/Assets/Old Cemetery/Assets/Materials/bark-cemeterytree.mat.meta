@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 2b36d28b3d516e04c97319f0fa52cee8
+timeCreated: 1537964546
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Materials/bark-cemeterytree.mat
+  uploadId: 907194

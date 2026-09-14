@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 6104f6aafc4ef70429f6d0b5bdef6260
+timeCreated: 1533216160
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 15600000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Terrain Assets/Cemetery Terrain.asset
+  uploadId: 907194

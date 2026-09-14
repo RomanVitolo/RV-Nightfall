@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 4ccc709ffbb37e44b9adf9b741d3560b
+timeCreated: 1533582362
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Prefabs/GravePot5.prefab
+  uploadId: 907194

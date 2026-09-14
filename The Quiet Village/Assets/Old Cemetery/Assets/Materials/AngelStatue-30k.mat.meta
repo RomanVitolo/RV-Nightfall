@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 1f21fb064a925be409f963a6215e87fd
+timeCreated: 1537914621
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Materials/AngelStatue-30k.mat
+  uploadId: 907194

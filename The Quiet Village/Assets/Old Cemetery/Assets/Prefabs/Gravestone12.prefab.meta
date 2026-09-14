@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 34a26906a82fb544ab7ca13ad44ccdb2
+timeCreated: 1533484748
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Prefabs/Gravestone12.prefab
+  uploadId: 907194

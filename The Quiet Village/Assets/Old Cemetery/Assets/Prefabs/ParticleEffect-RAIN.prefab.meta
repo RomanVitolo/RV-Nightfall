@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 0cf032c25ce3e6340abdcc8193028b5a
+timeCreated: 1537969506
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Prefabs/ParticleEffect-RAIN.prefab
+  uploadId: 907194

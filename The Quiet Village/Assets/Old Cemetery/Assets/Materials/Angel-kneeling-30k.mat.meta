@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 03835d4e9ae329141b81dcc3a7b13cef
+timeCreated: 1544099553
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Materials/Angel-kneeling-30k.mat
+  uploadId: 907194

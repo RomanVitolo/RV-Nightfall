@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: a8562931e2875a9459c384b650823e57
+timeCreated: 1537965060
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Prefabs/CemeteryTree1.prefab
+  uploadId: 907194

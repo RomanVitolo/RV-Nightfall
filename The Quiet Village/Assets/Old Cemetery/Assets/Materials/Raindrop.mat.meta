@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 8566de520b594bb4ead5d2ce538625d0
+timeCreated: 1537912536
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Materials/Raindrop.mat
+  uploadId: 907194

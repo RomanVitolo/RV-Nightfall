@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 524e83a38b152654ebdb67d2dd7dd5b1
+timeCreated: 1538052056
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Materials/Ivy.mat
+  uploadId: 907194

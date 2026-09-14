@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 5e99baa1d561d4642bb0d59b648a0ed9
+timeCreated: 1538069856
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Demo/DirLight-rotate.anim
+  uploadId: 907194

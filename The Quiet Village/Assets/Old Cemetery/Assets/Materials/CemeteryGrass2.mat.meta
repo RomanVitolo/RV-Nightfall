@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: eba8179974a87e747a55c3c403eccc2d
+timeCreated: 1537968036
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Materials/CemeteryGrass2.mat
+  uploadId: 907194

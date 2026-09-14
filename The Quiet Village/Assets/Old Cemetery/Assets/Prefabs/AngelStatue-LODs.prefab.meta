@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 3e8b8029f079ac94286f98daa17b6b89
+timeCreated: 1537961264
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Prefabs/AngelStatue-LODs.prefab
+  uploadId: 907194

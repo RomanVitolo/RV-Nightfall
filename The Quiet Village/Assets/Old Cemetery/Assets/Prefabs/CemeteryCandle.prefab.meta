@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 37716e21fc7bf01429a730880f4ad592
+timeCreated: 1537996856
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Prefabs/CemeteryCandle.prefab
+  uploadId: 907194

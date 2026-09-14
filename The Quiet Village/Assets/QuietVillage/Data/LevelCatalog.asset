@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: LevelCatalog
   m_EditorClassIdentifier: Modules.Multiplayer.Runtime::Modules.Multiplayer.Scripts.Runtime.Levels.LevelCatalog
   m_levels:
-  - DisplayName: Forest Village
+  - DisplayName: Hollow Chapel Cemetery
     SceneName: ForestVillage
-    Description: A chapel in a clearing, cottages in the trees. Four openings to
-      hold.
-  - DisplayName: Coastal Town
+    Description: A chapel in a wooded graveyard, crypts among the dead trees. Four
+      openings to hold.
+  - DisplayName: Saltmarsh Cemetery
     SceneName: CoastalTown
-    Description: A harbour warehouse with five ways in. Fewer trees, more creatures,
-      a longer night.
+    Description: 'A seaside cemetery in the rain: a chapel with five ways in, open
+      grave rows, more creatures, a longer night.'
   - DisplayName: UHFPS Demo
     SceneName: GameplayScene
     Description: The template's demo level, for testing systems.

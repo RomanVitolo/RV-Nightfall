@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 356505e2f039b2c47a7e53941027faa3
+timeCreated: 1537995685
+licenseType: Free
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Materials/CandleFlame.mat
+  uploadId: 907194

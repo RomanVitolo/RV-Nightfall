@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 2ca5df312fa649c45be26cd387525cb7
+timeCreated: 1533215487
+licenseType: Free
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Demo/Scenes/DemoScene.unity
+  uploadId: 907194

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d0d41b8df3832c741acd39deee097a0d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4890085278179872738
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Demo/Scenes/PresentationSettings.lighting
+  uploadId: 907194

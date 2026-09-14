@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: a109e4c60df623b47aa0e498633322d8
+timeCreated: 1537961808
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Demo/CemeteryGate-animated.controller
+  uploadId: 907194

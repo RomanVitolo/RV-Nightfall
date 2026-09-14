@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 9e5a4b61476b4f94783d855063a45193
+timeCreated: 1537996665
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 129703
+  packageName: Old Cemetery Pack
+  packageVersion: 1.2
+  assetPath: Assets/Old Cemetery/Assets/Scripts/LightIntensityRandomRange.cs
+  uploadId: 907194
