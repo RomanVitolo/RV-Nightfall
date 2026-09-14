@@ -20,16 +20,16 @@ MonoBehaviour:
     Enabled: 1
     Prefab: {fileID: 554255421800092820, guid: 9e36b4bf309bcdb4b98746307b6376f0, type: 3}
     Controller: {fileID: 22100000, guid: e716b2b1bbf714a40a08802a8a32a4e4, type: 2}
-    Idle: {fileID: 8993902097722301239, guid: 60a2ef8c992b803488c4ef8ba5361e78, type: 3}
-    Walk: {fileID: 8993902097722301239, guid: 29218cce79e9fd04c853cf043fc04641, type: 3}
-    Run: {fileID: 8993902097722301239, guid: 3d7a4f9cda3f2b74aa711eb06a433a56, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: 81d35d20c35935347b02e5be915de454, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: fda78a875a5d6604391ee9513f47e732, type: 3}
+    Run: {fileID: 8993902097722301239, guid: 37bce19cadc439d4095e42bd4dcf9d7a, type: 3}
     Attacks:
-    - {fileID: 8993902097722301239, guid: 7579296e827b9b34db9d5a4263ff9377, type: 3}
-    - {fileID: 8993902097722301239, guid: 7eecc58bf9866114f945e6eb5dbf9631, type: 3}
-    - {fileID: 8993902097722301239, guid: 768926bc272bdd647ba0dcdf3ddd77c7, type: 3}
-    Death: {fileID: 8993902097722301239, guid: d7c0cc912fe3940488feced972e4586d, type: 3}
-    Entrance: {fileID: 8993902097722301239, guid: 41cada70a0bf2b24db806c41e778059b, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: a2693b3369a9bb24baed1ec747eef494, type: 3}
+    - {fileID: 8993902097722301239, guid: 8b8e4ba95d4322e48ae96718ab89b769, type: 3}
+    - {fileID: 8993902097722301239, guid: 9022e1d22291e3542b5c75db4a56ad6d, type: 3}
+    Death: {fileID: 8993902097722301239, guid: 378b8c03132660648854cd32356a78be, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 12297ab7481912e4c9bd1423ab9ac8f5, type: 3}
+    Avatar: {fileID: 9000000, guid: 3dd497b375910ee4b88d7ef61238fb24, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps:
@@ -37,27 +37,27 @@ MonoBehaviour:
       Replacement: {fileID: 2100000, guid: f7345d8b1c7da5c41a456cf0aa50b586, type: 2}
     - NameContains: Head
       Replacement: {fileID: 2100000, guid: 380af1ceb1e8c51458989e10d2c18fe2, type: 2}
-    MoveSpeed: 3
-    WalkClipSpeed: 0.45166197
-    RunClipSpeed: 1.0946685
-    AttackHitDelay: 1.1250001
+    MoveSpeed: 3.2
+    WalkClipSpeed: 0.24376653
+    RunClipSpeed: 1.5940484
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 6
+    DeathDuration: 2.3333335
   - Id: maiden_zombie_2
     DisplayName: Horror Maiden (Zombie 2)
     Enabled: 1
     Prefab: {fileID: 6382517886484610703, guid: 2d7e4e71d5324f24abd909736ecc5d4b, type: 3}
     Controller: {fileID: 22100000, guid: b8a1624ac45d6174cbad5746d474cd31, type: 2}
-    Idle: {fileID: 8993902097722301239, guid: 967c521e6eef3d54b919c5bd27f0b170, type: 3}
-    Walk: {fileID: 8993902097722301239, guid: bfbe29343adcff243ae3b0f0acbe8ae0, type: 3}
-    Run: {fileID: 8993902097722301239, guid: 1b91f9759a219fa468f4d470ade2473e, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: 35ab6959414c2124fa9e2a0137d209b4, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: 9c9e54fc8c28f7b43856c563649122f0, type: 3}
+    Run: {fileID: 8993902097722301239, guid: b11294c0aa48fe9479dcc0f14770249c, type: 3}
     Attacks:
-    - {fileID: 8993902097722301239, guid: 1c95aeadbc4856746a23a433fe2c1c24, type: 3}
-    - {fileID: 8993902097722301239, guid: d7310c321c14b6a4fa8584ba499de6b6, type: 3}
-    - {fileID: 8993902097722301239, guid: c881546b7a666b04dacdbe7193962008, type: 3}
-    Death: {fileID: 8993902097722301239, guid: fe3734bc5e8cc924dabf4d109520883c, type: 3}
-    Entrance: {fileID: 8993902097722301239, guid: 347c064691bc1804d98dbab09c50108c, type: 3}
+    - {fileID: 8993902097722301239, guid: adafa3f8ad3eb304ca214550a4926aa3, type: 3}
+    - {fileID: 8993902097722301239, guid: ff572a30af2457d47934e08a02c6cdee, type: 3}
+    - {fileID: 8993902097722301239, guid: f8f402c4eaa897345a0b53cd45445abe, type: 3}
+    Death: {fileID: 8993902097722301239, guid: c6301a8150a4c984696ca82e41a6e1d6, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 4547ee5521de40c4b84cde14562fbbe5, type: 3}
     Avatar: {fileID: 0}
     Scale: 1
     YawOffset: 0
@@ -66,13 +66,13 @@ MonoBehaviour:
       Replacement: {fileID: 2100000, guid: 9cbf5a68c92feee42bad0fc3d81a4b00, type: 2}
     - NameContains: Head
       Replacement: {fileID: 2100000, guid: 6794612e35c5e33439035dfa8672ba14, type: 2}
-    MoveSpeed: 3
-    WalkClipSpeed: 0.45085996
-    RunClipSpeed: 0.95085996
-    AttackHitDelay: 1.1250001
+    MoveSpeed: 3.2
+    WalkClipSpeed: 1.3
+    RunClipSpeed: 2.9665053
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.6666667
+    DeathDuration: 2.8333335
   - Id: arachnid_boss
     DisplayName: Arachnid Boss
     Enabled: 0
@@ -951,251 +951,251 @@ MonoBehaviour:
     Enabled: 1
     Prefab: {fileID: 1572172197830532, guid: 83ded7fd4c5c3c54da3de86e243625ef, type: 3}
     Controller: {fileID: 22100000, guid: 3325dce08acb39a49a65ffe7575ebd04, type: 2}
-    Idle: {fileID: 7400000, guid: 87aabf907dad94d43961059f2413b005, type: 3}
-    Walk: {fileID: 7400000, guid: 6b54a5d3679f88a4ebe2aac4dfacf2d3, type: 3}
-    Run: {fileID: 7400000, guid: 3230013b78f50bc43aad42b860e260cd, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: 23e578d663905374c8e7ef7f6519fc20, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: 3410591686cf5d74fb99f4a21377ca06, type: 3}
+    Run: {fileID: 8993902097722301239, guid: 9ad350e0632994c43b3faa5b704b8f13, type: 3}
     Attacks:
-    - {fileID: 7400000, guid: bb2e4c903aa39704bbaa6ba021daa75b, type: 3}
-    - {fileID: 7400000, guid: 23eb7c596f0b9c24f8b12596e1420924, type: 3}
-    - {fileID: 7400000, guid: 2554937635e30b04aadc4f5ebe333cbb, type: 3}
-    Death: {fileID: 7400000, guid: 824e92f072a53b84188dd09208f830ce, type: 3}
-    Entrance: {fileID: 7400000, guid: 702847dcc8fb57d44b0aa7534e4ada92, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: a2693b3369a9bb24baed1ec747eef494, type: 3}
+    - {fileID: 8993902097722301239, guid: 8b8e4ba95d4322e48ae96718ab89b769, type: 3}
+    - {fileID: 8993902097722301239, guid: 9022e1d22291e3542b5c75db4a56ad6d, type: 3}
+    Death: {fileID: 8993902097722301239, guid: 378b8c03132660648854cd32356a78be, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 727dcacf907f0ba489e998a9ee1a377a, type: 3}
+    Avatar: {fileID: 9000000, guid: da1e0bb382bce1c4b829b7d13003aa2d, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps: []
-    MoveSpeed: 3.4
+    MoveSpeed: 3.8
     WalkClipSpeed: 1.3
-    RunClipSpeed: 3.6
-    AttackHitDelay: 1.1250001
+    RunClipSpeed: 4.841016
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.0000002
+    DeathDuration: 2.3333335
   - Id: creature_humanoid_02
     DisplayName: Creature Humanoid 02
     Enabled: 1
     Prefab: {fileID: 1078603814506092, guid: 0436aa6c7951cf648af9943debebb252, type: 3}
     Controller: {fileID: 22100000, guid: 41ea1d1a5fe7c384883be09d3ffb01d3, type: 2}
-    Idle: {fileID: 7400000, guid: 87aabf907dad94d43961059f2413b005, type: 3}
-    Walk: {fileID: 7400000, guid: 6b54a5d3679f88a4ebe2aac4dfacf2d3, type: 3}
-    Run: {fileID: 7400000, guid: 3230013b78f50bc43aad42b860e260cd, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: b24a31d0c2d66cb4c93567570b149207, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: 2b9a3a1d81602cc46999f18f0fa39e9d, type: 3}
+    Run: {fileID: 8993902097722301239, guid: 723d32bd96653244da40a292f6d8398a, type: 3}
     Attacks:
-    - {fileID: 7400000, guid: bb2e4c903aa39704bbaa6ba021daa75b, type: 3}
-    - {fileID: 7400000, guid: 23eb7c596f0b9c24f8b12596e1420924, type: 3}
-    - {fileID: 7400000, guid: 2554937635e30b04aadc4f5ebe333cbb, type: 3}
-    Death: {fileID: 7400000, guid: 824e92f072a53b84188dd09208f830ce, type: 3}
-    Entrance: {fileID: 7400000, guid: 702847dcc8fb57d44b0aa7534e4ada92, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: adafa3f8ad3eb304ca214550a4926aa3, type: 3}
+    - {fileID: 8993902097722301239, guid: ff572a30af2457d47934e08a02c6cdee, type: 3}
+    - {fileID: 8993902097722301239, guid: f8f402c4eaa897345a0b53cd45445abe, type: 3}
+    Death: {fileID: 8993902097722301239, guid: c6301a8150a4c984696ca82e41a6e1d6, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 12297ab7481912e4c9bd1423ab9ac8f5, type: 3}
+    Avatar: {fileID: 9000000, guid: d446eae9e1794764ea301a0632fb6467, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps: []
-    MoveSpeed: 3.4
-    WalkClipSpeed: 1.3
-    RunClipSpeed: 3.6
-    AttackHitDelay: 1.1250001
+    MoveSpeed: 3.8
+    WalkClipSpeed: 0.66545963
+    RunClipSpeed: 7.150334
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.0000002
+    DeathDuration: 2.8333335
   - Id: creature_humanoid_03
     DisplayName: Creature Humanoid 03
     Enabled: 1
     Prefab: {fileID: 1068458899818340, guid: 9bd51c5d985dc6d4b9748ac18e4979d0, type: 3}
     Controller: {fileID: 22100000, guid: fa5801fea9eaf334ea301ad254785b94, type: 2}
-    Idle: {fileID: 7400000, guid: 87aabf907dad94d43961059f2413b005, type: 3}
-    Walk: {fileID: 7400000, guid: 6b54a5d3679f88a4ebe2aac4dfacf2d3, type: 3}
-    Run: {fileID: 7400000, guid: 3230013b78f50bc43aad42b860e260cd, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: 81d35d20c35935347b02e5be915de454, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: 2b0e96f691e2ca7408ce841b829c1d2e, type: 3}
+    Run: {fileID: 8993902097722301239, guid: 46cc0f03c1d9a9241811d65cc33d9f3c, type: 3}
     Attacks:
-    - {fileID: 7400000, guid: bb2e4c903aa39704bbaa6ba021daa75b, type: 3}
-    - {fileID: 7400000, guid: 23eb7c596f0b9c24f8b12596e1420924, type: 3}
-    - {fileID: 7400000, guid: 2554937635e30b04aadc4f5ebe333cbb, type: 3}
-    Death: {fileID: 7400000, guid: 824e92f072a53b84188dd09208f830ce, type: 3}
-    Entrance: {fileID: 7400000, guid: 702847dcc8fb57d44b0aa7534e4ada92, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: 7d7ccb0c9b4792c46bbb06a357f644da, type: 3}
+    - {fileID: 8993902097722301239, guid: 46673e0875472c74ba9b6825fe54c42f, type: 3}
+    - {fileID: 8993902097722301239, guid: 63c0c0f391a113f44a8778865fa02687, type: 3}
+    Death: {fileID: 8993902097722301239, guid: 2eb8e8ca81778b844ad174146e4a5933, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 4547ee5521de40c4b84cde14562fbbe5, type: 3}
+    Avatar: {fileID: 9000000, guid: e3ddfff3af3242e49bcbe742f5b2103a, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps: []
-    MoveSpeed: 3.4
-    WalkClipSpeed: 1.3
-    RunClipSpeed: 3.6
-    AttackHitDelay: 1.1250001
+    MoveSpeed: 3.8
+    WalkClipSpeed: 0.761027
+    RunClipSpeed: 5.4893956
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.0000002
+    DeathDuration: 2.1666667
   - Id: creature_humanoid_04
     DisplayName: Creature Humanoid 04
     Enabled: 1
     Prefab: {fileID: 1124609711639834, guid: 5f0e640f434e7b240be34f48342cbeea, type: 3}
     Controller: {fileID: 22100000, guid: fc955bd64413c4441b4c835433fdf818, type: 2}
-    Idle: {fileID: 7400000, guid: 87aabf907dad94d43961059f2413b005, type: 3}
-    Walk: {fileID: 7400000, guid: 6b54a5d3679f88a4ebe2aac4dfacf2d3, type: 3}
-    Run: {fileID: 7400000, guid: 3230013b78f50bc43aad42b860e260cd, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: 35ab6959414c2124fa9e2a0137d209b4, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: fda78a875a5d6604391ee9513f47e732, type: 3}
+    Run: {fileID: 8993902097722301239, guid: 37bce19cadc439d4095e42bd4dcf9d7a, type: 3}
     Attacks:
-    - {fileID: 7400000, guid: bb2e4c903aa39704bbaa6ba021daa75b, type: 3}
-    - {fileID: 7400000, guid: 23eb7c596f0b9c24f8b12596e1420924, type: 3}
-    - {fileID: 7400000, guid: 2554937635e30b04aadc4f5ebe333cbb, type: 3}
-    Death: {fileID: 7400000, guid: 824e92f072a53b84188dd09208f830ce, type: 3}
-    Entrance: {fileID: 7400000, guid: 702847dcc8fb57d44b0aa7534e4ada92, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: a2693b3369a9bb24baed1ec747eef494, type: 3}
+    - {fileID: 8993902097722301239, guid: 8b8e4ba95d4322e48ae96718ab89b769, type: 3}
+    - {fileID: 8993902097722301239, guid: 9022e1d22291e3542b5c75db4a56ad6d, type: 3}
+    Death: {fileID: 8993902097722301239, guid: 378b8c03132660648854cd32356a78be, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 01d3dec6ff739f8478b3dedefe2576c0, type: 3}
+    Avatar: {fileID: 9000000, guid: 1fdabe7ae4162fc4e9c78efde8453c09, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps: []
-    MoveSpeed: 3.4
-    WalkClipSpeed: 1.3
-    RunClipSpeed: 3.6
-    AttackHitDelay: 1.1250001
+    MoveSpeed: 3.2
+    WalkClipSpeed: 0.24376653
+    RunClipSpeed: 1.5940484
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.0000002
+    DeathDuration: 2.3333335
   - Id: creature_humanoid_05
     DisplayName: Creature Humanoid 05
     Enabled: 1
     Prefab: {fileID: 1845810424943490, guid: c3f56c4b47dbf294d8b18192efea0758, type: 3}
     Controller: {fileID: 22100000, guid: eff43d95308cb814ca8ba23ce96b48fc, type: 2}
-    Idle: {fileID: 7400000, guid: 87aabf907dad94d43961059f2413b005, type: 3}
-    Walk: {fileID: 7400000, guid: 6b54a5d3679f88a4ebe2aac4dfacf2d3, type: 3}
-    Run: {fileID: 7400000, guid: 3230013b78f50bc43aad42b860e260cd, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: 08ae7e74e4e69554d919d131aabe6638, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: 9c9e54fc8c28f7b43856c563649122f0, type: 3}
+    Run: {fileID: 8993902097722301239, guid: b11294c0aa48fe9479dcc0f14770249c, type: 3}
     Attacks:
-    - {fileID: 7400000, guid: bb2e4c903aa39704bbaa6ba021daa75b, type: 3}
-    - {fileID: 7400000, guid: 23eb7c596f0b9c24f8b12596e1420924, type: 3}
-    - {fileID: 7400000, guid: 2554937635e30b04aadc4f5ebe333cbb, type: 3}
-    Death: {fileID: 7400000, guid: 824e92f072a53b84188dd09208f830ce, type: 3}
-    Entrance: {fileID: 7400000, guid: 702847dcc8fb57d44b0aa7534e4ada92, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: adafa3f8ad3eb304ca214550a4926aa3, type: 3}
+    - {fileID: 8993902097722301239, guid: ff572a30af2457d47934e08a02c6cdee, type: 3}
+    - {fileID: 8993902097722301239, guid: f8f402c4eaa897345a0b53cd45445abe, type: 3}
+    Death: {fileID: 8993902097722301239, guid: c6301a8150a4c984696ca82e41a6e1d6, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 727dcacf907f0ba489e998a9ee1a377a, type: 3}
+    Avatar: {fileID: 9000000, guid: f530896f3c761b348811b66b10e78b2c, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps: []
-    MoveSpeed: 3.4
+    MoveSpeed: 3.2
     WalkClipSpeed: 1.3
-    RunClipSpeed: 3.6
-    AttackHitDelay: 1.1250001
+    RunClipSpeed: 2.9665053
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.0000002
+    DeathDuration: 2.8333335
   - Id: monster_01
     DisplayName: Monster 01
     Enabled: 1
     Prefab: {fileID: 1692222168060432, guid: 3f27a8f2ca0d1fb4aa9e99c4571f2fee, type: 3}
     Controller: {fileID: 22100000, guid: dfeb49d02e8e1dd4891f89e1a7a5507f, type: 2}
-    Idle: {fileID: 7400000, guid: 87aabf907dad94d43961059f2413b005, type: 3}
-    Walk: {fileID: 7400000, guid: 6b54a5d3679f88a4ebe2aac4dfacf2d3, type: 3}
-    Run: {fileID: 7400000, guid: 3230013b78f50bc43aad42b860e260cd, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: 23e578d663905374c8e7ef7f6519fc20, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: f08b1f60b95c9b245a3aaf1234749dd6, type: 3}
+    Run: {fileID: 8993902097722301239, guid: bc651d55f47782241b8c7e6cea82293f, type: 3}
     Attacks:
-    - {fileID: 7400000, guid: bb2e4c903aa39704bbaa6ba021daa75b, type: 3}
-    - {fileID: 7400000, guid: 23eb7c596f0b9c24f8b12596e1420924, type: 3}
-    - {fileID: 7400000, guid: 2554937635e30b04aadc4f5ebe333cbb, type: 3}
-    Death: {fileID: 7400000, guid: 824e92f072a53b84188dd09208f830ce, type: 3}
-    Entrance: {fileID: 7400000, guid: 702847dcc8fb57d44b0aa7534e4ada92, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: 7d7ccb0c9b4792c46bbb06a357f644da, type: 3}
+    - {fileID: 8993902097722301239, guid: 46673e0875472c74ba9b6825fe54c42f, type: 3}
+    - {fileID: 8993902097722301239, guid: 63c0c0f391a113f44a8778865fa02687, type: 3}
+    Death: {fileID: 8993902097722301239, guid: 2eb8e8ca81778b844ad174146e4a5933, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 12297ab7481912e4c9bd1423ab9ac8f5, type: 3}
+    Avatar: {fileID: 9000000, guid: 6ec35cf50911f6847847c5685a9a4506, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps: []
-    MoveSpeed: 3.4
-    WalkClipSpeed: 1.3
-    RunClipSpeed: 3.6
-    AttackHitDelay: 1.1250001
+    MoveSpeed: 3.8
+    WalkClipSpeed: 0.29272836
+    RunClipSpeed: 4.0214286
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.0000002
+    DeathDuration: 2.1666667
   - Id: monster_02
     DisplayName: Monster 02
     Enabled: 1
     Prefab: {fileID: 1901395959897142, guid: de516883265a68246bdc37c156ada26a, type: 3}
     Controller: {fileID: 22100000, guid: 1dcbd71230a5bd44c979aea69845d752, type: 2}
-    Idle: {fileID: 7400000, guid: 87aabf907dad94d43961059f2413b005, type: 3}
-    Walk: {fileID: 7400000, guid: 6b54a5d3679f88a4ebe2aac4dfacf2d3, type: 3}
-    Run: {fileID: 7400000, guid: 3230013b78f50bc43aad42b860e260cd, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: b24a31d0c2d66cb4c93567570b149207, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: 3410591686cf5d74fb99f4a21377ca06, type: 3}
+    Run: {fileID: 8993902097722301239, guid: 9ad350e0632994c43b3faa5b704b8f13, type: 3}
     Attacks:
-    - {fileID: 7400000, guid: bb2e4c903aa39704bbaa6ba021daa75b, type: 3}
-    - {fileID: 7400000, guid: 23eb7c596f0b9c24f8b12596e1420924, type: 3}
-    - {fileID: 7400000, guid: 2554937635e30b04aadc4f5ebe333cbb, type: 3}
-    Death: {fileID: 7400000, guid: 824e92f072a53b84188dd09208f830ce, type: 3}
-    Entrance: {fileID: 7400000, guid: 702847dcc8fb57d44b0aa7534e4ada92, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: a2693b3369a9bb24baed1ec747eef494, type: 3}
+    - {fileID: 8993902097722301239, guid: 8b8e4ba95d4322e48ae96718ab89b769, type: 3}
+    - {fileID: 8993902097722301239, guid: 9022e1d22291e3542b5c75db4a56ad6d, type: 3}
+    Death: {fileID: 8993902097722301239, guid: 378b8c03132660648854cd32356a78be, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 4547ee5521de40c4b84cde14562fbbe5, type: 3}
+    Avatar: {fileID: 9000000, guid: ea4bd7120123a264884bb2b68cbefece, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps: []
-    MoveSpeed: 3.4
+    MoveSpeed: 3.8
     WalkClipSpeed: 1.3
-    RunClipSpeed: 3.6
-    AttackHitDelay: 1.1250001
+    RunClipSpeed: 4.841016
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.0000002
+    DeathDuration: 2.3333335
   - Id: monster_03
     DisplayName: Monster 03
     Enabled: 1
     Prefab: {fileID: 1621942306831948, guid: f450e0b7fb840a145a95e1a9c7875574, type: 3}
     Controller: {fileID: 22100000, guid: 7c1606141a942cb4aa57faf97ac127f5, type: 2}
-    Idle: {fileID: 7400000, guid: 87aabf907dad94d43961059f2413b005, type: 3}
-    Walk: {fileID: 7400000, guid: 6b54a5d3679f88a4ebe2aac4dfacf2d3, type: 3}
-    Run: {fileID: 7400000, guid: 3230013b78f50bc43aad42b860e260cd, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: 81d35d20c35935347b02e5be915de454, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: 2b9a3a1d81602cc46999f18f0fa39e9d, type: 3}
+    Run: {fileID: 8993902097722301239, guid: 723d32bd96653244da40a292f6d8398a, type: 3}
     Attacks:
-    - {fileID: 7400000, guid: bb2e4c903aa39704bbaa6ba021daa75b, type: 3}
-    - {fileID: 7400000, guid: 23eb7c596f0b9c24f8b12596e1420924, type: 3}
-    - {fileID: 7400000, guid: 2554937635e30b04aadc4f5ebe333cbb, type: 3}
-    Death: {fileID: 7400000, guid: 824e92f072a53b84188dd09208f830ce, type: 3}
-    Entrance: {fileID: 7400000, guid: 702847dcc8fb57d44b0aa7534e4ada92, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: adafa3f8ad3eb304ca214550a4926aa3, type: 3}
+    - {fileID: 8993902097722301239, guid: ff572a30af2457d47934e08a02c6cdee, type: 3}
+    - {fileID: 8993902097722301239, guid: f8f402c4eaa897345a0b53cd45445abe, type: 3}
+    Death: {fileID: 8993902097722301239, guid: c6301a8150a4c984696ca82e41a6e1d6, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 01d3dec6ff739f8478b3dedefe2576c0, type: 3}
+    Avatar: {fileID: 9000000, guid: ff3145152227d94418fca3b5fcbd3777, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps: []
-    MoveSpeed: 3.4
-    WalkClipSpeed: 1.3
-    RunClipSpeed: 3.6
-    AttackHitDelay: 1.1250001
+    MoveSpeed: 3.8
+    WalkClipSpeed: 0.66545963
+    RunClipSpeed: 7.150334
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.0000002
+    DeathDuration: 2.8333335
   - Id: monster_04
     DisplayName: Monster 04
     Enabled: 1
     Prefab: {fileID: 1310027756433816, guid: 5009c09b7e8ae7b468040a4f17f6f901, type: 3}
     Controller: {fileID: 22100000, guid: bf1751a8d528df3438ba96395cdbbf79, type: 2}
-    Idle: {fileID: 7400000, guid: 87aabf907dad94d43961059f2413b005, type: 3}
-    Walk: {fileID: 7400000, guid: 6b54a5d3679f88a4ebe2aac4dfacf2d3, type: 3}
-    Run: {fileID: 7400000, guid: 3230013b78f50bc43aad42b860e260cd, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: 35ab6959414c2124fa9e2a0137d209b4, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: 2b0e96f691e2ca7408ce841b829c1d2e, type: 3}
+    Run: {fileID: 8993902097722301239, guid: 46cc0f03c1d9a9241811d65cc33d9f3c, type: 3}
     Attacks:
-    - {fileID: 7400000, guid: bb2e4c903aa39704bbaa6ba021daa75b, type: 3}
-    - {fileID: 7400000, guid: 23eb7c596f0b9c24f8b12596e1420924, type: 3}
-    - {fileID: 7400000, guid: 2554937635e30b04aadc4f5ebe333cbb, type: 3}
-    Death: {fileID: 7400000, guid: 824e92f072a53b84188dd09208f830ce, type: 3}
-    Entrance: {fileID: 7400000, guid: 702847dcc8fb57d44b0aa7534e4ada92, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: 7d7ccb0c9b4792c46bbb06a357f644da, type: 3}
+    - {fileID: 8993902097722301239, guid: 46673e0875472c74ba9b6825fe54c42f, type: 3}
+    - {fileID: 8993902097722301239, guid: 63c0c0f391a113f44a8778865fa02687, type: 3}
+    Death: {fileID: 8993902097722301239, guid: 2eb8e8ca81778b844ad174146e4a5933, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 727dcacf907f0ba489e998a9ee1a377a, type: 3}
+    Avatar: {fileID: 9000000, guid: 994184534e14037418e67aff288a338e, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps: []
-    MoveSpeed: 3.4
-    WalkClipSpeed: 1.3
-    RunClipSpeed: 3.6
-    AttackHitDelay: 1.1250001
+    MoveSpeed: 3.8
+    WalkClipSpeed: 0.761027
+    RunClipSpeed: 5.4893956
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.0000002
+    DeathDuration: 2.1666667
   - Id: monster_05
     DisplayName: Monster 05
     Enabled: 1
     Prefab: {fileID: 1670970213356496, guid: 359ba4df0d8c6db429ddddce53229299, type: 3}
     Controller: {fileID: 22100000, guid: 870cc4d0bcd09334fa2fbd2b99b797d9, type: 2}
-    Idle: {fileID: 7400000, guid: 87aabf907dad94d43961059f2413b005, type: 3}
-    Walk: {fileID: 7400000, guid: 6b54a5d3679f88a4ebe2aac4dfacf2d3, type: 3}
-    Run: {fileID: 7400000, guid: 3230013b78f50bc43aad42b860e260cd, type: 3}
+    Idle: {fileID: 8993902097722301239, guid: 08ae7e74e4e69554d919d131aabe6638, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: fda78a875a5d6604391ee9513f47e732, type: 3}
+    Run: {fileID: 8993902097722301239, guid: 37bce19cadc439d4095e42bd4dcf9d7a, type: 3}
     Attacks:
-    - {fileID: 7400000, guid: bb2e4c903aa39704bbaa6ba021daa75b, type: 3}
-    - {fileID: 7400000, guid: 23eb7c596f0b9c24f8b12596e1420924, type: 3}
-    - {fileID: 7400000, guid: 2554937635e30b04aadc4f5ebe333cbb, type: 3}
-    Death: {fileID: 7400000, guid: 824e92f072a53b84188dd09208f830ce, type: 3}
-    Entrance: {fileID: 7400000, guid: 702847dcc8fb57d44b0aa7534e4ada92, type: 3}
-    Avatar: {fileID: 0}
+    - {fileID: 8993902097722301239, guid: a2693b3369a9bb24baed1ec747eef494, type: 3}
+    - {fileID: 8993902097722301239, guid: 8b8e4ba95d4322e48ae96718ab89b769, type: 3}
+    - {fileID: 8993902097722301239, guid: 9022e1d22291e3542b5c75db4a56ad6d, type: 3}
+    Death: {fileID: 8993902097722301239, guid: 378b8c03132660648854cd32356a78be, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 12297ab7481912e4c9bd1423ab9ac8f5, type: 3}
+    Avatar: {fileID: 9000000, guid: 1554f9489d39a8a47958004a5f3e5379, type: 3}
     Scale: 1
     YawOffset: 0
     MaterialSwaps: []
-    MoveSpeed: 3.4
-    WalkClipSpeed: 1.3
-    RunClipSpeed: 3.6
-    AttackHitDelay: 1.1250001
+    MoveSpeed: 3.2
+    WalkClipSpeed: 0.24376653
+    RunClipSpeed: 1.5940484
+    AttackHitDelay: 1.2
     AttackDuration: 1.8
     HasEntrance: 1
-    DeathDuration: 3.0000002
+    DeathDuration: 2.3333335
   - Id: parazite
     DisplayName: Parazite
     Enabled: 0
@@ -1417,3 +1417,28 @@ MonoBehaviour:
     AttackDuration: 0.96666664
     HasEntrance: 1
     DeathDuration: 1.4666667
+  - Id: zombie_female
+    DisplayName: Female Zombie
+    Enabled: 1
+    Prefab: {fileID: 4982165776056593501, guid: c2a05e90e05a77a48bc5db3cfa6fe731, type: 3}
+    Controller: {fileID: 22100000, guid: 8aeaf8e783403804e8d14a46d9f0ce7c, type: 2}
+    Idle: {fileID: 8993902097722301239, guid: 08ae7e74e4e69554d919d131aabe6638, type: 3}
+    Walk: {fileID: 8993902097722301239, guid: f08b1f60b95c9b245a3aaf1234749dd6, type: 3}
+    Run: {fileID: 8993902097722301239, guid: bc651d55f47782241b8c7e6cea82293f, type: 3}
+    Attacks:
+    - {fileID: 8993902097722301239, guid: 7d7ccb0c9b4792c46bbb06a357f644da, type: 3}
+    - {fileID: 8993902097722301239, guid: 46673e0875472c74ba9b6825fe54c42f, type: 3}
+    - {fileID: 8993902097722301239, guid: 63c0c0f391a113f44a8778865fa02687, type: 3}
+    Death: {fileID: 8993902097722301239, guid: 2eb8e8ca81778b844ad174146e4a5933, type: 3}
+    Entrance: {fileID: 8993902097722301239, guid: 01d3dec6ff739f8478b3dedefe2576c0, type: 3}
+    Avatar: {fileID: 0}
+    Scale: 1
+    YawOffset: 0
+    MaterialSwaps: []
+    MoveSpeed: 3.8
+    WalkClipSpeed: 0.29272836
+    RunClipSpeed: 4.0214286
+    AttackHitDelay: 1.2
+    AttackDuration: 1.8
+    HasEntrance: 1
+    DeathDuration: 2.1666667

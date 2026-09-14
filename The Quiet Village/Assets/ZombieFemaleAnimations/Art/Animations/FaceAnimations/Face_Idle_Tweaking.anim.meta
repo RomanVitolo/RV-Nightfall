@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0a7bfef824fbb03449786c231ed2f8b7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/Animations/FaceAnimations/Face_Idle_Tweaking.anim
+  uploadId: 803404

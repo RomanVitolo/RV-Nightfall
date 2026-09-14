@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 039e644036e60c1478eb5ba92988bd2b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/UnityMan_ZombieFemale_CrawlLegGrabEndVictim.controller
+  uploadId: 803404

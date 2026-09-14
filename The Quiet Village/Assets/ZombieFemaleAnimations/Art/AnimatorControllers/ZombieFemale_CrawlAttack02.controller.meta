@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cfc6f4ff3f03620469cf081ee0bcf24a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_CrawlAttack02.controller
+  uploadId: 803404

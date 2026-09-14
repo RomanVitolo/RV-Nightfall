@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9cf32a77deb936d4fa977ddff644be71
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_FallOutOfBedLeftSide.controller
+  uploadId: 803404

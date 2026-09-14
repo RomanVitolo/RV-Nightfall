@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8e4b8509201799c4e9c1c0d8dc0a9f38
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/Animations/FaceAnimations/Face_Grab.anim
+  uploadId: 803404

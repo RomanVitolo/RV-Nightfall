@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5929c94eb7fcd2e4f965536217de9b43
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_Run01ForwardRight.controller
+  uploadId: 803404

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ff96f0b189b4f174cba6f40ce823e9d9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_AttackInPlace03.controller
+  uploadId: 803404

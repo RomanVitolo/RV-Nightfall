@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 66f6c72e0b22c99438fdb0c32d87ddf6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_GrabTakeDownPushOffEndAttacker.controller
+  uploadId: 803404

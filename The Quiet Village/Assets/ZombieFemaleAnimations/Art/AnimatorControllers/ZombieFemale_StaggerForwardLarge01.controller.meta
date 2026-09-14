@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ca3f0a10d86c571429cb862685581a58
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_StaggerForwardLarge01.controller
+  uploadId: 803404

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bbae3b16a41d1a04c954924d768519c9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_GrabStartAttacker.controller
+  uploadId: 803404

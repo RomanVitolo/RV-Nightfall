@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 729b443cafd08e544b5298673bba0b18
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_ClimbOnTableFallForwardGetUpEnd.controller
+  uploadId: 803404

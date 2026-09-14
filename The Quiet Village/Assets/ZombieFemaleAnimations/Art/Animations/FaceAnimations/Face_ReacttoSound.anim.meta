@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fd4a510b71fea554b8bee924f9daa6a4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/Animations/FaceAnimations/Face_ReacttoSound.anim
+  uploadId: 803404

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cdc3a5a9f9829b04093a8a05e422f0f6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/Animations/FaceAnimations/Face_Walk01.anim
+  uploadId: 803404

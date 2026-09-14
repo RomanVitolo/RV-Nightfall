@@ -27,10 +27,10 @@ namespace QuietVillage.Gameplay.EditorTools
     /// Only One. After that the catalog is design data: edit clips, speeds, scale or enabled flags in its Inspector, then
     /// re-run to rebuild the overrides. Re-running never re-seeds or changes those values.
     ///
-    /// Vendor assets are never modified. Gait clips that do not loop in their import are copied into
-    /// <c>Art/Animations/Creatures/Loops</c> with looping on; see <see cref="Looping"/>.
+    /// Vendor assets are never modified. Gait clips that do not loop in their import, and death clips that do, are copied
+    /// into <c>Art/Animations/Creatures/Loops</c> with looping corrected; see <see cref="WithLooping"/>.
     /// </remarks>
-    public static class CreatureSetup
+    public static partial class CreatureSetup
     {
         private const string CatalogPath = ProjectPaths.CreatureCatalog;
         private const string AnimationFolder = ProjectPaths.CreatureAnimations;
@@ -72,7 +72,7 @@ namespace QuietVillage.Gameplay.EditorTools
                 return;
             }
 
-            Execute();
+            Execute(applyZombieFemale: false);
         }
 
         [MenuItem("Tools/Quiet Village/Creatures/Select Creature Catalog")]
@@ -93,12 +93,16 @@ namespace QuietVillage.Gameplay.EditorTools
         /// <summary>Entry point for <c>-executeMethod</c>, so this can run headlessly.</summary>
         public static void RunFromCommandLine()
         {
-            var succeeded = Execute();
+            var succeeded = Execute(applyZombieFemale: false);
 
             if (Application.isBatchMode) EditorApplication.Exit(succeeded ? 0 : 1);
         }
 
-        private static bool Execute()
+        /// <param name="applyZombieFemale">
+        /// Also dress the humanoid zombies in the Zombie Female animation set, replacing their clips; see
+        /// <see cref="ApplyZombieFemaleSet"/>. Always done for a freshly seeded catalog.
+        /// </param>
+        private static bool Execute(bool applyZombieFemale)
         {
             var report = new StringBuilder();
 
@@ -123,7 +127,13 @@ namespace QuietVillage.Gameplay.EditorTools
             }
 
             var bodies = catalog.EditableBodies;
-            if (bodies.Count == 0) Seed(bodies, report);
+            if (bodies.Count == 0)
+            {
+                Seed(bodies, report);
+                applyZombieFemale = true;
+            }
+
+            if (applyZombieFemale) ApplyZombieFemaleSet(bodies, report);
 
             var usable = 0;
             var enabled = 0;
@@ -513,13 +523,13 @@ namespace QuietVillage.Gameplay.EditorTools
             if (created) controller = new AnimatorOverrideController(baseController) { name = Slugify(label) };
             else controller.runtimeAnimatorController = baseController;
 
-            controller[placeholders[Slot.Idle]] = Looping(body.Idle, report);
-            controller[placeholders[Slot.Walk]] = Looping(body.Walk, report);
-            controller[placeholders[Slot.Run]] = Looping(body.Run != null ? body.Run : body.Walk, report);
+            controller[placeholders[Slot.Idle]] = WithLooping(body.Idle, true, report);
+            controller[placeholders[Slot.Walk]] = WithLooping(body.Walk, true, report);
+            controller[placeholders[Slot.Run]] = WithLooping(body.Run != null ? body.Run : body.Walk, true, report);
             controller[placeholders[Slot.Attack1]] = attacks[0];
             controller[placeholders[Slot.Attack2]] = attacks[1 % attacks.Count];
             controller[placeholders[Slot.Attack3]] = attacks[2 % attacks.Count];
-            controller[placeholders[Slot.Death]] = body.Death != null ? body.Death : body.Idle;
+            controller[placeholders[Slot.Death]] = body.Death != null ? WithLooping(body.Death, false, report) : body.Idle;
             controller[placeholders[Slot.Entrance]] = body.Entrance != null ? body.Entrance : body.Idle;
 
             if (created) AssetDatabase.CreateAsset(controller, path);
@@ -538,12 +548,16 @@ namespace QuietVillage.Gameplay.EditorTools
         /// A copy leaves the pack exactly as it shipped. Copies are made once and reused; delete the Loops folder to
         /// remake them.
         /// </remarks>
-        private static AnimationClip Looping(AnimationClip clip, StringBuilder report)
+        /// <param name="loop">
+        /// True for gaits. False for a death: the Zombie Female set marks every clip as looping, and a death that loops
+        /// dies again and again until the creature is removed.
+        /// </param>
+        private static AnimationClip WithLooping(AnimationClip clip, bool loop, StringBuilder report)
         {
-            if (clip == null || clip.isLooping) return clip;
+            if (clip == null || clip.isLooping == loop) return clip;
 
             var source = AssetDatabase.GetAssetPath(clip);
-            var name = Slugify($"{Path.GetFileNameWithoutExtension(source)}_{clip.name}");
+            var name = Slugify($"{Path.GetFileNameWithoutExtension(source)}_{clip.name}") + (loop ? string.Empty : "_once");
             var path = $"{LoopFolder}/{name}.anim";
 
             var copy = AssetDatabase.LoadAssetAtPath<AnimationClip>(path);
@@ -553,11 +567,11 @@ namespace QuietVillage.Gameplay.EditorTools
             copy.name = name;
 
             var settings = AnimationUtility.GetAnimationClipSettings(copy);
-            settings.loopTime = true;
+            settings.loopTime = loop;
             AnimationUtility.SetAnimationClipSettings(copy, settings);
 
             AssetDatabase.CreateAsset(copy, path);
-            report.AppendLine($"  Looping copy: {path}.");
+            report.AppendLine($"  {(loop ? "Looping" : "Non-looping")} copy: {path}.");
             return copy;
         }
 

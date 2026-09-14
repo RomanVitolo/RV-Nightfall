@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0dd02e24521f0464f894ed09426d82fe
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/UnityMan_ZombieFemale_GrabBitingLoopVictim.controller
+  uploadId: 803404

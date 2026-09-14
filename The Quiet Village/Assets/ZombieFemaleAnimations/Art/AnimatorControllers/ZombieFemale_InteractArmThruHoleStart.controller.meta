@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a8c952d5bdf157b4e8d709b97a6a6d39
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_InteractArmThruHoleStart.controller
+  uploadId: 803404

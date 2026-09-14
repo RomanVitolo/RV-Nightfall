@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 901a1c4336d47aa4586179dbe05446ea
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_StaggerLeft01.controller
+  uploadId: 803404

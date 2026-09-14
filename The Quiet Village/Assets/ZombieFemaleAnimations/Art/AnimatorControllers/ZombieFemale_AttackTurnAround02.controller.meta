@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5235d749ed8100b4aa3ee3c46cb31124
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/AnimatorControllers/ZombieFemale_AttackTurnAround02.controller
+  uploadId: 803404
