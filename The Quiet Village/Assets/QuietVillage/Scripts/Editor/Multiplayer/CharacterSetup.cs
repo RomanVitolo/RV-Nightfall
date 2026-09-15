@@ -48,6 +48,7 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
             public string Description;
             public (string Name, string Path)[] Variants;
             public Action<CharacterCatalog.Perks> Perks;
+            public RoleAbility Ability;
             public (string Title, int Quantity)[] Items = Array.Empty<(string, int)>();
         }
 
@@ -64,7 +65,8 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
                     ("Standard", Pack + "/Character_Worker/Prefabs/Sci_Fi_Worker 01.prefab"),
                     ("Armoured", Pack + "/Character_Worker/Prefabs/Sci_Fi_Worker_02.prefab")
                 },
-                Perks = perks => perks.BarricadeRepair = 1.5f,
+                Perks = perks => perks.BarricadeRepair = 2f,
+                Ability = RoleAbility.Reinforce,
                 Items = new[] { ("Scrap", 2) }
             },
             new()
@@ -77,7 +79,13 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
                     ("Style 2", Pack + "/Sci_Fi_Character_05/Prefabs/Sci_Fi_Character_05_02.prefab"),
                     ("Style 3", Pack + "/Sci_Fi_Character_05/Prefabs/Sci_Fi_Character_05_03.prefab")
                 },
-                Perks = perks => perks.Healing = 1.5f,
+                Perks = perks =>
+                {
+                    perks.Healing = 1.5f;
+                    perks.ReviveSpeed = 2f;
+                    perks.ReviveHealth = 2f;
+                },
+                Ability = RoleAbility.HealingArea,
                 Items = new[] { ("First AID KIT", 1) }
             },
             new()
@@ -89,7 +97,8 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
                     ("Style 1", Pack + "/Character_Head_Hunter/Prefabs/Head_Hunter_01.prefab"),
                     ("Style 2", Pack + "/Character_Head_Hunter/Prefabs/Head_Hunter_02.prefab")
                 },
-                Perks = perks => perks.RunSpeed = 1.15f,
+                Perks = perks => perks.RunSpeed = 1.2f,
+                Ability = RoleAbility.SenseCreatures,
                 Items = new[] { ("Lockpick", 1) }
             },
             new()
@@ -103,7 +112,8 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
                     ("Style 2", Pack + "/Character_Seller/Prefabs/Seller_02.prefab"),
                     ("Style 3", Pack + "/Character_Seller/Prefabs/Seller_03.prefab")
                 },
-                Perks = perks => perks.ExtraInventorySlots = 9
+                Perks = perks => perks.ExtraInventorySlots = 9,
+                Ability = RoleAbility.Scrounge
             }
         };
 
@@ -286,6 +296,7 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
                 }
 
                 seed.Perks?.Invoke(character.Perks);
+                character.Ability = seed.Ability;
 
                 foreach (var (title, quantity) in seed.Items)
                     character.StartingItems.Add(new CharacterCatalog.StartingItem { Title = title, Quantity = quantity });
@@ -334,29 +345,35 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
             return null;
         }
 
-        private static void CompleteItems(CharacterCatalog.Character character, Dictionary<string, string> items,
+        private static void CompleteItems(CharacterCatalog.Character character, Dictionary<string, Item> items,
             string label, StringBuilder report)
         {
             if (character.StartingItems == null) return;
 
             foreach (var item in character.StartingItems)
             {
-                if (item == null || !string.IsNullOrEmpty(item.ItemGuid)) continue;
+                if (item == null) continue;
 
-                if (!string.IsNullOrWhiteSpace(item.Title) && items.TryGetValue(item.Title.Trim(), out var guid))
+                if (string.IsNullOrEmpty(item.ItemGuid))
                 {
-                    item.ItemGuid = guid;
-                    continue;
+                    if (string.IsNullOrWhiteSpace(item.Title) || !items.TryGetValue(item.Title.Trim(), out var byTitle))
+                    {
+                        report.AppendLine($"WARNING '{label}': no inventory item titled '{item.Title}'; it will not be given.");
+                        continue;
+                    }
+
+                    item.ItemGuid = byTitle.GUID;
                 }
 
-                report.AppendLine($"WARNING '{label}': no inventory item titled '{item.Title}'; it will not be given.");
+                // By GUID, so an item filled in on an earlier run, or by hand, still gets its icon.
+                if (item.Icon == null && items.TryGetValue(item.ItemGuid, out var byGuid)) item.Icon = byGuid.Icon;
             }
         }
 
-        /// <summary>Every item in the player's inventory database, by title, ignoring case.</summary>
-        private static Dictionary<string, string> ItemsByTitle()
+        /// <summary>Every item in the player's inventory database, by title (ignoring case) and by GUID.</summary>
+        private static Dictionary<string, Item> ItemsByTitle()
         {
-            var items = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            var items = new Dictionary<string, Item>(StringComparer.OrdinalIgnoreCase);
 
             var inventory = PlayerAssetLookup.FindInventory();
             if (inventory == null || inventory.inventoryDatabase == null) return items;
@@ -367,7 +384,9 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
 
                 foreach (var item in section.Items)
                 {
-                    if (item != null && !string.IsNullOrWhiteSpace(item.Title)) items.TryAdd(item.Title.Trim(), item.GUID);
+                    if (item == null) continue;
+                    if (!string.IsNullOrWhiteSpace(item.Title)) items.TryAdd(item.Title.Trim(), item);
+                    if (!string.IsNullOrEmpty(item.GUID)) items.TryAdd(item.GUID, item);
                 }
             }
 
@@ -492,6 +511,69 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
 
         // ---- Lobby scene -----------------------------------------------------------------------------
 
+        private const string CemeteryPack = "Assets/Old Cemetery/Assets";
+
+        /// <summary>Where each default backdrop prop stands: pack path, position (body at the origin, camera at +Z), yaw.</summary>
+        /// <remarks>
+        /// Kept to the sides and behind, so nothing crosses the body, and thinning out with distance where the fog takes
+        /// over. Scale 1, as in the levels.
+        /// </remarks>
+        private static readonly (string Path, Vector3 Position, float Yaw)[] Backdrop =
+        {
+            ($"{CemeteryPack}/Prefabs/CemeteryTree1.prefab", new Vector3(-3.4f, 0f, -7f), 25f),
+            ($"{CemeteryPack}/Prefabs/CemeteryTree2.prefab", new Vector3(3.6f, 0f, -9f), -40f),
+            ($"{CemeteryPack}/Prefabs/Angel-kneeling-LODs.prefab", new Vector3(-2.2f, 0f, -3.6f), 35f),
+            ($"{CemeteryPack}/Prefabs/Gravestone1.prefab", new Vector3(1.5f, 0f, -2.4f), -18f),
+            ($"{CemeteryPack}/Prefabs/Gravestone11.prefab", new Vector3(-1.4f, 0f, -2f), 12f),
+            ($"{CemeteryPack}/Prefabs/Gravestone12.prefab", new Vector3(2.8f, 0f, -5f), -30f),
+            ($"{CemeteryPack}/Prefabs/GraveMound.prefab", new Vector3(1.9f, 0f, -3.6f), -20f),
+            ($"{CemeteryPack}/Models/GravestonesOld4.fbx", new Vector3(0.4f, 0f, -4.4f), 5f),
+            ($"{CemeteryPack}/Models/GravestonesOld7.fbx", new Vector3(-0.9f, 0f, -6.5f), -10f),
+            ($"{CemeteryPack}/Models/GravestonesOld12.fbx", new Vector3(1.2f, 0f, -7.5f), 20f),
+            ($"{CemeteryPack}/Prefabs/CemeteryCandleTrio.prefab", new Vector3(0.9f, 0f, -1f), 0f),
+            ($"{CemeteryPack}/Prefabs/CemeteryGrass1.prefab", new Vector3(-0.9f, 0f, -0.8f), 0f),
+            ($"{CemeteryPack}/Prefabs/CemeteryGrass2.prefab", new Vector3(1.6f, 0f, -1.6f), 60f),
+            ($"{CemeteryPack}/Prefabs/CemeteryGrass1.prefab", new Vector3(-2f, 0f, -2.8f), 130f)
+        };
+
+        private static readonly string BackdropGround = ProjectPaths.Art + "/Materials/Cemetery/Ground_layer_Cemetery-grassy.mat";
+
+        /// <summary>Gives the preview stage a small cemetery at night, the first time only.</summary>
+        /// <remarks>Once the stage has a ground or any props, they are design data and never replaced.</remarks>
+        private static void SeedBackdrop(CharacterPreviewStage stage, StringBuilder report)
+        {
+            var serialized = new SerializedObject(stage);
+            var ground = serialized.FindProperty("m_groundMaterial");
+            var pieces = serialized.FindProperty("m_backdrop");
+
+            if (ground.objectReferenceValue != null || pieces.arraySize > 0) return;
+
+            ground.objectReferenceValue = AssetDatabase.LoadAssetAtPath<Material>(BackdropGround);
+            if (ground.objectReferenceValue == null)
+                report.AppendLine($"WARNING: preview ground {BackdropGround} not found; build a cemetery level first. No ground.");
+
+            var missing = 0;
+            foreach (var (path, position, yaw) in Backdrop)
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (prefab == null)
+                {
+                    missing++;
+                    continue;
+                }
+
+                var piece = pieces.GetArrayElementAtIndex(pieces.arraySize++);
+                piece.FindPropertyRelative("Prefab").objectReferenceValue = prefab;
+                piece.FindPropertyRelative("Position").vector3Value = position;
+                piece.FindPropertyRelative("Yaw").floatValue = yaw;
+                piece.FindPropertyRelative("Scale").floatValue = 1f;
+            }
+
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            report.AppendLine($"LobbyScene: preview backdrop seeded with {Backdrop.Length - missing} Old Cemetery props" +
+                              (missing > 0 ? $" ({missing} not found)." : "."));
+        }
+
         private static bool ConfigureLobbyScene(StringBuilder report)
         {
             var scenePath = LobbySetup.LobbyScenePath;
@@ -525,6 +607,7 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
             }
 
             HeroPlayerSetup.AssignSerializedReference(bootstrap, "m_previewStage", stage);
+            SeedBackdrop(stage, report);
 
             EditorSceneManager.MarkSceneDirty(scene);
             if (!EditorSceneManager.SaveScene(scene))

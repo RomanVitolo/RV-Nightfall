@@ -18,12 +18,15 @@ namespace QuietVillage.Gameplay.Survival
         /// <summary>Creatures hunt until dawn.</summary>
         Night,
 
-        /// <summary>The night was survived. Creatures are gone; the run is won.</summary>
-        Dawn
+        /// <summary>A night was survived and more are to come: a short breather while the creatures die off and the dead return.</summary>
+        Dawn,
+
+        /// <summary>The last night was survived. Creatures are gone; the run is won and the clock stops.</summary>
+        Won
     }
 
     /// <summary>
-    /// Runs one level's day and night for the whole room: the clock, the barricades and the creatures.
+    /// Runs one level's run for the whole room: its days and nights, the barricades and the creatures.
     /// </summary>
     /// <remarks>
     /// Authority: server. The clock, barricade health and creatures are shared outcomes, so the host decides them
@@ -33,17 +36,25 @@ namespace QuietVillage.Gameplay.Survival
     /// The clock replicates as a phase and the server time it ends at, rather than a countdown written every frame,
     /// so it costs nothing between phase changes and a late or lagging client still shows the right time.
     ///
+    /// A run is several nights (the room's settings say how many): Day, Night, then a short Dawn before the next Day,
+    /// until the last Night ends in Won. Each night brings more creatures. How a run ends, what dawn gives back, and
+    /// the end-of-run numbers are in SurvivalDirector.Run.cs.
+    ///
     /// Barricade health is one list indexed by each barricade's authored <see cref="Barricade.Order"/>, the same on
     /// every machine, so there is a single network object per level instead of one per barricade.
     ///
     /// One per level, placed in the scene; the greybox builder adds it.
     ///
-    /// Joins the co-op save as an <see cref="IWorldSaveParticipant"/>: phase, time left and barricade health. Without it,
+    /// Also holds the game's loot seed (SurvivalDirector.Loot.cs) and the shelter generator (SurvivalDirector.Power.cs), so
+    /// the level still has a single network object for its shared state.
+    ///
+    /// Joins the co-op save as an <see cref="IWorldSaveParticipant"/>: phase, night, time left, barricade health, the loot
+    /// seed and the generator's fuel. Without it,
     /// a game saved at night resumed at daybreak with barricades down but the scrap spent on them still gone. Creatures
     /// are not saved; a night resumes with a fresh set at the spawn points.
     /// </remarks>
     [RequireComponent(typeof(NetworkObject))]
-    public class SurvivalDirector : NetworkBehaviour, IWorldSaveParticipant
+    public partial class SurvivalDirector : NetworkBehaviour, IWorldSaveParticipant
     {
         [Header("Clock")]
         [Tooltip("Seconds of daylight before night falls.")]
@@ -51,6 +62,9 @@ namespace QuietVillage.Gameplay.Survival
 
         [Tooltip("Seconds of night the players must survive.")]
         [SerializeField] private float m_nightDuration = 300f;
+
+        [Tooltip("Seconds of dawn between a night survived and the next day, while creatures die off and the dead return.")]
+        [SerializeField] private float m_dawnDuration = 15f;
 
         [Header("Barricades")]
         [Tooltip("Inventory item spent on a barricade. Scrap stands in until the game has wood.")]
@@ -75,8 +89,9 @@ namespace QuietVillage.Gameplay.Survival
         [Tooltip("More creatures for each living player.")]
         [SerializeField] private int m_creaturesPerPlayer = 1;
 
-        private const string NightFallsHint = "Night has fallen. Get inside and hold the barricades.";
-        private const string DawnHint = "Dawn. You survived the night.";
+        [Tooltip("Extra share of creatures for each night after the first: 0.35 makes night 3 bring 1.7 times night 1's.")]
+        [SerializeField] private float m_creatureGrowthPerNight = 0.35f;
+
         private const string BarricadeBrokenHint = "A barricade has broken!";
 
         private readonly NetworkVariable<SurvivalPhase> m_phase =
@@ -84,6 +99,13 @@ namespace QuietVillage.Gameplay.Survival
 
         private readonly NetworkVariable<double> m_phaseEndsAt =
             new(0d, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+        // Which night the run is on, from 1; still the night just survived during its dawn.
+        private readonly NetworkVariable<int> m_night =
+            new(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+        private readonly NetworkVariable<int> m_totalNights =
+            new(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
         private readonly NetworkList<int> m_barricadeHealth =
             new(null, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
@@ -101,6 +123,12 @@ namespace QuietVillage.Gameplay.Survival
 
         public SurvivalPhase Phase => m_phase.Value;
 
+        /// <summary>The night the run is on, from 1. During dawn, the night just survived.</summary>
+        public int Night => m_night.Value;
+
+        /// <summary>Nights this run must survive to be won.</summary>
+        public int TotalNights => Mathf.Max(1, m_totalNights.Value);
+
         public int BarricadeMaxHealth => m_barricadeMaxHealth;
 
         /// <summary>The inventory item barricades consume.</summary>
@@ -108,28 +136,30 @@ namespace QuietVillage.Gameplay.Survival
 
         public IReadOnlyList<Barricade> Barricades => m_barricades;
 
-        /// <summary>Seconds left in the current phase, as this client estimates server time. Zero at dawn.</summary>
+        /// <summary>Seconds left in the current phase, as this client estimates server time. Zero once the run is won.</summary>
         public float SecondsRemaining
         {
             get
             {
-                if (!IsSpawned || m_phase.Value == SurvivalPhase.Dawn) return 0f;
+                if (!IsSpawned || m_phase.Value == SurvivalPhase.Won) return 0f;
 
                 return Mathf.Max(0f, (float)(m_phaseEndsAt.Value - NetworkManager.ServerTime.Time));
             }
         }
 
-        /// <summary>Length of the current phase in seconds. Zero at dawn, which does not end.</summary>
+        /// <summary>Length of the current phase in seconds. Zero once the run is won, which does not end.</summary>
         public float PhaseDuration => m_phase.Value switch
         {
-            SurvivalPhase.Day => m_dayDuration,
-            SurvivalPhase.Night => m_nightDuration,
+            SurvivalPhase.Day => DayLength,
+            SurvivalPhase.Night => NightLength,
+            SurvivalPhase.Dawn => m_dawnDuration,
             _ => 0f
         };
 
         private void Awake()
         {
             CollectBarricades();
+            CollectFloodlights();
         }
 
         public override void OnNetworkSpawn()
@@ -138,6 +168,8 @@ namespace QuietVillage.Gameplay.Survival
 
             m_phase.OnValueChanged += HandlePhaseChanged;
             m_barricadeHealth.OnListChanged += HandleBarricadeHealthChanged;
+            m_lootSeed.OnValueChanged += HandleLootSeedChanged;
+            m_power.OnValueChanged += HandlePowerChanged;
 
             if (IsServer)
             {
@@ -147,24 +179,47 @@ namespace QuietVillage.Gameplay.Survival
                 m_world = FindAnyObjectByType<WorldSync>();
                 if (m_world != null) m_world.RegisterSaveParticipant(this);
 
-                if (WorldSync.TryGetResumedState(SaveKey, out var saved)) RestoreSaveState(saved);
+                // First: phase lengths and the loot share must be set before the phase begins and the seed is applied.
+                ApplyRoomSettings();
+
+                var resumed = WorldSync.TryGetResumedState(SaveKey, out var saved);
+                ChooseLootSeed(resumed ? saved : null);
+                RestorePower(resumed ? saved : null);
+
+                if (resumed) RestoreSaveState(saved);
                 else BeginPhase(SurvivalPhase.Day);
             }
+            else
+            {
+                // Arrived with the spawn: this client's loot and padlock codes follow the host's seed at once.
+                ApplyLootSeed(m_lootSeed.Value);
+            }
+
+            ShowPower();
 
             m_shownHealth = new int[m_barricades.Count];
             ShowBarricades(announceBreaks: false);
 
+            OnRunSpawn();
+            OnToolsSpawn(IsServer && WorldSync.TryGetResumedState(SaveKey, out var toolsState) ? toolsState : null);
+
             // Presentation belongs to whoever is looking, so every client adds its own.
             if (!TryGetComponent<SurvivalHud>(out _)) gameObject.AddComponent<SurvivalHud>();
+            if (!TryGetComponent<RoleAbilities>(out _)) gameObject.AddComponent<RoleAbilities>();
         }
 
         public override void OnNetworkDespawn()
         {
             m_phase.OnValueChanged -= HandlePhaseChanged;
             m_barricadeHealth.OnListChanged -= HandleBarricadeHealthChanged;
+            m_lootSeed.OnValueChanged -= HandleLootSeedChanged;
+            m_power.OnValueChanged -= HandlePowerChanged;
 
             if (m_world != null) m_world.UnregisterSaveParticipant(this);
             m_world = null;
+
+            OnRunDespawn();
+            OnToolsDespawn();
 
             if (ReferenceEquals(Active, this)) Active = null;
         }
@@ -177,10 +232,25 @@ namespace QuietVillage.Gameplay.Survival
 
         private void Update()
         {
-            if (!IsServer || !IsSpawned || m_phase.Value == SurvivalPhase.Dawn) return;
+            if (!IsSpawned) return;
+
+            ShowPower();
+            ClaimDawnSupplies();
+            RegisterToolUses();
+            if (!IsServer) return;
+
+            PruneFlares();
+
+            // First, and whatever the phase: everyone dying ends the run even in the middle of a dawn.
+            WatchForWipe();
+            if (m_phase.Value == SurvivalPhase.Won || IsRunOver) return;
+
+            CheckTraps();
+
+            UpdatePower();
             if (NetworkManager.ServerTime.Time < m_phaseEndsAt.Value) return;
 
-            BeginPhase(m_phase.Value == SurvivalPhase.Day ? SurvivalPhase.Night : SurvivalPhase.Dawn);
+            AdvancePhase();
         }
 
         // ---- Clock (server) --------------------------------------------------------------------------
@@ -190,31 +260,59 @@ namespace QuietVillage.Gameplay.Survival
         {
             var duration = phase switch
             {
-                SurvivalPhase.Day => m_dayDuration,
-                SurvivalPhase.Night => m_nightDuration,
+                SurvivalPhase.Day => DayLength,
+                SurvivalPhase.Night => NightLength,
+                SurvivalPhase.Dawn => m_dawnDuration,
                 _ => 0f
             };
 
             if (remaining.HasValue) duration = Mathf.Clamp(remaining.Value, 0f, duration);
 
+            // Before the phase changes: fuel burnt so far is counted under the phase it burnt in.
+            StampPowerForPhase();
+
             m_phaseEndsAt.Value = NetworkManager.ServerTime.Time + duration;
             m_phase.Value = phase;
 
             if (phase == SurvivalPhase.Night) SpawnCreatures();
-            else DespawnCreatures(dieAtDawn: phase == SurvivalPhase.Dawn);
+            else DespawnCreatures(dieAtDawn: phase is SurvivalPhase.Dawn or SurvivalPhase.Won);
+
+            if (phase == SurvivalPhase.Dawn) BeginDawn();
+            else if (phase == SurvivalPhase.Won) EndRun(won: true);
+        }
+
+        /// <summary>Server: moves the run on from the phase it is in. Dawn after the last night is the win.</summary>
+        private void AdvancePhase()
+        {
+            switch (m_phase.Value)
+            {
+                case SurvivalPhase.Day:
+                    BeginPhase(SurvivalPhase.Night);
+                    break;
+
+                case SurvivalPhase.Night:
+                    BeginPhase(m_night.Value >= TotalNights ? SurvivalPhase.Won : SurvivalPhase.Dawn);
+                    break;
+
+                case SurvivalPhase.Dawn:
+                    m_night.Value = Mathf.Min(m_night.Value + 1, TotalNights);
+                    BeginPhase(SurvivalPhase.Day);
+                    break;
+            }
         }
 
         /// <summary>Host only: ends the current phase now. For testing a night without waiting out the day.</summary>
         public void SkipPhase()
         {
-            if (!IsServer || !IsSpawned || m_phase.Value == SurvivalPhase.Dawn) return;
+            if (!IsServer || !IsSpawned || m_phase.Value == SurvivalPhase.Won || IsRunOver) return;
 
-            BeginPhase(m_phase.Value == SurvivalPhase.Day ? SurvivalPhase.Night : SurvivalPhase.Dawn);
+            AdvancePhase();
         }
 
         // ---- Save (server) ---------------------------------------------------------------------------
 
         private const string SavePhase = "phase";
+        private const string SaveNight = "night";
         private const string SaveRemaining = "remaining";
         private const string SaveBarricades = "barricades";
 
@@ -230,8 +328,16 @@ namespace QuietVillage.Gameplay.Survival
             return new JObject
             {
                 [SavePhase] = (int)m_phase.Value,
+                [SaveNight] = m_night.Value,
                 [SaveRemaining] = SecondsRemaining,
-                [SaveBarricades] = barricades
+                [SaveBarricades] = barricades,
+                [SaveTraps] = CaptureTraps(),
+                [SaveLootSeed] = m_lootSeed.Value,
+                [SavePowerRunning] = m_power.Value.Running,
+                [SavePowerFuel] = FuelSeconds,
+
+                // Read back by the lobby, not here: a resumed room is created with these and locked to them.
+                [SaveSettings] = m_settings.Encode()
             };
         }
 
@@ -247,13 +353,17 @@ namespace QuietVillage.Gameplay.Survival
                 var count = Mathf.Min(barricades.Count, m_barricadeHealth.Count);
                 for (var i = 0; i < count; i++)
                 {
-                    m_barricadeHealth[i] = Mathf.Clamp((int?)barricades[i] ?? 0, 0, m_barricadeMaxHealth);
+                    // Up to reinforced: a Builder's reinforcement survives a save.
+                    m_barricadeHealth[i] = Mathf.Clamp((int?)barricades[i] ?? 0, 0, ReinforcedHealth);
                 }
             }
 
             var phaseValue = (int?)state?[SavePhase] ?? (int)SurvivalPhase.Day;
             var phase = Enum.IsDefined(typeof(SurvivalPhase), (byte)phaseValue) ? (SurvivalPhase)phaseValue : SurvivalPhase.Day;
             var remaining = (float?)state?[SaveRemaining];
+
+            // Saves from before runs had several nights were all on the first.
+            m_night.Value = Mathf.Clamp((int?)state?[SaveNight] ?? 1, 1, TotalNights);
 
             BeginPhase(phase, remaining);
         }
@@ -275,7 +385,10 @@ namespace QuietVillage.Gameplay.Survival
             }
 
             var catalog = CreatureCatalogOf(m_creaturePrefab);
-            var count = Mathf.Max(0, m_creaturesBase + m_creaturesPerPlayer * living);
+            // Scaled by the settings, but never below one: a night with nothing in it is not a night.
+            // And more each night, so a run builds to its last.
+            var growth = 1f + Mathf.Max(0f, m_creatureGrowthPerNight) * (m_night.Value - 1);
+            var count = Mathf.Max(1, Mathf.RoundToInt((m_creaturesBase + m_creaturesPerPlayer * living) * m_settings.CreatureCount * growth));
             for (var i = 0; i < count; i++)
             {
                 var spawn = m_creatureSpawns[i % m_creatureSpawns.Length];
@@ -399,7 +512,10 @@ namespace QuietVillage.Gameplay.Survival
                 : BuildResult.Built;
 
             if (result == BuildResult.Built)
+            {
                 m_barricadeHealth[index] = Mathf.Min(m_barricadeMaxHealth, health + HealthPerItemFrom(sender));
+                CountRepair(sender);
+            }
 
             BuildResultRpc(result, RpcTarget.Single(sender, RpcTargetUse.Temp));
         }
@@ -460,7 +576,8 @@ namespace QuietVillage.Gameplay.Survival
         }
 
         /// <summary>The standing barricade nearest a position, or <c>null</c> if every one is down.</summary>
-        public Barricade NearestStandingBarricade(Vector3 position)
+        /// <param name="skipLit">Leave out barricades whose attack point is in floodlight, where creatures will not stand.</param>
+        public Barricade NearestStandingBarricade(Vector3 position, bool skipLit = false)
         {
             Barricade nearest = null;
             var nearestDistance = float.MaxValue;
@@ -468,6 +585,7 @@ namespace QuietVillage.Gameplay.Survival
             foreach (var barricade in m_barricades)
             {
                 if (barricade == null || !barricade.IsStanding) continue;
+                if (skipLit && IsLit(barricade.AttackPoint)) continue;
 
                 var distance = Vector3.SqrMagnitude(barricade.AttackPoint - position);
                 if (distance >= nearestDistance) continue;
@@ -481,6 +599,24 @@ namespace QuietVillage.Gameplay.Survival
 
         private void HandleBarricadeHealthChanged(NetworkListEvent<int> change) => ShowBarricades(announceBreaks: true);
 
+        private int m_lastBarricadeHit = -1;
+
+        private void PlayBarricadeSound(Barricade barricade, bool broke)
+        {
+            var sounds = m_creaturePrefab != null && m_creaturePrefab.TryGetComponent<NightCreature>(out var creature) ? creature.Sounds : null;
+            if (sounds == null || barricade == null) return;
+
+            var clip = broke && sounds.BarricadeBreak != null
+                ? sounds.BarricadeBreak
+                : CreatureSounds.Pick(sounds.BarricadeHits, ref m_lastBarricadeHit);
+
+            var source = UHFPS.Tools.GameTools.PlayOneShot3D(barricade.transform.position, clip, sounds.MaxDistance, sounds.BarricadeVolume, "BarricadeSound");
+            if (source == null) return;
+
+            source.rolloffMode = AudioRolloffMode.Logarithmic;
+            source.minDistance = sounds.MinDistance;
+        }
+
         private void ShowBarricades(bool announceBreaks)
         {
             if (m_shownHealth.Length != m_barricades.Count) m_shownHealth = new int[m_barricades.Count];
@@ -490,6 +626,10 @@ namespace QuietVillage.Gameplay.Survival
             {
                 var health = i < m_barricadeHealth.Count ? m_barricadeHealth[i] : 0;
                 if (announceBreaks && m_shownHealth[i] > 0 && health == 0) anyBroke = true;
+
+                // Heard where it happens: a thud per hit, a crack when it gives way. From the replicated health, so every
+                // client hears it without a message of its own.
+                if (announceBreaks && health < m_shownHealth[i]) PlayBarricadeSound(m_barricades[i], broke: health == 0);
 
                 m_shownHealth[i] = health;
                 m_barricades[i].ShowHealth(health, m_barricadeMaxHealth);
@@ -502,10 +642,30 @@ namespace QuietVillage.Gameplay.Survival
 
         private void HandlePhaseChanged(SurvivalPhase previous, SurvivalPhase current)
         {
-            if (current == SurvivalPhase.Night) ShowHint(NightFallsHint);
-            else if (current == SurvivalPhase.Dawn) ShowHint(DawnHint);
+            // A frame later: the night number changes in the same tick as the phase, and may be applied after it.
+            StartCoroutine(ShowPhaseHintNextFrame(current));
 
             PhaseChanged?.Invoke(current);
+        }
+
+        private System.Collections.IEnumerator ShowPhaseHintNextFrame(SurvivalPhase phase)
+        {
+            yield return null;
+
+            var night = m_night.Value;
+            var total = TotalNights;
+            var hint = phase switch
+            {
+                SurvivalPhase.Night => $"Night {night} of {total} has fallen. Get inside and hold the barricades.",
+                SurvivalPhase.Dawn => m_deadReturn.Value
+                    ? $"Dawn. Night {night} of {total} survived. The fallen return."
+                    : $"Dawn. Night {night} of {total} survived.",
+                SurvivalPhase.Won => total == 1 ? "Dawn. You survived the night." : $"Dawn. You survived all {total} nights!",
+                SurvivalPhase.Day when night > 1 => $"Day {night}. Scavenge and repair before night falls.",
+                _ => null
+            };
+
+            if (hint != null) ShowHint(hint);
         }
 
         private static void ShowHint(string message)

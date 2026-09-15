@@ -718,6 +718,98 @@ MonoBehaviour:
           GlocText: item.description.healingpotion
           NormalText: A powerful concoction made from Medical Oil and Medical Herb.
             Provides quick and significant health boost.
+    - GUID: 2d46868ea6ca4c58a8423cd05e690fb4
+      SectionGUID: bc38a49db3da43c8928dfbde7c7d1f1c
+      Title: Holy Water
+      Description: Blessed water from the chapel font. Throw it at your feet to drive
+        back and stun what comes close.
+      Width: 1
+      Height: 2
+      Padding: 0
+      Orientation: 0
+      FlipDirection: 0
+      Icon: {fileID: 21300000, guid: 72e0a50274940f24e9f97a26002c9a46, type: 3}
+      ItemObject:
+        GUID: 133737a415365a442b859b2874cb6b61
+        Object: {fileID: 3599484163075152661, guid: 133737a415365a442b859b2874cb6b61, type: 3}
+      Settings:
+        isUsable: 1
+        isStackable: 1
+        isExaminable: 0
+        isCombinable: 0
+        isDroppable: 1
+        isDiscardable: 1
+        canBindShortcut: 1
+        alwaysShowQuantity: 0
+        applyAttributesOnUse: 0
+      UsableSettings:
+        usableType: 2
+        playerItemIndex: -1
+        healthPoints: 0
+        removeOnUse: 1
+        customData:
+          Type: 0
+          JsonData: 
+          ItemAttributes:
+            Items: []
+      Properties:
+        maxStack: 5
+      CombineSettings: []
+      LocalizationSettings:
+        titleKey:
+          GlocText: '*Holy Water'
+          NormalText: Holy Water
+        descriptionKey:
+          GlocText: '*Blessed water from the chapel font. Throw it at your feet to
+            drive back and stun what comes close.'
+          NormalText: Blessed water from the chapel font. Throw it at your feet to
+            drive back and stun what comes close.
+    - GUID: 25f4c388a0d24515908f7e2fd6cbcd06
+      SectionGUID: bc38a49db3da43c8928dfbde7c7d1f1c
+      Title: Flare
+      Description: 'A road flare. Strike it and drop it: creatures will not step
+        into its red light while it burns.'
+      Width: 1
+      Height: 2
+      Padding: 0
+      Orientation: 0
+      FlipDirection: 0
+      Icon: {fileID: 21300000, guid: db5b4c70b71ff85459b719ef8777186e, type: 3}
+      ItemObject:
+        GUID: 923478062d38ba34e85bb752960b86e2
+        Object: {fileID: 7417685537340804062, guid: 923478062d38ba34e85bb752960b86e2, type: 3}
+      Settings:
+        isUsable: 1
+        isStackable: 1
+        isExaminable: 0
+        isCombinable: 0
+        isDroppable: 1
+        isDiscardable: 1
+        canBindShortcut: 1
+        alwaysShowQuantity: 0
+        applyAttributesOnUse: 0
+      UsableSettings:
+        usableType: 2
+        playerItemIndex: -1
+        healthPoints: 0
+        removeOnUse: 1
+        customData:
+          Type: 0
+          JsonData: 
+          ItemAttributes:
+            Items: []
+      Properties:
+        maxStack: 5
+      CombineSettings: []
+      LocalizationSettings:
+        titleKey:
+          GlocText: '*Flare'
+          NormalText: Flare
+        descriptionKey:
+          GlocText: '*A road flare. Strike it and drop it: creatures will not step
+            into its red light while it burns.'
+          NormalText: 'A road flare. Strike it and drop it: creatures will not step
+            into its red light while it burns.'
   - Section:
       Name: Reload Items
       GUID: 401b335b9c9c4c5588e0ec76a2faef23

@@ -39,6 +39,15 @@ namespace QuietVillage.Multiplayer.Bridge
 
         private enum Phase { Alive, Dying, Spectating, EveryoneDead }
 
+        /// <summary>
+        /// Set by a level that ends the run itself when everyone is dead, with a screen of its own (the survival level's).
+        /// </summary>
+        /// <remarks>
+        /// A static the level sets rather than a reference to it: the bridge must not know gameplay. While set, a wipe
+        /// leaves the view where it was and offers no Restart here, so there are never two answers to the same question.
+        /// </remarks>
+        public static bool WipeHandledByLevel { get; set; }
+
         private GameManager m_gameManager;
         private PlayerHealthSync m_health;
         private PlayerHealth m_playerHealth;
@@ -161,6 +170,14 @@ namespace QuietVillage.Multiplayer.Bridge
         {
             m_phase = Phase.EveryoneDead;
 
+            if (WipeHandledByLevel)
+            {
+                m_title.text = EveryoneDeadTitle;
+                m_next.gameObject.SetActive(false);
+                m_restart.gameObject.SetActive(false);
+                return;
+            }
+
             // Back to the death screen as UHFPS laid it out. The camera stays where it was, on the last to fall.
             m_backdrop.color = m_backdropColor;
             m_titleRect.anchoredPosition = m_titlePosition;
@@ -255,8 +272,8 @@ namespace QuietVillage.Multiplayer.Bridge
                 var onClick = button.onClick;
                 for (var i = 0; i < onClick.GetPersistentEventCount(); i++)
                 {
-                    if (onClick.GetPersistentTarget(i) is GameManager
-                        && onClick.GetPersistentMethodName(i) == nameof(GameManager.RestartGame))
+                    if (SessionMenus.Calls<GameManager>(onClick.GetPersistentTarget(i), onClick.GetPersistentMethodName(i),
+                            nameof(GameManager.RestartGame)))
                     {
                         m_restart = button;
                     }

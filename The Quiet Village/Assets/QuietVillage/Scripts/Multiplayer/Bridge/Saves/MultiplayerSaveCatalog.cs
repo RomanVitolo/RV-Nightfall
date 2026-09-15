@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using QuietVillage.Multiplayer.Characters;
 using QuietVillage.Multiplayer.Saves;
 using UnityEngine;
 
@@ -56,6 +57,28 @@ namespace QuietVillage.Multiplayer.Bridge.Saves
 
             Resumed = save;
             return true;
+        }
+
+        public IReadOnlyDictionary<string, CharacterChoice> ResumedCharacters()
+        {
+            var characters = new Dictionary<string, CharacterChoice>();
+            if (Resumed == null) return characters;
+
+            foreach (var player in Resumed.Players)
+            {
+                if (PlayerSaveState.TryGetCharacter(player.Value, out var choice)) characters[player.Key] = choice;
+            }
+
+            return characters;
+        }
+
+        /// <remarks>Stored by the survival director with the rest of its state; see <c>SurvivalDirector.CaptureSaveState</c>.</remarks>
+        public string ResumedGameplaySettings()
+        {
+            if (Resumed == null || !Resumed.Participants.TryGetValue("survival", out var survival)) return string.Empty;
+
+            var settings = survival?["settings"];
+            return settings != null && settings.Type == Newtonsoft.Json.Linq.JTokenType.String ? (string)settings : string.Empty;
         }
 
         public void StartFresh() => Resumed = null;

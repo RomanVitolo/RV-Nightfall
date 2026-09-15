@@ -109,6 +109,9 @@ namespace QuietVillage.Gameplay.EditorTools
             /// <summary>Dresses the level as an old cemetery; <c>null</c> keeps the plain greybox.</summary>
             public CemeteryStyle Cemetery;
 
+            /// <summary>Locked crypts, loot, clutter and the generator; <c>null</c> for none. Needs <see cref="Cemetery"/>.</summary>
+            public DayPlan Day;
+
             public string ScenePath => $"{LevelSetup.ScenesFolder}/{SceneName}.unity";
         }
 
@@ -123,6 +126,7 @@ namespace QuietVillage.Gameplay.EditorTools
             DisplayName = "Hollow Chapel Cemetery",
             Description = "A chapel in a wooded graveyard, crypts among the dead trees. Four openings to hold.",
             Cemetery = HollowChapelStyle(),
+            Day = HollowChapelDay(),
             Seed = 1701,
             ShelterCentre = Vector3.zero,
             ShelterYaw = 0f,
@@ -161,6 +165,7 @@ namespace QuietVillage.Gameplay.EditorTools
             DisplayName = "Saltmarsh Cemetery",
             Description = "A seaside cemetery in the rain: a chapel with five ways in, open grave rows, more creatures, a longer night.",
             Cemetery = SaltmarshStyle(),
+            Day = SaltmarshDay(),
             Seed = 4242,
             ShelterCentre = new Vector3(14f, 0f, -16f),
             ShelterYaw = 90f,
@@ -279,6 +284,9 @@ namespace QuietVillage.Gameplay.EditorTools
             // Before the bake: graves, fences and trees are what creatures have to path round.
             if (layout.Cemetery != null) DressAsCemetery(layout, layoutRoot, creatureSpawns, playerSpawns, report);
             else report.AppendLine($"{layout.TreeCount} trees.");
+
+            // After the dressing, so clutter finds the graves already standing; before the bake, so creatures path round it.
+            BuildDayActivities(layout, layoutRoot, creatureSpawns, playerSpawns, report);
 
             if (!BakeNavMesh(scene.name, LevelSetup.NavMeshFolder, report))
             {
@@ -668,6 +676,7 @@ namespace QuietVillage.Gameplay.EditorTools
             serialized.FindProperty("m_dayDuration").floatValue = layout.DaySeconds;
             serialized.FindProperty("m_nightDuration").floatValue = layout.NightSeconds;
             serialized.FindProperty("m_buildItem.m_GUID").stringValue = ScrapItemGuid;
+            serialized.FindProperty("m_fuelItem.m_GUID").stringValue = CanisterItemGuid;
             serialized.FindProperty("m_creaturePrefab").objectReferenceValue = creaturePrefab;
             serialized.FindProperty("m_creaturesBase").intValue = layout.CreaturesBase;
             serialized.FindProperty("m_creaturesPerPlayer").intValue = layout.CreaturesPerPlayer;

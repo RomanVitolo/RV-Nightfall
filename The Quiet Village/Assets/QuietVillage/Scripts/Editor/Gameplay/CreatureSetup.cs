@@ -150,7 +150,9 @@ namespace QuietVillage.Gameplay.EditorTools
             EditorUtility.SetDirty(catalog);
             AssetDatabase.SaveAssets();
 
-            if (!AssignToCreaturePrefab(catalog, report))
+            var sounds = EnsureSounds(report);
+
+            if (!AssignToCreaturePrefab(catalog, sounds, report))
             {
                 Debug.LogError($"Set Up Creatures aborted.\n{report}");
                 return false;
@@ -611,7 +613,7 @@ namespace QuietVillage.Gameplay.EditorTools
 
         // ---- Creature prefab -------------------------------------------------------------------------
 
-        private static bool AssignToCreaturePrefab(CreatureCatalog catalog, StringBuilder report)
+        private static bool AssignToCreaturePrefab(CreatureCatalog catalog, CreatureSounds sounds, StringBuilder report)
         {
             if (AssetDatabase.LoadAssetAtPath<GameObject>(CreaturePrefabPath) == null)
             {
@@ -632,6 +634,11 @@ namespace QuietVillage.Gameplay.EditorTools
 
                 var serialized = new SerializedObject(creature);
                 serialized.FindProperty("m_catalog").objectReferenceValue = catalog;
+
+                // Only when unset, so a hand-picked sound set on the prefab is kept.
+                var soundsProperty = serialized.FindProperty("m_sounds");
+                if (soundsProperty.objectReferenceValue == null) soundsProperty.objectReferenceValue = sounds;
+
                 serialized.ApplyModifiedPropertiesWithoutUndo();
 
                 PrefabUtility.SaveAsPrefabAsset(root, CreaturePrefabPath);

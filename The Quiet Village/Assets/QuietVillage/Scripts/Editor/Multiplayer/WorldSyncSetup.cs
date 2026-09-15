@@ -92,6 +92,7 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
             AddRigidbodies(added);
             AddExaminables(added);
             AddHidingPlaces(added);
+            AddPuzzleLocks(added);
             AddSaveables(added, report);
             AddNetworkedNpcs(added, report);
 
@@ -246,6 +247,25 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
 
                 // One motion stream per transform: a physics prop's SyncedRigidbody already carries it.
                 if (item.GetComponent<SyncedMotionEntity>() == null) GetOrAdd<SyncedTransform>(item.gameObject, added);
+            }
+        }
+
+        /// <summary>
+        /// One lock per close-up puzzle, so only one player at a time is inside it. Puzzles that act in a single press
+        /// (keycard readers, fuse boxes) have no session to share and are left alone.
+        /// </summary>
+        private static void AddPuzzleLocks(Dictionary<string, int> added)
+        {
+            foreach (var behaviour in Object.FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include))
+            {
+                if (behaviour is not (PuzzleBase or PuzzleBaseBlend)) continue;
+
+                // The gate is looked up on the puzzle's own object, so one puzzle per object.
+                var existing = behaviour.GetComponent<SyncedPuzzleLock>();
+                if (existing != null && existing.Puzzle == behaviour) continue;
+
+                var entity = GetOrAdd<SyncedPuzzleLock>(behaviour.gameObject, added);
+                HeroPlayerSetup.AssignSerializedReference(entity, "m_puzzle", behaviour);
             }
         }
 
@@ -442,6 +462,7 @@ namespace QuietVillage.Multiplayer.Bridge.EditorTools
                 SyncedSaveable => (serialized.FindProperty("m_saveable")?.objectReferenceValue, "state"),
                 SyncedExamineLock => (serialized.FindProperty("m_item")?.objectReferenceValue, "examine"),
                 SyncedHidingPlace => (serialized.FindProperty("m_hideInteract")?.objectReferenceValue, "hide"),
+                SyncedPuzzleLock => (serialized.FindProperty("m_puzzle")?.objectReferenceValue, "puzzle"),
 
                 // Nothing to point at but the object itself; its Transform is saved in the scene with a stable id.
                 SyncedTransform => (entity.transform, "transform"),

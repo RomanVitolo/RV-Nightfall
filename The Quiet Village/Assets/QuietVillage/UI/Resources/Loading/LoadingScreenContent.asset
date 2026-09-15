@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fb080ac79bb6284aa278894412d5b9b, type: 3}
+  m_Name: LoadingScreenContent
+  m_EditorClassIdentifier: QuietVillage.Multiplayer.Runtime::QuietVillage.Multiplayer.Loading.LoadingScreenContent
+  SplashTagline: Hold the chapel. Survive the nights. Together.
+  Tips:
+  - Barricades are the whole defence. Creatures that cannot path to you will tear
+    through the nearest one instead.
+  - Scrap goes further in a Builder's hands. Let them repair while the others scavenge.
+  - A downed teammate has 30 seconds. Hold Use on them to get them back up, but watch
+    your back while you do.
+  - Creatures will not step into light. Keep the generator fuelled, or drop a flare
+    where you need it.
+  - Holy water drives back and stuns whatever is close. Save it for when a barricade
+    is about to fall.
+  - The chapel bell stuns every creature in earshot, then needs a long rest. Ring
+    it when it counts.
+  - Set a scrap trap outside a barricade by day. The first creature to break it will
+    regret it.
+  - 'Press G to use your role''s ability. Reinforce, heal, sense or scrounge: each
+    one can turn a night.'
+  - Stalkers go for whoever is alone. Stay together after dark.
+  - Brutes break barricades three times as fast. Reinforce the one they are heading
+    for.
+  - When a Screamer finds you, the others are not far behind.
+  - Each dawn brings supplies, and the fallen return. Each night brings more creatures.
+  - Weapons will not kill them, but a solid hit makes a creature flinch long enough
+    to get away.
+  - Locked crypts hold the best loot. Look for keys, lockpicks and padlock codes
+    written on notes.
+  SecondsPerTip: 7
+  MinimumLevelSeconds: 3

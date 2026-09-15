@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bdd7250d4b91c9429c90ca823f472f0, type: 3}
+  m_Name: CreatureSounds
+  m_EditorClassIdentifier: Assembly-CSharp::QuietVillage.Gameplay.Survival.CreatureSounds
+  Growls:
+  - {fileID: 8300000, guid: 395a20a5940f9074fa6ffe62af919b39, type: 3}
+  - {fileID: 8300000, guid: a9ce26b5189a6a245b449f91b3ef5bd4, type: 3}
+  - {fileID: 8300000, guid: 49b69091c36a8b74597c38f5da65c28b, type: 3}
+  - {fileID: 8300000, guid: d5fa50f4447ace44d9dc3e7106eedfce, type: 3}
+  - {fileID: 8300000, guid: b9e9ef29d74156e4aaffd2e58f0452a0, type: 3}
+  - {fileID: 8300000, guid: d988b39fb1b46de4fa69d9caa1659dd8, type: 3}
+  - {fileID: 8300000, guid: 9ee871d6c15bbbf45a73ae73675a0da9, type: 3}
+  GrowlInterval: {x: 4, y: 10}
+  Screams:
+  - {fileID: 8300000, guid: 2bc38e3d25ee11145ad46274ad1f58c8, type: 3}
+  - {fileID: 8300000, guid: e15397a2d3d00e142a64ff3fbadc925d, type: 3}
+  - {fileID: 8300000, guid: 4d8bffde5f32ca44a9f7931e8f86b56f, type: 3}
+  - {fileID: 8300000, guid: 6cf50c18b41b68f438fe11d37ac17b8a, type: 3}
+  ScreamCooldown: 14
+  Attacks:
+  - {fileID: 8300000, guid: 95b5825fab77b934b99c33894a04e352, type: 3}
+  - {fileID: 8300000, guid: 95a3cccf2fabd9b4e93c9ef23b9d60a3, type: 3}
+  - {fileID: 8300000, guid: 35fc5894d8af3b44ca994c18eaf5a3ec, type: 3}
+  - {fileID: 8300000, guid: c0d50124bb3699b4d863cb84a8ba5f85, type: 3}
+  - {fileID: 8300000, guid: bda3f2ff6ac24a04a837d9f06230be79, type: 3}
+  - {fileID: 8300000, guid: f039e1a01cc415540bb9d8710e842d3d, type: 3}
+  Deaths:
+  - {fileID: 8300000, guid: ec1013ef2c658784dbbd6ed24431af7c, type: 3}
+  - {fileID: 8300000, guid: 1fed2f5ef07ba0244a12727e5b42d4cc, type: 3}
+  - {fileID: 8300000, guid: 1657925469c78374bba884d373b3a8ab, type: 3}
+  Footsteps:
+  - {fileID: 8300000, guid: d07d732c58beac44e8f8fb979081f69f, type: 3}
+  - {fileID: 8300000, guid: dac395d75748e494b87791bf9662a7e4, type: 3}
+  - {fileID: 8300000, guid: 3333b19c58f64c449bb6e1df1011b12e, type: 3}
+  - {fileID: 8300000, guid: 60f9f5f8025cf174d8091ae0c844d476, type: 3}
+  - {fileID: 8300000, guid: 401e6e1b64fc3cd4bb3584468a0e2a8c, type: 3}
+  - {fileID: 8300000, guid: 54873b189a3917b4e90a611d01304a38, type: 3}
+  - {fileID: 8300000, guid: 4a31e4e8a9656f641a1f9d6b26389385, type: 3}
+  - {fileID: 8300000, guid: b8998fdec74fb494da96aeaf8eb7ccc3, type: 3}
+  - {fileID: 8300000, guid: 2e4f104702b82ce4eac3a04de7710b99, type: 3}
+  - {fileID: 8300000, guid: f5bb3139d987a2f4ca8d843ec4088dbf, type: 3}
+  StepLength: 0.9
+  BarricadeHits:
+  - {fileID: 8300000, guid: a59ca8b03ffd16b488cbff435884dc08, type: 3}
+  - {fileID: 8300000, guid: 5a2534a20befa604da994e41547f151d, type: 3}
+  - {fileID: 8300000, guid: 736481f1390485f45826e46a05924789, type: 3}
+  - {fileID: 8300000, guid: 6e020339eaf1a3c4fa72ffd60244afb9, type: 3}
+  BarricadeBreak: {fileID: 8300000, guid: 4d2ccc3f85296ef44831c7b44ba1518a, type: 3}
+  VoiceVolume: 0.9
+  FootstepVolume: 0.45
+  BarricadeVolume: 0.9
+  MinDistance: 2
+  MaxDistance: 40

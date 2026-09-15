@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace QuietVillage.Gameplay.Survival
 {
     /// <summary>
-    /// Tells this player what time it is and what they carry to build with: "Night falls in 4:12 · Scrap 3".
+    /// Tells this player what time it is and what they carry to build with: "DAY 2/4 · Night falls in 4:12 · Scrap 3".
     /// </summary>
     /// <remarks>
     /// A placeholder HUD built in code, so a level needs no UI setup and the UHFPS HUD prefab stays untouched. Reads
@@ -73,11 +73,15 @@ namespace QuietVillage.Gameplay.Survival
             var remaining = Mathf.CeilToInt(m_director.SecondsRemaining);
             var time = $"{remaining / 60}:{remaining % 60:00}";
 
+            var night = m_director.Night;
+            var total = m_director.TotalNights;
+
             return m_director.Phase switch
             {
-                SurvivalPhase.Day => $"DAY  ·  Night falls in {time}",
-                SurvivalPhase.Night => $"<color=#d05050>NIGHT</color>  ·  Dawn in {time}",
-                _ => "DAWN  ·  You survived the night"
+                SurvivalPhase.Day => $"DAY {night}/{total}  ·  Night falls in {time}",
+                SurvivalPhase.Night => $"<color=#d05050>NIGHT {night}/{total}</color>  ·  Dawn in {time}",
+                SurvivalPhase.Dawn => $"DAWN  ·  Night {night} of {total} survived  ·  Day {night + 1} in {time}",
+                _ => total == 1 ? "DAWN  ·  You survived the night" : $"DAWN  ·  You survived all {total} nights"
             };
         }
 
@@ -92,7 +96,16 @@ namespace QuietVillage.Gameplay.Survival
                 if (barricade != null && barricade.IsStanding) standing++;
             }
 
-            return $"Scrap {scrap}  ·  Barricades {standing}/{m_director.Barricades.Count}";
+            var supplies = $"Scrap {scrap}  ·  Barricades {standing}/{m_director.Barricades.Count}";
+            if (!m_director.HasGenerator) return supplies;
+
+            var canisters = inventory != null && !string.IsNullOrEmpty(m_director.FuelItemGuid)
+                ? inventory.GetItemQuantity(m_director.FuelItemGuid)
+                : 0;
+            var fuel = Mathf.CeilToInt(m_director.FuelSeconds);
+            var state = m_director.GeneratorRunning ? "<color=#f0d070>ON</color>" : "off";
+
+            return $"{supplies}  ·  Canisters {canisters}  ·  Generator {state} {fuel / 60}:{fuel % 60:00}";
         }
 
         private void Build()

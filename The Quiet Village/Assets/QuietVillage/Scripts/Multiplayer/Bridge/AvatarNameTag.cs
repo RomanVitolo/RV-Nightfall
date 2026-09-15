@@ -10,7 +10,8 @@ namespace QuietVillage.Multiplayer.Bridge
     /// World-space text rather than a screen overlay, and drawn as ordinary geometry, so a wall between you and
     /// them hides it: in a dark game, names glowing through walls would give away more than the game should.
     /// It fades out with distance for the same reason, and disappears entirely when its player dies, leaving a
-    /// body on the floor rather than a labelled one.
+    /// body on the floor rather than a labelled one. While they are down it turns red and counts their bleed-out, so a
+    /// teammate can find who needs them and how long they have.
     ///
     /// Remote copies only: <see cref="HeroPlayerNetworkSetup"/> adds it to bodies this client does not own.
     /// </remarks>
@@ -80,10 +81,14 @@ namespace QuietVillage.Multiplayer.Bridge
 
             m_label.enabled = true;
 
-            if (m_player != null && m_player.DisplayName != m_shownName)
+            var shown = m_player != null ? m_player.DisplayName : string.Empty;
+            if (m_health != null && m_health.IsDowned)
+                shown = $"<color=#e05050>{shown}  ·  DOWN {Mathf.CeilToInt(m_health.BleedOutRemaining)}</color>";
+
+            if (shown != m_shownName)
             {
-                m_shownName = m_player.DisplayName;
-                m_label.text = m_shownName;
+                m_shownName = shown;
+                m_label.text = shown;
             }
 
             // Square on to the viewer, and readable rather than mirrored.

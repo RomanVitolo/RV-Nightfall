@@ -69,6 +69,9 @@ namespace UHFPS.Runtime
         {
             if (!isActive)
             {
+                // MULTIPLAYER PATCH: one player at a time. The grant, if it has to wait for the host, comes back here.
+                if (TryGetComponent(out IPuzzleGate gate) && !gate.TryBeginPuzzle(InteractStart)) return;
+
                 playerPresence.FreezePlayer(true);
                 playerManager.PlayerItems.IsItemsUsable = false;
                 playerPresence.SwitchActiveCamera(PuzzleCamera.gameObject, SwitchCameraFadeSpeed, OnBackgroundFade, () => { canSwitch = true; });
@@ -104,6 +107,9 @@ namespace UHFPS.Runtime
             }
             else
             {
+                // MULTIPLAYER PATCH: the player is back in their own view; others may use the puzzle now.
+                if (TryGetComponent(out IPuzzleGate gate)) gate.EndPuzzle();
+
                 playerPresence.FreezePlayer(false);
                 playerManager.PlayerItems.IsItemsUsable = true;
                 gameManager.ShowControlsInfo(false, null);

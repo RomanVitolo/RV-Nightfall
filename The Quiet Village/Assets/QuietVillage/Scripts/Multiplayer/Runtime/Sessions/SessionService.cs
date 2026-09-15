@@ -43,7 +43,16 @@ namespace QuietVillage.Multiplayer.Sessions
         private const string DisplayNameProperty = "displayName";
         private const string CharacterProperty = "character";
         private const string LevelProperty = "level";
+        private const string SavedCharactersProperty = "savedCharacters";
+        private const string SettingsProperty = "settings";
+        private const string SettingsLockedProperty = "settingsLocked";
         private const int QueryPageSize = 50;
+
+        // Kept well under the service's limit on one property's value. A save with more players than fit simply leaves
+        // the rest unannounced; the host still spawns them as saved.
+        private const int MaxSavedCharactersLength = 1000;
+        private const char SavedCharacterSeparator = ';';
+        private const char SavedCharacterAssignment = '=';
 
         private ISession m_session;
         private NetworkManager m_watchedNetworkManager;
@@ -103,6 +112,102 @@ namespace QuietVillage.Multiplayer.Sessions
                                           && property != null
                 ? property.Value ?? string.Empty
                 : string.Empty;
+
+        /// <summary>How the room plays, as the host last set it; Normal when not in a room or never set.</summary>
+        /// <remarks>
+        /// A room property rather than something the host keeps to itself, so everyone waiting sees what they are in for.
+        /// The host's own copy wins while it is still being saved to the service, so its sliders never jump back.
+        /// </remarks>
+        public GameplaySettings RoomSettings
+        {
+            get
+            {
+                if (m_session != null && m_session.IsHost && m_pendingSettings.HasValue) return m_pendingSettings.Value;
+
+                return m_session?.Properties != null && m_session.Properties.TryGetValue(SettingsProperty, out var property)
+                                                     && property != null
+                    ? GameplaySettings.Parse(property.Value)
+                    : GameplaySettings.Normal;
+            }
+        }
+
+        /// <summary>True when the room resumes a save, whose settings it keeps; nobody may change them.</summary>
+        public bool RoomSettingsLocked =>
+            m_session?.Properties != null && m_session.Properties.TryGetValue(SettingsLockedProperty, out var property)
+                                          && property != null && property.Value == "1";
+
+        /// <summary>Host: changes how the room plays, for everyone waiting.</summary>
+        /// <remarks>
+        /// Coalesced like character changes: dragging a slider sends one update per round trip, not one per frame, which
+        /// keeps inside the service's rate limit. Refused when the room resumes a save.
+        /// </remarks>
+        public void SetRoomSettings(GameplaySettings settings)
+        {
+            if (m_session == null || !m_session.IsHost || RoomSettingsLocked) return;
+
+            m_pendingSettings = settings;
+            RosterChanged?.Invoke();
+            _ = PublishSettingsAsync();
+        }
+
+        private GameplaySettings? m_pendingSettings;
+        private bool m_publishingSettings;
+        private bool m_settingsDirty;
+
+        private async Task PublishSettingsAsync()
+        {
+            m_settingsDirty = true;
+            if (m_publishingSettings) return;
+
+            m_publishingSettings = true;
+            try
+            {
+                while (m_settingsDirty && m_session != null && m_session.IsHost && m_pendingSettings.HasValue)
+                {
+                    m_settingsDirty = false;
+
+                    var host = m_session.AsHost();
+                    host.SetProperty(SettingsProperty,
+                        new SessionProperty(m_pendingSettings.Value.Encode(), VisibilityPropertyOptions.Member));
+                    await host.SavePropertiesAsync();
+                }
+            }
+            catch (Exception exception)
+            {
+                LastError = Describe("Could not update the game settings", exception);
+                Debug.LogWarning($"{nameof(SessionService)} — {LastError}", this);
+            }
+            finally
+            {
+                m_publishingSettings = false;
+
+                // Saved and read back: the room's own value is the truth again.
+                if (!m_settingsDirty) m_pendingSettings = null;
+            }
+        }
+
+        /// <summary>
+        /// The character a room member had in the save this room resumes, encoded; empty for a new game or a player new to
+        /// the save.
+        /// </summary>
+        /// <remarks>
+        /// Display only, like the members' own character property: the host spawns from the save it holds. It is here so
+        /// a player joining a resumed game sees, before it starts, that the save decides who they are.
+        /// </remarks>
+        public string SavedCharacterOf(string playerId)
+        {
+            if (string.IsNullOrEmpty(playerId) || m_session?.Properties == null
+                || !m_session.Properties.TryGetValue(SavedCharactersProperty, out var property) || property?.Value == null)
+                return string.Empty;
+
+            foreach (var entry in property.Value.Split(SavedCharacterSeparator))
+            {
+                var assignment = entry.IndexOf(SavedCharacterAssignment);
+                if (assignment > 0 && entry.Substring(0, assignment) == playerId) return entry.Substring(assignment + 1);
+            }
+
+            return string.Empty;
+        }
 
         /// <summary>Code other players can type to join this room. Empty until connected.</summary>
         public string JoinCode => m_session != null ? m_session.Code : string.Empty;
@@ -222,8 +327,14 @@ namespace QuietVillage.Multiplayer.Sessions
         /// <summary>Creates a room and becomes its host.</summary>
         /// <param name="password">Empty for an open room.</param>
         /// <param name="level">Scene name of the level to play, published as <see cref="RoomLevel"/>.</param>
+        /// <param name="savedCharacters">
+        /// Encoded characters by account id from the save being resumed, published for <see cref="SavedCharacterOf"/>.
+        /// </param>
+        /// <param name="settings">How the room plays to begin with; Normal when omitted.</param>
+        /// <param name="settingsLocked">True when resuming a save, whose settings nobody may change.</param>
         public async Task CreateRoomAsync(string displayName, string roomName, int maxPlayers, string password,
-            string level = null)
+            string level = null, IReadOnlyDictionary<string, string> savedCharacters = null,
+            GameplaySettings? settings = null, bool settingsLocked = false)
         {
             if (IsBusy || IsConnected) return;
 
@@ -250,7 +361,7 @@ namespace QuietVillage.Multiplayer.Sessions
                     IsPrivate = false,
                     Password = string.IsNullOrEmpty(password) ? null : password,
                     PlayerProperties = PlayerPropertiesFor(displayName),
-                    SessionProperties = RoomPropertiesFor(level)
+                    SessionProperties = RoomPropertiesFor(level, savedCharacters, settings ?? GameplaySettings.Normal, settingsLocked)
                 }.WithRelayNetwork();
 
                 AttachSession(await MultiplayerService.Instance.CreateSessionAsync(options));
@@ -364,15 +475,47 @@ namespace QuietVillage.Multiplayer.Sessions
             }
         }
 
-        private static Dictionary<string, SessionProperty> RoomPropertiesFor(string level)
+        private static Dictionary<string, SessionProperty> RoomPropertiesFor(string level,
+            IReadOnlyDictionary<string, string> savedCharacters, GameplaySettings settings, bool settingsLocked)
         {
-            var properties = new Dictionary<string, SessionProperty>();
+            var properties = new Dictionary<string, SessionProperty>
+            {
+                [SettingsProperty] = new(settings.Encode(), VisibilityPropertyOptions.Member)
+            };
+
+            if (settingsLocked) properties[SettingsLockedProperty] = new SessionProperty("1", VisibilityPropertyOptions.Member);
 
             // Member visibility, like names: only people in the room need to know where it is headed.
             if (!string.IsNullOrEmpty(level))
                 properties[LevelProperty] = new SessionProperty(level, VisibilityPropertyOptions.Member);
 
+            var encoded = EncodeSavedCharacters(savedCharacters);
+            if (encoded.Length > 0)
+                properties[SavedCharactersProperty] = new SessionProperty(encoded, VisibilityPropertyOptions.Member);
+
             return properties;
+        }
+
+        /// <summary>Writes <c>account=choice;account=choice</c>, skipping anything that would not read back.</summary>
+        private static string EncodeSavedCharacters(IReadOnlyDictionary<string, string> savedCharacters)
+        {
+            if (savedCharacters == null) return string.Empty;
+
+            var builder = new System.Text.StringBuilder();
+            foreach (var saved in savedCharacters)
+            {
+                if (string.IsNullOrEmpty(saved.Key) || string.IsNullOrEmpty(saved.Value)) continue;
+                if (saved.Key.IndexOf(SavedCharacterSeparator) >= 0 || saved.Key.IndexOf(SavedCharacterAssignment) >= 0
+                    || saved.Value.IndexOf(SavedCharacterSeparator) >= 0) continue;
+
+                var entry = $"{saved.Key}{SavedCharacterAssignment}{saved.Value}";
+                if (builder.Length + entry.Length + 1 > MaxSavedCharactersLength) break;
+
+                if (builder.Length > 0) builder.Append(SavedCharacterSeparator);
+                builder.Append(entry);
+            }
+
+            return builder.ToString();
         }
 
         private Dictionary<string, PlayerProperty> PlayerPropertiesFor(string displayName)
@@ -447,6 +590,10 @@ namespace QuietVillage.Multiplayer.Sessions
         private void AttachSession(ISession session)
         {
             m_session = session;
+
+            // A change still unsaved when the last room ended belongs to that room.
+            m_pendingSettings = null;
+            m_settingsDirty = false;
             if (m_session == null) return;
 
             // The host can delete the room or kick us; either way our NetworkManager is already going down,

@@ -11,7 +11,8 @@ using UnityEngine.UIElements;
 namespace QuietVillage.Multiplayer.UI
 {
     /// <summary>
-    /// The lobby: browse rooms, create one, join one, and wait in it until the host starts the game.
+    /// The main menu and lobby: Play, Character, Settings and Quit; then browse rooms, create one, join one, and wait in
+    /// it until the host starts the game.
     /// </summary>
     /// <remarks>
     /// A view over <see cref="SessionService"/> and <see cref="SessionFlow"/> that keeps no session state of
@@ -20,6 +21,9 @@ namespace QuietVillage.Multiplayer.UI
     ///
     /// References arrive through <see cref="Bind"/> from <see cref="MultiplayerBootstrap"/>: the services
     /// live on a persistent root that a scene object cannot reference in the Inspector.
+    ///
+    /// Which of the menu and the room browser shows is the one piece of state kept here, because it is the player's
+    /// choice rather than the session's: being in a room always shows the waiting room over both.
     /// </remarks>
     [RequireComponent(typeof(UIDocument))]
     public class LobbyScreen : MonoBehaviour
@@ -44,6 +48,7 @@ namespace QuietVillage.Multiplayer.UI
         private bool m_subscribed;
 
         private CharacterScreen m_characterScreen;
+        private GameplaySettingsPanel m_settingsPanel;
         private Button m_characterButton;
         private Button m_roomCharacterButton;
 
@@ -51,6 +56,11 @@ namespace QuietVillage.Multiplayer.UI
         private readonly List<RoomMember> m_members = new();
 
         private TextField m_nameField;
+        private VisualElement m_menuView;
+        private VisualElement m_header;
+        private Label m_menuProfile;
+        private MenuSettingsPanel m_menuSettings;
+        private bool m_showBrowser;
         private VisualElement m_browserView;
         private VisualElement m_roomView;
         private Label m_statusBar;
@@ -87,6 +97,9 @@ namespace QuietVillage.Multiplayer.UI
         private readonly List<SaveEntry> m_saves = new();
         private Button m_createCancel;
         private Button m_createConfirm;
+        private Toggle m_createShowPassword;
+        private Label m_summaryName, m_summaryLevel, m_summaryLevelDesc, m_summaryPlayers, m_summaryAccess, m_summaryStart,
+            m_summaryHost, m_summarySettings;
 
         private VisualElement m_joinDialog;
         private Label m_joinTitle;
@@ -128,6 +141,7 @@ namespace QuietVillage.Multiplayer.UI
             if (!m_uiReady) return;
 
             m_characterScreen?.Bind(m_characters, m_previewStage);
+            m_settingsPanel?.Bind(m_sessions);
 
             Subscribe();
             RefreshAll();
@@ -154,6 +168,7 @@ namespace QuietVillage.Multiplayer.UI
             ConfigureElements();
             RegisterCallbacks();
             m_characterScreen?.Bind(m_characters, m_previewStage);
+            m_settingsPanel?.Bind(m_sessions);
             m_uiReady = true;
 
             // Coming back from a game leaves UHFPS's locked, hidden cursor behind, and possibly the stopped
@@ -173,6 +188,7 @@ namespace QuietVillage.Multiplayer.UI
         {
             // Stops the preview camera, which would otherwise keep rendering into a screen nobody can see.
             m_characterScreen?.Close();
+            m_menuSettings?.Close();
 
             m_uiReady = false;
             Unsubscribe();
@@ -186,7 +202,7 @@ namespace QuietVillage.Multiplayer.UI
             if (IsBrowsing && !m_querying && Time.unscaledTime >= m_nextAutoRefreshAt) RequestRoomRefresh(force: false);
         }
 
-        private bool IsBrowsing => m_sessions != null && !m_sessions.IsConnected && !m_sessions.IsBusy;
+        private bool IsBrowsing => m_sessions != null && !m_sessions.IsConnected && !m_sessions.IsBusy && m_showBrowser;
 
         private bool IsBusy => (m_sessions != null && m_sessions.IsBusy) || (m_flow != null && m_flow.IsStarting);
 
@@ -197,6 +213,27 @@ namespace QuietVillage.Multiplayer.UI
         private bool QueryElements(VisualElement root)
         {
             m_nameField = root.Q<TextField>("player-name");
+
+            // Not required: an older LobbyScreen.uxml without the main menu opens straight on the room browser.
+            m_menuView = root.Q("menu-view");
+            m_header = root.Q("lobby-header");
+            m_menuProfile = root.Q<Label>("menu-profile");
+            m_showBrowser = m_menuView == null;
+            BindMenu(root);
+
+            m_menuSettings = new MenuSettingsPanel(root);
+            if (!m_menuSettings.IsAvailable) m_menuSettings = null;
+
+            m_createShowPassword = root.Q<Toggle>("create-show-password");
+            m_summaryName = root.Q<Label>("create-summary-name");
+            m_summaryLevel = root.Q<Label>("create-summary-level");
+            m_summaryLevelDesc = root.Q<Label>("create-summary-level-desc");
+            m_summaryPlayers = root.Q<Label>("create-summary-players");
+            m_summaryAccess = root.Q<Label>("create-summary-access");
+            m_summaryStart = root.Q<Label>("create-summary-start");
+            m_summaryHost = root.Q<Label>("create-summary-host");
+            m_summarySettings = root.Q<Label>("create-summary-settings");
+
             m_browserView = root.Q("browser-view");
             m_roomView = root.Q("room-view");
             m_statusBar = root.Q<Label>("status-bar");
@@ -257,6 +294,10 @@ namespace QuietVillage.Multiplayer.UI
             m_roomCharacterButton = root.Q<Button>("room-character-button");
             m_characterScreen = new CharacterScreen(root);
             if (!m_characterScreen.IsAvailable) m_characterScreen = null;
+
+            // Not required either: without it every room plays Normal.
+            m_settingsPanel = new GameplaySettingsPanel(root);
+            if (!m_settingsPanel.IsAvailable) m_settingsPanel = null;
 
             return m_nameField != null && m_browserView != null && m_roomView != null && m_statusBar != null
                    && m_roomCount != null && m_roomList != null && m_roomListEmpty != null && m_refreshButton != null
@@ -323,9 +364,92 @@ namespace QuietVillage.Multiplayer.UI
             if (m_roomCharacterButton != null) m_roomCharacterButton.clicked += OpenCharacterScreen;
             if (m_characterScreen != null) m_characterScreen.Confirmed += HandleCharacterConfirmed;
 
+            // Escape closes the join dialog too.
+            m_joinDialog.RegisterCallback<KeyDownEvent>(evt =>
+            {
+                if (evt.keyCode == KeyCode.Escape) SetHidden(m_joinDialog, true);
+                else if (evt.keyCode is KeyCode.Return or KeyCode.KeypadEnter) ConfirmJoin();
+                else return;
+
+                evt.StopPropagation();
+            });
+
             // A save decides its own level, so picking one moves and locks the level picker to match.
             m_createSave?.RegisterValueChangedCallback(_ => RefreshLevelPicker());
             m_createLevel?.RegisterValueChangedCallback(_ => RefreshLevelPicker());
+
+            // The preview follows every field as it changes.
+            m_createName.RegisterValueChangedCallback(_ => RefreshCreateSummary());
+            m_createMaxPlayers.RegisterValueChangedCallback(_ => RefreshCreateSummary());
+            m_createPassword.RegisterValueChangedCallback(_ => RefreshCreateSummary());
+            m_createShowPassword?.RegisterValueChangedCallback(evt =>
+            {
+                m_createPassword.isPasswordField = !evt.newValue;
+                RefreshCreateSummary();
+            });
+
+            // Enter creates, Escape cancels, as a dialog should.
+            m_createDialog.RegisterCallback<KeyDownEvent>(evt =>
+            {
+                if (evt.keyCode == KeyCode.Escape) SetHidden(m_createDialog, true);
+                else if (evt.keyCode is KeyCode.Return or KeyCode.KeypadEnter) ConfirmCreate();
+                else return;
+
+                evt.StopPropagation();
+            });
+        }
+
+        // ---- Main menu -------------------------------------------------------------------------------
+
+        private void BindMenu(VisualElement root)
+        {
+            if (m_menuView == null) return;
+
+            var play = root.Q<Button>("menu-play");
+            var character = root.Q<Button>("menu-character");
+            var settings = root.Q<Button>("menu-settings");
+            var quit = root.Q<Button>("menu-quit");
+            var version = root.Q<Label>("menu-version");
+
+            if (play != null) play.clicked += () => ShowBrowser(true);
+            if (character != null) character.clicked += OpenCharacterScreen;
+            if (settings != null) settings.clicked += () => m_menuSettings?.Open();
+            if (quit != null) quit.clicked += Quit;
+            if (version != null) version.text = $"v{Application.version}";
+
+            var back = root.Q<Button>("browser-back");
+            if (back != null) back.clicked += () => ShowBrowser(false);
+        }
+
+        private void ShowBrowser(bool show)
+        {
+            if (m_menuView == null) show = true;
+            m_showBrowser = show;
+
+            RefreshAll();
+            if (show) RequestRoomRefresh(force: true);
+        }
+
+        private static void Quit()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+
+        private void RefreshMenu(bool inRoom)
+        {
+            var showMenu = m_menuView != null && !inRoom && !m_showBrowser;
+            SetHidden(m_menuView, !showMenu);
+            SetHidden(m_header, showMenu);
+            if (!showMenu || m_menuProfile == null) return;
+
+            var role = CanChooseCharacter ? m_characters.Catalog.RoleOf(m_characters.LocalChoice) : string.Empty;
+            m_menuProfile.text = string.IsNullOrEmpty(role)
+                ? $"Playing as {DisplayName}"
+                : $"Playing as {DisplayName}  ·  {role}";
         }
 
         private void Subscribe()
@@ -365,7 +489,8 @@ namespace QuietVillage.Multiplayer.UI
             if (!m_uiReady || m_sessions == null) return;
 
             var inRoom = m_sessions.IsConnected;
-            SetHidden(m_browserView, inRoom);
+            RefreshMenu(inRoom);
+            SetHidden(m_browserView, inRoom || !m_showBrowser);
             SetHidden(m_roomView, !inRoom);
 
             // The name travels with the join, so changing it mid-room would not reach anyone.
@@ -392,8 +517,11 @@ namespace QuietVillage.Multiplayer.UI
             SetHidden(m_roomCharacterButton, !available);
             if (!available) return;
 
-            var role = m_characters.Catalog.RoleOf(m_characters.LocalChoice);
+            var saved = LocalSavedCharacter();
+            var role = m_characters.Catalog.RoleOf(saved ?? m_characters.LocalChoice);
             if (m_characterButton != null) m_characterButton.text = $"Character: {role}";
+            if (m_roomCharacterButton != null)
+                m_roomCharacterButton.text = saved.HasValue ? "View Character" : "Change Character";
 
             // Once the game is starting, the host is already spawning from the record; a change now would not show.
             var canChange = !IsBusy;
@@ -401,6 +529,7 @@ namespace QuietVillage.Multiplayer.UI
             m_roomCharacterButton?.SetEnabled(canChange);
 
             if (!canChange && m_characterScreen.IsOpen) m_characterScreen.Close();
+            if (m_characterScreen.IsOpen) m_characterScreen.SetTeammates(Teammates());
         }
 
         private void OpenCharacterScreen()
@@ -408,7 +537,36 @@ namespace QuietVillage.Multiplayer.UI
             if (!CanChooseCharacter || IsBusy) return;
 
             var inRoom = m_sessions != null && m_sessions.IsConnected;
-            m_characterScreen.Open(m_nameField.value, nameEditable: !inRoom);
+            m_characterScreen.Open(m_nameField.value, nameEditable: !inRoom, LocalSavedCharacter(), Teammates());
+        }
+
+        /// <summary>The character a room member will spawn as: their saved one in a resumed game, else their pick.</summary>
+        private CharacterChoice CharacterOf(RoomMember member) =>
+            m_characters != null ? m_characters.RoomChoiceOf(member) : CharacterChoice.Parse(member.Character);
+
+        /// <summary>This player's character in the save the room resumes; <c>null</c> when their pick decides.</summary>
+        private CharacterChoice? LocalSavedCharacter()
+        {
+            if (m_sessions == null || !m_sessions.IsConnected || m_characters?.Catalog == null) return null;
+
+            var saved = CharacterChoice.Parse(m_sessions.SavedCharacterOf(m_sessions.LocalPlayerId));
+            return saved.IsEmpty ? null : m_characters.Catalog.Resolve(saved);
+        }
+
+        /// <summary>Everyone else in the room with the character they will play, for the Character screen's roster.</summary>
+        private List<CharacterScreen.Teammate> Teammates()
+        {
+            var teammates = new List<CharacterScreen.Teammate>();
+            if (m_sessions == null || !m_sessions.IsConnected || m_characters?.Catalog == null) return teammates;
+
+            foreach (var member in m_sessions.Members)
+            {
+                if (member.IsLocal) continue;
+                teammates.Add(new CharacterScreen.Teammate(member.DisplayName,
+                    m_characters.Catalog.Resolve(CharacterOf(member)).CharacterId));
+            }
+
+            return teammates;
         }
 
         private void HandleCharacterConfirmed(string playerName)
@@ -506,6 +664,9 @@ namespace QuietVillage.Multiplayer.UI
             m_roomHint.text = isHost
                 ? "Start when everyone is here. The room locks once the game begins, so nobody can join mid-game."
                 : "Waiting for the host to start the game…";
+
+            // Once the game is starting the host is already loading the level with the settings as they were.
+            m_settingsPanel?.Refresh(canEdit: isHost && !IsBusy);
         }
 
         private void RefreshStatus()
@@ -606,7 +767,7 @@ namespace QuietVillage.Multiplayer.UI
 
             // Resolved like the spawn resolves it, so an unknown or missing character reads as the default role.
             var catalog = m_characters != null ? m_characters.Catalog : null;
-            row.Q<Label>("role").text = catalog != null ? catalog.RoleOf(CharacterChoice.Parse(member.Character)) : string.Empty;
+            row.Q<Label>("role").text = catalog != null ? catalog.RoleOf(CharacterOf(member)) : string.Empty;
 
             SetHidden(row.Q<Label>("host"), !member.IsHost);
             SetHidden(row.Q<Label>("you"), !member.IsLocal);
@@ -621,7 +782,9 @@ namespace QuietVillage.Multiplayer.UI
 
             RefreshAll();
 
-            // Just left a room: show the list as it is now, not as it was before joining.
+            // Just left a room: show the list as it is now, not as it was before joining. Leaving a room lands on the
+            // browser it was joined from, not back on the menu.
+            if (state == SessionConnectionState.Connected) m_showBrowser = true;
             if (state == SessionConnectionState.Disconnected || state == SessionConnectionState.Error) RequestRoomRefresh(force: true);
         }
 
@@ -683,13 +846,17 @@ namespace QuietVillage.Multiplayer.UI
             m_createName.value = $"{DisplayName}'s room";
             m_createMaxPlayers.value = SessionService.MaxRoomSize;
             m_createPassword.value = string.Empty;
+            m_createPassword.isPasswordField = true;
+            m_createShowPassword?.SetValueWithoutNotify(false);
             m_createError.text = string.Empty;
 
             FillLevelPicker();
             _ = RefreshSavesAsync();
 
             SetHidden(m_createDialog, false);
+            RefreshCreateSummary();
             m_createName.Focus();
+            m_createName.SelectAll();
         }
 
         /// <summary>
@@ -775,6 +942,8 @@ namespace QuietVillage.Multiplayer.UI
             // The save's level is not the host's to change: its world only fits the level it was made in.
             m_createLevel.SetEnabled(!save.HasValue);
 
+            RefreshCreateSummary();
+
             if (m_createLevelHint == null) return;
 
             var level = ChosenLevel();
@@ -784,6 +953,43 @@ namespace QuietVillage.Multiplayer.UI
                 ? $"This save was made in '{level}', which is no longer in the level list."
                 : catalogLevel != null ? catalogLevel.Description ?? string.Empty
                 : string.Empty;
+        }
+
+        /// <summary>The Create Room preview: the room exactly as it will be made, in plain words.</summary>
+        private void RefreshCreateSummary()
+        {
+            if (m_summaryName == null) return;
+
+            var name = string.IsNullOrWhiteSpace(m_createName.value) ? "Untitled room" : m_createName.value.Trim();
+            m_summaryName.text = name;
+
+            var level = ChosenLevel();
+            var catalogLevel = m_flow != null && m_flow.Levels != null ? m_flow.Levels.Find(level) : null;
+            if (m_summaryLevel != null) m_summaryLevel.text = string.IsNullOrEmpty(level) ? "None available" : LevelName(level);
+            if (m_summaryLevelDesc != null)
+            {
+                m_summaryLevelDesc.text = catalogLevel?.Description ?? string.Empty;
+                SetHidden(m_summaryLevelDesc, string.IsNullOrWhiteSpace(m_summaryLevelDesc.text));
+            }
+
+            if (m_summaryPlayers != null) m_summaryPlayers.text = $"Up to {m_createMaxPlayers.value}";
+
+            if (m_summaryAccess != null)
+            {
+                var password = m_createPassword.value ?? string.Empty;
+                m_summaryAccess.text = password.Length == 0 ? "Open to anyone"
+                    : m_createShowPassword != null && m_createShowPassword.value ? $"Password: {password}"
+                    : $"Password ({password.Length} characters)";
+            }
+
+            var save = ChosenSave();
+            if (m_summaryStart != null) m_summaryStart.text = save.HasValue ? $"Continue save ({save.Value.Label})" : "New game";
+            if (m_summaryHost != null) m_summaryHost.text = DisplayName;
+
+            if (m_summarySettings != null)
+                m_summarySettings.text = save.HasValue
+                    ? "The save's own settings, locked."
+                    : $"{GameplaySettingsPanel.Remembered.Preset}: {GameplaySettingsPanel.Remembered.Summary()}\nYou can change these in the room before starting.";
         }
 
         /// <summary>The save picked in the dialog, or <c>null</c> for a new game.</summary>
@@ -840,6 +1046,10 @@ namespace QuietVillage.Multiplayer.UI
             var catalog = SaveCatalog.Active;
             var save = ChosenSave();
             var level = ChosenLevel();
+            Dictionary<string, string> savedCharacters = null;
+
+            // A new room starts with the host's last settings; a resumed one with the save's, locked.
+            var settings = GameplaySettingsPanel.Remembered;
 
             if (catalog != null)
             {
@@ -852,6 +1062,12 @@ namespace QuietVillage.Multiplayer.UI
                         RefreshAll();
                         return;
                     }
+
+                    savedCharacters = new Dictionary<string, string>();
+                    foreach (var saved in catalog.ResumedCharacters()) savedCharacters[saved.Key] = saved.Value.Encode();
+
+                    // A save from before settings existed was played as the levels were built: Normal.
+                    settings = GameplaySettings.Parse(catalog.ResumedGameplaySettings());
                 }
                 else
                 {
@@ -860,7 +1076,7 @@ namespace QuietVillage.Multiplayer.UI
             }
 
             await m_sessions.CreateRoomAsync(DisplayName, m_createName.value, m_createMaxPlayers.value,
-                m_createPassword.value, level);
+                m_createPassword.value, level, savedCharacters, settings, settingsLocked: save.HasValue);
         }
 
         /// <param name="room">The listed room needing a password, or <c>null</c> to join by code.</param>

@@ -76,7 +76,12 @@ namespace QuietVillage.Multiplayer.Bridge
             PublishDisplayName();
             AdaptMenusToSession();
             ShareDroppedItems();
-            ApplyRolePerks(freshStart: savedPlayer == null);
+            HandleBeingDowned();
+
+            // A player returning mid-level starts empty-handed: what they had was dropped where they died.
+            var character = GetComponent<PlayerCharacter>();
+            var returning = character != null && character.Returning;
+            ApplyRolePerks(freshStart: savedPlayer == null && !returning);
 
             // UHFPS resolves the player through this manager from about ten different systems (AI
             // targeting, doors, dialogue, cutscenes). Its scene reference is empty until we hand it
@@ -157,11 +162,9 @@ namespace QuietVillage.Multiplayer.Bridge
                 return;
             }
 
-            if (gameManager.GlobalPPVolume == null)
-                gameManager.GlobalPPVolume = sceneReferences.GlobalPostProcessing;
-
-            if (gameManager.HealthPPVolume == null)
-                gameManager.HealthPPVolume = sceneReferences.HealthPostProcessing;
+            // Through the GameManager rather than its fields: it also re-reads the blur radius and rain overlay, which
+            // its Awake could not find before these existed.
+            gameManager.BindPostProcessing(sceneReferences.GlobalPostProcessing, sceneReferences.HealthPostProcessing);
         }
 
         /// <summary>
@@ -210,6 +213,18 @@ namespace QuietVillage.Multiplayer.Bridge
             if (carried == null) carried = gameObject.AddComponent<CarriedItems>();
 
             carried.Bind(inventory, health);
+        }
+
+        /// <summary>Makes being down crawl, disarm and count down for the player at this machine.</summary>
+        private void HandleBeingDowned()
+        {
+            var health = GetComponent<PlayerHealthSync>();
+            if (health == null) return;
+
+            var downed = GetComponent<DownedPlayer>();
+            if (downed == null) downed = gameObject.AddComponent<DownedPlayer>();
+
+            downed.Bind(health);
         }
 
         /// <summary>Gives this player their role's run speed, and on a fresh start its extra slots and starting items.</summary>
@@ -435,6 +450,10 @@ namespace QuietVillage.Multiplayer.Bridge
                 gameObject.AddComponent<AvatarHeldItem>().Bind(actions, avatarAnimator, inventory);
 
             ShowNameTag(avatarAnimator);
+
+            // Held Use on this body revives it while its player is down.
+            var health = GetComponent<PlayerHealthSync>();
+            if (health != null) ReviveTarget.Attach(health, this);
         }
 
         /// <summary>Hangs this player's name over their body for whoever is looking.</summary>

@@ -90,7 +90,7 @@ first use and tolerates the player being absent.
 | `Utilities/Tools/CanvasLootAtCamera.cs` | Player camera |
 | `Core/Dialogue/DialogueTrigger.cs` | Player transform for ranged dialogue |
 | `Core/DynamicObject/DynamicObject.cs` | `Physics.IgnoreCollision` pairing, retried from `Update` |
-| `Core/Game/GameManager.cs` | Stamina subscription, retried from `Update` |
+| `Core/Game/GameManager.cs` | Stamina subscription, retried from `Update`; post-processing volume: `GetStack`/`SetStack` return nothing while it is unbound (a module's `OnAwake` threw there and aborted `Awake`, leaving the dialogue system and default blur radius unset), and `BindPostProcessing` assigns it at spawn and re-reads the blur radius and rain overlay |
 | `Core/Puzzle/.../LockpickInteract.cs` | `PlayerManager`, resolved in `InteractStart` |
 | `Core/Puzzle/.../SafePuzzle.cs` | `PlayerManager` + `ExamineController` |
 | `Trigger/GhostHunting/ThermometerTemp.cs` | Thermometer lookup, retried at each use |
@@ -172,8 +172,8 @@ compile unchanged; the only writes were the `Awake` lines removed.
 | `Core/DynamicObject/DynamicObject.cs` | `inventory`, `gameManager` |
 | `Core/DynamicObject/DynamicUnlock/DynamicBrokenFix.cs` | `gameManager` |
 | `Core/Inventory/Behaviour/InventoryContainer.cs` | `inventory` (base of `ItemsStorage`, `ItemsContainer`) |
-| `Core/Puzzle/PuzzleBase.cs` | `playerPresence`, `playerManager`, `gameManager` |
-| `Core/Puzzle/PuzzleBaseBlend.cs` | the above, `playerItems`, the Cinemachine brain; the blend to restore is captured when the puzzle starts |
+| `Core/Puzzle/PuzzleBase.cs` | `playerPresence`, `playerManager`, `gameManager`; one player at a time: `InteractStart` asks the object's `IPuzzleGate` (the bridge's `SyncedPuzzleLock`) before switching camera, and `OnBackgroundFade` releases it on the way out |
+| `Core/Puzzle/PuzzleBaseBlend.cs` | the above, `playerItems`, the Cinemachine brain; the blend to restore is captured when the puzzle starts; the same `IPuzzleGate` check in `InteractStart`, released in `SwitchedBack` |
 | `Core/Puzzle/Puzzles/Maze/MazePuzzle.cs` | `inventory` |
 | `Core/Puzzle/Puzzles/Lockpick/LockpickInteract.cs` | `PlayerPresence`, `GameManager`; lockpick HUD wired on first use |
 | `Core/Puzzle/Puzzles/Safe/SafeBig/SafePuzzle.cs` | `GameManager`, `PlayerPresence`; safe HUD wired on first use |

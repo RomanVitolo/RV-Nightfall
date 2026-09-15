@@ -31,6 +31,9 @@ namespace QuietVillage.Multiplayer.Levels
             [Tooltip("One line shown under the picker, e.g. what makes this settlement different.")]
             [TextArea(1, 3)]
             public string Description;
+
+            [Tooltip("Picture behind the loading screen while this level loads. Empty keeps the plain dark screen.")]
+            public Sprite LoadingImage;
         }
 
         [SerializeField] private List<Level> m_levels = new();

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using QuietVillage.Multiplayer.Characters;
 
 namespace QuietVillage.Multiplayer.Saves
 {
@@ -38,6 +39,17 @@ namespace QuietVillage.Multiplayer.Saves
 
         /// <summary>Every save on this machine, newest first.</summary>
         Task<IReadOnlyList<SaveEntry>> ListAsync();
+
+        /// <summary>The character each player had in the resumed save, by account id; empty for a new game.</summary>
+        /// <remarks>
+        /// The host publishes this to the room, so players joining a resumed game learn before it starts that the save,
+        /// not the Character screen, decides who they are.
+        /// </remarks>
+        IReadOnlyDictionary<string, CharacterChoice> ResumedCharacters();
+
+        /// <summary>The gameplay settings the resumed save was played with, encoded; empty for a new game or an older save.</summary>
+        /// <remarks>A resumed game keeps them, so the room shows them locked.</remarks>
+        string ResumedGameplaySettings();
 
         /// <summary>Reads a save and holds it for the next game this room starts.</summary>
         /// <returns><c>false</c> if it could not be read, in which case nothing is resumed.</returns>

@@ -1,4 +1,5 @@
-/* Shared by the lobby screen (LobbyScreen.uxml) and the in-game room panel (SessionOverlay.uxml). */
+/* Shared by the lobby screen (LobbyScreen.uxml) and the in-game room panel (SessionOverlay.uxml).
+   Control colours and the body font come from the theme (MultiplayerRuntimeTheme.tss); titles use Noto Serif. */
 
 /* ---- Lobby layout ------------------------------------------------------------------------------ */
 
@@ -18,9 +19,9 @@
 }
 
 .mp-title {
-    font-size: 42px;
-    -unity-font-style: bold;
-    letter-spacing: 6px;
+    font-size: 40px;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/Normal/NotoSerif-Bold.ttf");
+    letter-spacing: 4px;
     color: rgb(236, 236, 238);
 }
 
@@ -46,12 +47,13 @@
 }
 
 .mp-section-title {
-    font-size: 24px;
-    -unity-font-style: bold;
+    font-size: 26px;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/Normal/NotoSerif-Bold.ttf");
+    color: rgb(240, 240, 242);
 }
 
 .mp-muted {
-    color: rgb(128, 133, 143);
+    color: rgb(150, 155, 165);
 }
 
 .mp-spacer {
@@ -65,14 +67,15 @@
 /* ---- Buttons and fields ------------------------------------------------------------------------ */
 
 .mp-button {
-    height: 40px;
+    height: 42px;
     margin: 0 0 0 8px;
-    padding: 0 20px;
+    padding: 0 22px;
     border-width: 0;
     border-radius: 6px;
     background-color: rgb(40, 43, 50);
-    color: rgb(220, 222, 226);
-    font-size: 16px;
+    color: rgb(230, 232, 236);
+    font-size: 18px;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/Roboto Condensed/Normal/RobotoCondensed-Bold.ttf");
 }
 
 .mp-button:hover {
@@ -100,11 +103,35 @@
 
 .mp-field {
     margin: 8px 0;
+    align-items: center;
 }
 
 .mp-field .unity-base-field__label {
-    min-width: 170px;
-    color: rgb(170, 175, 185);
+    min-width: 190px;
+    width: 190px;
+}
+
+.mp-field--compact {
+    margin-top: 2px;
+}
+
+/* A line under a field, lined up with its input rather than its label. */
+.mp-field-hint {
+    margin: -2px 0 8px 193px;
+    white-space: normal;
+    font-size: 15px;
+    color: rgb(176, 180, 190);
+}
+
+.mp-button--ghost {
+    margin-left: 0;
+    padding: 0 14px;
+    background-color: rgba(0, 0, 0, 0);
+    color: rgb(190, 194, 202);
+}
+
+.mp-button--ghost:hover {
+    background-color: rgb(34, 37, 44);
 }
 
 .mp-name-field {
@@ -247,7 +274,7 @@
 }
 
 .mp-dialog {
-    width: 560px;
+    width: 640px;
     padding: 28px;
     border-radius: 8px;
     border-width: 1px;
@@ -295,6 +322,7 @@
 
 .mp-character-list {
     width: 260px;
+    flex-shrink: 0;
     margin-right: 20px;
 }
 
@@ -325,8 +353,53 @@
     color: rgb(236, 236, 238);
 }
 
+.mp-character-card-perks {
+    margin-top: 6px;
+    white-space: normal;
+    font-size: 14px;
+    color: rgb(150, 196, 150);
+}
+
+.mp-character-card:focus {
+    border-color: rgb(120, 126, 138);
+}
+
+.mp-character-card--selected:focus {
+    border-color: rgb(220, 70, 70);
+}
+
+.mp-character-random {
+    margin-left: 16px;
+}
+
+.mp-character-card-current {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    margin-left: 0;
+}
+
+.mp-character-card-played-by {
+    margin-top: 6px;
+    white-space: normal;
+    font-size: 14px;
+    color: rgb(214, 170, 120);
+}
+
+.mp-character-save-notice {
+    margin-bottom: 16px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border-left-width: 3px;
+    border-color: rgb(214, 170, 120);
+    background-color: rgb(44, 36, 26);
+    color: rgb(236, 220, 196);
+    white-space: normal;
+}
+
 .mp-character-preview {
     flex-grow: 1;
+    min-width: 240px;
     border-radius: 6px;
     background-color: rgb(14, 15, 19);
     overflow: hidden;
@@ -351,6 +424,8 @@
 
 .mp-character-details {
     width: 420px;
+    min-width: 300px;
+    flex-shrink: 1;
     margin-left: 24px;
 }
 
@@ -361,7 +436,7 @@
 .mp-character-role {
     margin-top: 16px;
     font-size: 34px;
-    -unity-font-style: bold;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/Normal/NotoSerif-Bold.ttf");
     color: rgb(255, 255, 255);
 }
 
@@ -390,12 +465,112 @@
 }
 
 .mp-character-variant {
+    width: 92px;
     margin: 0 8px 8px 0;
+    padding: 4px;
+    border-width: 2px;
+    border-radius: 6px;
+    border-color: rgb(38, 41, 48);
+    background-color: rgb(26, 28, 34);
+    align-items: center;
+}
+
+.mp-character-variant:hover {
+    background-color: rgb(36, 39, 46);
+}
+
+.mp-character-variant:focus {
+    border-color: rgb(120, 126, 138);
 }
 
 .mp-character-variant--selected {
-    background-color: rgb(146, 36, 36);
-    color: rgb(255, 255, 255);
+    border-color: rgb(178, 46, 46);
+    background-color: rgb(44, 26, 28);
+}
+
+.mp-character-variant-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    background-color: rgb(14, 15, 19);
+}
+
+.mp-character-variant-name {
+    margin-top: 4px;
+    font-size: 13px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+    color: rgb(220, 222, 228);
+}
+
+.mp-character-item {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.mp-character-item-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+/* ---- Game settings (waiting room) -------------------------------------------------------------- */
+
+.mp-room-settings {
+    margin: 12px 0;
+    padding: 12px 16px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-color: rgb(38, 41, 48);
+    background-color: rgb(24, 26, 31);
+}
+
+.mp-settings-header {
+    margin-bottom: 4px;
+}
+
+.mp-settings-header .mp-character-heading {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.mp-settings-preset {
+    min-width: 180px;
+    margin: 0;
+}
+
+.mp-settings-summary {
+    white-space: normal;
+    color: rgb(214, 216, 222);
+    margin-bottom: 4px;
+}
+
+.mp-settings-custom {
+    margin-top: 8px;
+}
+
+.mp-setting-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.mp-setting-slider {
+    flex-grow: 1;
+    margin: 2px 0;
+}
+
+.mp-setting-slider .unity-base-field__label {
+    min-width: 190px;
+    width: 190px;
+}
+
+.mp-setting-value {
+    width: 70px;
+    -unity-text-align: middle-right;
+    color: rgb(214, 170, 120);
 }
 
 /* ---- In-game room panel ------------------------------------------------------------------------ */
@@ -449,4 +624,165 @@
     font-size: 15px;
     white-space: normal;
     flex-shrink: 1;
+}
+
+/* ---- Main menu --------------------------------------------------------------------------------- */
+
+.mp-menu {
+    flex-grow: 1;
+    justify-content: center;
+    padding-left: 60px;
+}
+
+.mp-menu-column {
+    width: 560px;
+}
+
+.mp-menu-title {
+    font-size: 76px;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/Normal/NotoSerif-Bold.ttf");
+    letter-spacing: 6px;
+    white-space: normal;
+    color: rgb(238, 236, 232);
+}
+
+.mp-menu-rule {
+    width: 120px;
+    height: 3px;
+    margin: 14px 0 14px 4px;
+    background-color: rgb(178, 46, 46);
+}
+
+.mp-menu-tagline {
+    margin: 0 0 40px 4px;
+    font-size: 20px;
+    color: rgb(160, 164, 174);
+}
+
+.mp-menu-buttons {
+    align-items: stretch;
+}
+
+.mp-menu-button {
+    height: 60px;
+    margin: 0 0 12px 0;
+    padding: 0 28px;
+    border-width: 0;
+    border-left-width: 3px;
+    border-radius: 4px;
+    border-color: rgba(0, 0, 0, 0);
+    background-color: rgba(28, 30, 36, 0.9);
+    color: rgb(226, 228, 232);
+    font-size: 24px;
+    letter-spacing: 2px;
+    -unity-text-align: middle-left;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/Normal/NotoSerif-Bold.ttf");
+}
+
+.mp-menu-button:hover,
+.mp-menu-button:focus {
+    border-color: rgb(222, 72, 72);
+    background-color: rgb(44, 28, 30);
+    color: rgb(255, 255, 255);
+}
+
+.mp-menu-button--primary {
+    background-color: rgb(120, 30, 30);
+    color: rgb(255, 255, 255);
+}
+
+.mp-menu-button--primary:hover,
+.mp-menu-button--primary:focus {
+    background-color: rgb(160, 40, 40);
+}
+
+.mp-menu-profile {
+    margin: 24px 0 0 4px;
+    font-size: 17px;
+    color: rgb(160, 164, 174);
+}
+
+.mp-menu-version {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 14px;
+    color: rgb(96, 100, 110);
+}
+
+/* ---- Create Room preview ----------------------------------------------------------------------- */
+
+.mp-dialog--wide {
+    width: 1120px;
+    max-width: 94%;
+}
+
+.mp-dialog-subtitle {
+    margin: 2px 0 18px 0;
+    color: rgb(170, 174, 184);
+}
+
+.mp-dialog-columns {
+    flex-direction: row;
+}
+
+.mp-dialog-form {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.mp-summary {
+    width: 380px;
+    flex-shrink: 0;
+    margin-left: 28px;
+    padding: 18px 20px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-left-width: 3px;
+    border-color: rgb(46, 50, 58);
+    border-left-color: rgb(178, 46, 46);
+    background-color: rgb(14, 15, 19);
+}
+
+.mp-summary-heading {
+    margin-top: 0;
+}
+
+.mp-summary-title {
+    margin-bottom: 12px;
+    font-size: 26px;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/Normal/NotoSerif-Bold.ttf");
+    white-space: normal;
+    color: rgb(255, 255, 255);
+}
+
+.mp-summary-row {
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 4px 0;
+}
+
+.mp-summary-key {
+    width: 80px;
+    flex-shrink: 0;
+    color: rgb(140, 145, 155);
+}
+
+.mp-summary-value {
+    flex-shrink: 1;
+    white-space: normal;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/Roboto Condensed/Normal/RobotoCondensed-Bold.ttf");
+    color: rgb(240, 240, 242);
+}
+
+.mp-summary-note {
+    margin: 2px 0 6px 80px;
+    white-space: normal;
+    font-size: 15px;
+    color: rgb(176, 180, 190);
+}
+
+#create-summary-settings {
+    margin-left: 0;
 }

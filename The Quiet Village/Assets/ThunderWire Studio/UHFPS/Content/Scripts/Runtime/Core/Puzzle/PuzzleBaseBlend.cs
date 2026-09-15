@@ -85,6 +85,9 @@ namespace UHFPS.Runtime
             if (isActive)
                 return;
 
+            // MULTIPLAYER PATCH: one player at a time. The grant, if it has to wait for the host, comes back here.
+            if (TryGetComponent(out QuietVillage.Multiplayer.Bridge.IPuzzleGate gate) && !gate.TryBeginPuzzle(InteractStart)) return;
+
             // set blend definition
             // MULTIPLAYER PATCH: the blend to restore is captured here rather than in Awake, where the player's
             // camera did not exist yet — and here it is also the blend actually in effect when the puzzle starts.
@@ -148,6 +151,9 @@ namespace UHFPS.Runtime
             cinemachineBrain.DefaultBlend = defaultBlend;
             SetPlayerUsable(true);
             OnBlendedOut();
+
+            // MULTIPLAYER PATCH: the player is back in their own view; others may use the puzzle now.
+            if (TryGetComponent(out QuietVillage.Multiplayer.Bridge.IPuzzleGate gate)) gate.EndPuzzle();
         }
 
         private void SetPlayerUsable(bool state)

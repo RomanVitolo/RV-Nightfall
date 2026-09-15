@@ -1,4 +1,5 @@
 using System;
+using QuietVillage.Multiplayer.Characters;
 using QuietVillage.Multiplayer.Flow;
 using QuietVillage.Multiplayer.Sessions;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.UIElements;
 namespace QuietVillage.Multiplayer.UI
 {
     /// <summary>
-    /// In-game room panel: who is here, the room code, and the way back to the lobby.
+    /// In-game room panel: who is here and what role each plays, the room code, and the way back to the lobby.
     /// </summary>
     /// <remarks>
     /// Lives on the persistent multiplayer root, so it exists in every level without each scene having to
@@ -24,6 +25,9 @@ namespace QuietVillage.Multiplayer.UI
         [SerializeField] private UIDocument m_document;
         [SerializeField] private SessionService m_sessions;
         [SerializeField] private SessionFlow m_flow;
+
+        [Tooltip("Shows each player's role beside their name. Found on the same root when empty.")]
+        [SerializeField] private CharacterSelections m_characters;
 
         [Tooltip("Toggles the panel in game. Tab and the other obvious keys are already bound by UHFPS.")]
         [SerializeField] private Key m_toggleKey = Key.F1;
@@ -45,6 +49,7 @@ namespace QuietVillage.Multiplayer.UI
         {
             if (m_sessions == null) m_sessions = GetComponent<SessionService>();
             if (m_flow == null) m_flow = GetComponent<SessionFlow>();
+            if (m_characters == null) m_characters = GetComponent<CharacterSelections>();
         }
 
         private void OnEnable()
@@ -149,6 +154,15 @@ namespace QuietVillage.Multiplayer.UI
                 var row = new VisualElement();
                 row.AddToClassList("mp-player-row");
                 row.Add(new Label(member.DisplayName));
+
+                // Who does what, so a team can see at a glance who holds the healing or the lockpick.
+                var roleText = m_characters != null ? m_characters.RoomRoleOf(member) : string.Empty;
+                if (!string.IsNullOrEmpty(roleText))
+                {
+                    var role = new Label(roleText);
+                    role.AddToClassList("mp-player-role");
+                    row.Add(role);
+                }
 
                 if (member.IsHost) row.Add(Badge("Host", "mp-badge--host"));
                 if (member.IsLocal) row.Add(Badge("You", "mp-badge--you"));

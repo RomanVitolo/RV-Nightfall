@@ -33622,6 +33622,7 @@ GameObject:
   - component: {fileID: 758018853}
   - component: {fileID: 758018855}
   - component: {fileID: 758018856}
+  - component: {fileID: 758018857}
   m_Layer: 6
   m_Name: Puzzle_ElectricCircuit_Medium
   m_TagString: Untagged
@@ -34114,6 +34115,21 @@ MonoBehaviour:
   m_pollInterval: 0.5
   m_churnLimit: 8
   m_churnWindow: 5
+--- !u!114 &758018857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758018849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c949b7afa2f63479452c342146ffec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuietVillage.Multiplayer.Bridge.World.SyncedPuzzleLock
+  m_id: GlobalObjectId_V1-2-ccce3bb1d069b4948a32b2a90efff845-758018851-0#puzzle
+  m_puzzle: {fileID: 758018851}
+  m_unusedGrantTimeout: 1.5
 --- !u!1 &758743621
 GameObject:
   m_ObjectHideFlags: 0
@@ -91090,6 +91106,7 @@ GameObject:
   - component: {fileID: 1908343103}
   - component: {fileID: 1908343102}
   - component: {fileID: 1908343107}
+  - component: {fileID: 1908343108}
   m_Layer: 6
   m_Name: Door
   m_TagString: Untagged
@@ -91404,6 +91421,21 @@ MonoBehaviour:
   m_pollInterval: 0.5
   m_churnLimit: 8
   m_churnWindow: 5
+--- !u!114 &1908343108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908343100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c949b7afa2f63479452c342146ffec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuietVillage.Multiplayer.Bridge.World.SyncedPuzzleLock
+  m_id: GlobalObjectId_V1-2-ccce3bb1d069b4948a32b2a90efff845-1908343102-0#puzzle
+  m_puzzle: {fileID: 1908343102}
+  m_unusedGrantTimeout: 1.5
 --- !u!1 &1914137833
 GameObject:
   m_ObjectHideFlags: 0
@@ -111980,6 +112012,7 @@ GameObject:
   - component: {fileID: 608274597250592826}
   - component: {fileID: 3657452964738206077}
   - component: {fileID: 3788949763206718757}
+  - component: {fileID: 3788949763206718758}
   m_Layer: 6
   m_Name: Keypad
   m_TagString: Untagged
@@ -114890,6 +114923,7 @@ GameObject:
   - component: {fileID: 1711813855346866553}
   - component: {fileID: 321398272}
   - component: {fileID: 321398271}
+  - component: {fileID: 3469287837262302644}
   m_Layer: 6
   m_Name: Statue
   m_TagString: Untagged
@@ -119482,6 +119516,7 @@ GameObject:
   - component: {fileID: 3364866401822925849}
   - component: {fileID: 2395156748592867727}
   - component: {fileID: 6223601100796265114}
+  - component: {fileID: 6223601100796265115}
   m_Layer: 6
   m_Name: Puzzle_MazePuzzle
   m_TagString: Untagged
@@ -122677,6 +122712,7 @@ GameObject:
   - component: {fileID: 1302302946315257923}
   - component: {fileID: 4682442493815171461}
   - component: {fileID: 7093871598330995850}
+  - component: {fileID: 7093871598330995851}
   m_Layer: 6
   m_Name: Puzzle_ElectricCircuit_Hard
   m_TagString: Untagged
@@ -139985,6 +140021,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149475776684}
   m_Mesh: {fileID: -7786390875159896513, guid: d731d52c7b176b94293ca0ca4f6f0b24, type: 3}
+--- !u!114 &3469287837262302644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149475776684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c949b7afa2f63479452c342146ffec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuietVillage.Multiplayer.Bridge.World.SyncedPuzzleLock
+  m_id: GlobalObjectId_V1-2-ccce3bb1d069b4948a32b2a90efff845-321398271-0#puzzle
+  m_puzzle: {fileID: 321398271}
+  m_unusedGrantTimeout: 1.5
 --- !u!33 &3469501848965447126
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -143137,6 +143188,21 @@ MonoBehaviour:
   m_pollInterval: 0.5
   m_churnLimit: 8
   m_churnWindow: 5
+--- !u!114 &3788949763206718758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608274597250592827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c949b7afa2f63479452c342146ffec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuietVillage.Multiplayer.Bridge.World.SyncedPuzzleLock
+  m_id: GlobalObjectId_V1-2-ccce3bb1d069b4948a32b2a90efff845-608274597250592826-0#puzzle
+  m_puzzle: {fileID: 608274597250592826}
+  m_unusedGrantTimeout: 1.5
 --- !u!4 &3794131609320769676
 Transform:
   m_ObjectHideFlags: 0
@@ -168856,6 +168922,21 @@ MonoBehaviour:
   m_pollInterval: 0.5
   m_churnLimit: 8
   m_churnWindow: 5
+--- !u!114 &6223601100796265115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315218357671258329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c949b7afa2f63479452c342146ffec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuietVillage.Multiplayer.Bridge.World.SyncedPuzzleLock
+  m_id: GlobalObjectId_V1-2-ccce3bb1d069b4948a32b2a90efff845-3364866401822925849-0#puzzle
+  m_puzzle: {fileID: 3364866401822925849}
+  m_unusedGrantTimeout: 1.5
 --- !u!1001 &6227286020823658005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -176884,6 +176965,21 @@ MonoBehaviour:
   m_pollInterval: 0.5
   m_churnLimit: 8
   m_churnWindow: 5
+--- !u!114 &7093871598330995851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826602233129636602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c949b7afa2f63479452c342146ffec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuietVillage.Multiplayer.Bridge.World.SyncedPuzzleLock
+  m_id: GlobalObjectId_V1-2-ccce3bb1d069b4948a32b2a90efff845-1302302946315257923-0#puzzle
+  m_puzzle: {fileID: 1302302946315257923}
+  m_unusedGrantTimeout: 1.5
 --- !u!114 &7106798196102088610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206447,6 +206543,7 @@ GameObject:
   - component: {fileID: 4823023922716181540}
   - component: {fileID: 4823023922716181530}
   - component: {fileID: 9082310800643379463}
+  - component: {fileID: 9082310800643379464}
   m_Layer: 6
   m_Name: Puzzle_Padlock
   m_TagString: Untagged
@@ -206471,6 +206568,21 @@ MonoBehaviour:
   m_pollInterval: 0.5
   m_churnLimit: 8
   m_churnWindow: 5
+--- !u!114 &9082310800643379464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9082310800643379462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c949b7afa2f63479452c342146ffec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuietVillage.Multiplayer.Bridge.World.SyncedPuzzleLock
+  m_id: GlobalObjectId_V1-2-ccce3bb1d069b4948a32b2a90efff845-4823023922716181530-0#puzzle
+  m_puzzle: {fileID: 4823023922716181530}
+  m_unusedGrantTimeout: 1.5
 --- !u!1 &9087085610444635185
 GameObject:
   m_ObjectHideFlags: 0

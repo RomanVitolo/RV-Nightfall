@@ -644,6 +644,9 @@ namespace UHFPS.Runtime
         /// </summary>
         public void SetStack<T>(bool active) where T : VolumeComponent
         {
+            // MULTIPLAYER PATCH: the volume is a scene object bound after the player spawns (BindPostProcessing).
+            if (GlobalPPVolume == null || GlobalPPVolume.profile == null) return;
+
             if (GlobalPPVolume.profile.TryGet(out T component))
             {
                 component.active = active;
@@ -655,10 +658,37 @@ namespace UHFPS.Runtime
         /// </summary>
         public T GetStack<T>() where T : VolumeComponent
         {
+            // MULTIPLAYER PATCH: null until BindPostProcessing. Throwing here from a module's OnAwake used to abort
+            // GameManager.Awake, leaving the dialogue system and the default blur radius unset for the whole game.
+            if (GlobalPPVolume == null || GlobalPPVolume.profile == null) return default;
+
             if (GlobalPPVolume.profile.TryGet(out T component))
                 return component;
 
             return default;
+        }
+
+        /// <summary>
+        /// Assigns the scene's post-processing volumes and reads what Awake could not before they existed.
+        /// </summary>
+        /// <remarks>
+        /// MULTIPLAYER PATCH. The GameManager lives on the network-spawned player, which is instantiated (and woken)
+        /// before the bridge can hand it scene references. Awake found no volume, so the blur radius puzzles, the
+        /// lockpick and menus fade to was 0, and the rain overlay had nothing to drive.
+        /// </remarks>
+        public void BindPostProcessing(Volume global, Volume health)
+        {
+            if (GlobalPPVolume == null) GlobalPPVolume = global;
+            if (HealthPPVolume == null) HealthPPVolume = health;
+
+            DualKawaseBlur blur = GetStack<DualKawaseBlur>();
+            if (blur != null) defaultBlurRadius = blur.BlurRadius.value;
+
+            foreach (var module in Modules.ManagerModules)
+            {
+                // Only the rain module reads the volume when it wakes; the others must not wake twice.
+                if (module is RainingModule raining) raining.OnAwake();
+            }
         }
 
         /// <summary>

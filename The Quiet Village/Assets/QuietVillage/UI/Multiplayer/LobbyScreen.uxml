@@ -2,10 +2,27 @@
     <Style src="Multiplayer.uss" />
     <ui:VisualElement name="lobby-root" class="mp-root">
 
-        <ui:VisualElement class="mp-header">
+        <!-- Main menu: the first thing a player sees, and where Back from the room browser returns. -->
+        <ui:VisualElement name="menu-view" class="mp-menu">
+            <ui:VisualElement class="mp-menu-column">
+                <ui:Label text="THE QUIET VILLAGE" class="mp-menu-title" />
+                <ui:VisualElement class="mp-menu-rule" />
+                <ui:Label text="Hold the chapel. Survive the nights. Together." class="mp-menu-tagline" />
+                <ui:VisualElement class="mp-menu-buttons">
+                    <ui:Button name="menu-play" text="Play" class="mp-menu-button mp-menu-button--primary" />
+                    <ui:Button name="menu-character" text="Character" class="mp-menu-button" />
+                    <ui:Button name="menu-settings" text="Settings" class="mp-menu-button" />
+                    <ui:Button name="menu-quit" text="Quit" class="mp-menu-button" />
+                </ui:VisualElement>
+                <ui:Label name="menu-profile" class="mp-menu-profile" />
+            </ui:VisualElement>
+            <ui:Label name="menu-version" class="mp-menu-version" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="lobby-header" class="mp-header">
             <ui:VisualElement>
                 <ui:Label text="THE QUIET VILLAGE" class="mp-title" />
-                <ui:Label text="MULTIPLAYER LOBBY" class="mp-subtitle" />
+                <ui:Label text="MULTIPLAYER" class="mp-subtitle" />
             </ui:VisualElement>
             <ui:VisualElement class="mp-header-profile">
                 <ui:TextField name="player-name" label="Your name" class="mp-field mp-name-field" />
@@ -20,10 +37,11 @@
             <ui:Button name="ended-notice-dismiss" text="Dismiss" class="mp-button" />
         </ui:VisualElement>
 
-        <!-- Room browser: shown while not in a room. -->
-        <ui:VisualElement name="browser-view" class="mp-card">
+        <!-- Room browser: shown while not in a room, after Play. -->
+        <ui:VisualElement name="browser-view" class="mp-card mp-hidden">
             <ui:VisualElement class="mp-toolbar">
-                <ui:Label text="Rooms" class="mp-section-title" />
+                <ui:Button name="browser-back" text="‹  Main Menu" class="mp-button mp-button--ghost" />
+                <ui:Label text="Rooms" class="mp-section-title" style="margin-left: 16px;" />
                 <ui:Label name="room-count" class="mp-muted" style="margin-left: 12px;" />
                 <ui:VisualElement class="mp-spacer" />
                 <ui:Button name="join-code-button" text="Join by Code" class="mp-button" />
@@ -55,6 +73,17 @@
                 <ui:Label name="room-password" text="Password protected" class="mp-badge" />
             </ui:VisualElement>
             <ui:ListView name="player-list" class="mp-list" />
+            <!-- Game settings: the host picks a preset or Custom; everyone sees the result. -->
+            <ui:VisualElement name="room-settings" class="mp-room-settings">
+                <ui:VisualElement class="mp-toolbar mp-settings-header">
+                    <ui:Label text="GAME SETTINGS" class="mp-character-heading" />
+                    <ui:VisualElement class="mp-spacer" />
+                    <ui:DropdownField name="settings-preset" class="mp-settings-preset" />
+                </ui:VisualElement>
+                <ui:Label name="settings-summary" class="mp-settings-summary" />
+                <ui:Label name="settings-hint" class="mp-muted" />
+                <ui:VisualElement name="settings-custom" class="mp-settings-custom mp-hidden" />
+            </ui:VisualElement>
             <ui:Label name="room-hint" class="mp-muted" />
             <ui:VisualElement class="mp-actions">
                 <ui:Button name="room-character-button" text="Change Character" class="mp-button" />
@@ -66,20 +95,54 @@
 
         <ui:Label name="status-bar" class="mp-status-bar mp-error" />
 
+        <!-- Create Room: the form on the left, what it will make on the right, updated as you type. -->
         <ui:VisualElement name="create-dialog" class="mp-modal mp-hidden">
-            <ui:VisualElement class="mp-dialog">
+            <ui:VisualElement class="mp-dialog mp-dialog--wide">
                 <ui:Label text="Create Room" class="mp-section-title" />
-                <ui:TextField name="create-name" label="Room name" class="mp-field" />
-                <ui:SliderInt name="create-max-players" label="Max players" class="mp-field" />
-                <ui:TextField name="create-password" label="Password (optional)" class="mp-field" />
-                <ui:DropdownField name="create-save" label="Start from" class="mp-field" />
-                <ui:Label name="create-save-hint" class="mp-muted" />
-                <ui:DropdownField name="create-level" label="Level" class="mp-field" />
-                <ui:Label name="create-level-hint" class="mp-muted" />
+                <ui:Label text="Set up your room, then share its code with your friends." class="mp-dialog-subtitle" />
+                <ui:VisualElement class="mp-dialog-columns">
+                    <ui:VisualElement class="mp-dialog-form">
+                        <ui:TextField name="create-name" label="Room name" class="mp-field" />
+                        <ui:SliderInt name="create-max-players" label="Max players" class="mp-field" />
+                        <ui:TextField name="create-password" label="Password" class="mp-field" />
+                        <ui:Toggle name="create-show-password" label="Show password" class="mp-field mp-field--compact" />
+                        <ui:DropdownField name="create-save" label="Start from" class="mp-field" />
+                        <ui:Label name="create-save-hint" class="mp-field-hint" />
+                        <ui:DropdownField name="create-level" label="Level" class="mp-field" />
+                        <ui:Label name="create-level-hint" class="mp-field-hint" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="create-summary" class="mp-summary">
+                        <ui:Label text="ROOM PREVIEW" class="mp-character-heading mp-summary-heading" />
+                        <ui:Label name="create-summary-name" class="mp-summary-title" />
+                        <ui:VisualElement class="mp-summary-row">
+                            <ui:Label text="Level" class="mp-summary-key" />
+                            <ui:Label name="create-summary-level" class="mp-summary-value" />
+                        </ui:VisualElement>
+                        <ui:Label name="create-summary-level-desc" class="mp-summary-note" />
+                        <ui:VisualElement class="mp-summary-row">
+                            <ui:Label text="Players" class="mp-summary-key" />
+                            <ui:Label name="create-summary-players" class="mp-summary-value" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="mp-summary-row">
+                            <ui:Label text="Access" class="mp-summary-key" />
+                            <ui:Label name="create-summary-access" class="mp-summary-value" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="mp-summary-row">
+                            <ui:Label text="Game" class="mp-summary-key" />
+                            <ui:Label name="create-summary-start" class="mp-summary-value" />
+                        </ui:VisualElement>
+                        <ui:VisualElement class="mp-summary-row">
+                            <ui:Label text="Host" class="mp-summary-key" />
+                            <ui:Label name="create-summary-host" class="mp-summary-value" />
+                        </ui:VisualElement>
+                        <ui:Label text="GAME SETTINGS" class="mp-character-heading" />
+                        <ui:Label name="create-summary-settings" class="mp-summary-note" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
                 <ui:Label name="create-error" class="mp-error" />
                 <ui:VisualElement class="mp-actions">
                     <ui:Button name="create-cancel" text="Cancel" class="mp-button" />
-                    <ui:Button name="create-confirm" text="Create" class="mp-button mp-button--primary" />
+                    <ui:Button name="create-confirm" text="Create Room" class="mp-button mp-button--primary" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
@@ -98,6 +161,28 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
+        <!-- Settings: display and audio, saved on this machine. -->
+        <ui:VisualElement name="settings-dialog" class="mp-modal mp-hidden">
+            <ui:VisualElement class="mp-dialog">
+                <ui:Label text="Settings" class="mp-section-title" />
+                <ui:Label text="DISPLAY" class="mp-character-heading" />
+                <ui:DropdownField name="options-resolution" label="Resolution" class="mp-field" />
+                <ui:DropdownField name="options-display-mode" label="Display mode" class="mp-field" />
+                <ui:DropdownField name="options-quality" label="Quality" class="mp-field" />
+                <ui:Toggle name="options-vsync" label="VSync" class="mp-field mp-field--compact" />
+                <ui:Label text="AUDIO" class="mp-character-heading" />
+                <ui:VisualElement class="mp-setting-row">
+                    <ui:Slider name="options-volume" label="Master volume" low-value="0" high-value="1" class="mp-setting-slider" />
+                    <ui:Label name="options-volume-value" class="mp-setting-value" />
+                </ui:VisualElement>
+                <ui:Label name="options-hint" class="mp-field-hint" />
+                <ui:VisualElement class="mp-actions">
+                    <ui:Button name="options-close" text="Close" class="mp-button" />
+                    <ui:Button name="options-apply" text="Apply" class="mp-button mp-button--primary" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
         <!-- Character screen: who you are (and so your role), how you look, and your name. -->
         <ui:VisualElement name="character-dialog" class="mp-modal mp-hidden">
             <ui:VisualElement class="mp-character-screen">
@@ -105,11 +190,13 @@
                     <ui:Label text="Choose Your Character" class="mp-section-title" />
                     <ui:VisualElement class="mp-spacer" />
                     <ui:Label name="character-lock-hint" class="mp-muted" />
+                    <ui:Button name="character-random" text="Random" class="mp-button mp-button--small mp-character-random" />
                 </ui:VisualElement>
+                <ui:Label name="character-save-notice" class="mp-character-save-notice mp-hidden" />
                 <ui:VisualElement class="mp-character-body">
                     <ui:ScrollView name="character-list" class="mp-character-list" />
                     <ui:VisualElement name="character-preview" class="mp-character-preview">
-                        <ui:Label text="Drag to turn" class="mp-muted mp-character-preview-hint" />
+                        <ui:Label text="Drag to turn  ·  Up/Down: character  ·  Left/Right: look  ·  Enter: done" class="mp-muted mp-character-preview-hint" />
                     </ui:VisualElement>
                     <ui:VisualElement class="mp-character-details">
                         <ui:TextField name="character-player-name" label="Name" class="mp-field mp-character-name" />

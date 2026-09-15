@@ -117,7 +117,25 @@ namespace QuietVillage.Multiplayer.Flow
             Spawn(clientId);
         }
 
-        private void Spawn(ulong clientId)
+        /// <summary>
+        /// Server only: puts a client back into the level with a new player, after their old one was despawned.
+        /// </summary>
+        /// <remarks>
+        /// For a player coming back mid-level, e.g. at dawn after dying in the night. Never held by the spawn gate: the
+        /// client already has the world, and a resumed save's belongings were theirs once, not every time they return.
+        /// </remarks>
+        /// <returns><c>false</c> if the client is gone or still has a player.</returns>
+        public bool Respawn(ulong clientId)
+        {
+            if (m_networkManager == null || !m_networkManager.IsServer) return false;
+            if (!m_networkManager.ConnectedClients.TryGetValue(clientId, out var client) || client.PlayerObject != null)
+                return false;
+
+            Spawn(clientId, returning: true);
+            return true;
+        }
+
+        private void Spawn(ulong clientId, bool returning = false)
         {
             if (!m_networkManager.ConnectedClients.TryGetValue(clientId, out var client) || client.PlayerObject != null)
                 return;
@@ -133,7 +151,7 @@ namespace QuietVillage.Multiplayer.Flow
             var character = instance.GetComponent<PlayerCharacter>();
             if (character != null)
             {
-                character.Assign(m_characters != null ? m_characters.ChoiceFor(clientId) : CharacterChoice.None);
+                character.Assign(m_characters != null ? m_characters.ChoiceFor(clientId) : CharacterChoice.None, returning);
             }
 
             networkObject.SpawnAsPlayerObject(clientId, destroyWithScene: true);

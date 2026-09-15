@@ -27,13 +27,17 @@ MonoBehaviour:
     - DisplayName: Armoured
       Prefab: {fileID: 5006548195107497151, guid: 7f0cad655b367b04c9392208d26b51bb, type: 3}
     Perks:
-      BarricadeRepair: 1.5
+      BarricadeRepair: 2
       Healing: 1
       RunSpeed: 1
       ExtraInventorySlots: 0
+      ReviveSpeed: 1
+      ReviveHealth: 1
+    Ability: 1
     StartingItems:
     - Title: Scrap
       ItemGuid: 29901ad3ad2a4edf828062ef0684be91
+      Icon: {fileID: 21300000, guid: cdd9523cd2fa1454b8705c9a9c661c5a, type: 3}
       Quantity: 2
   - Id: medic
     DisplayName: Field Medic
@@ -41,7 +45,7 @@ MonoBehaviour:
     Description: Patches the team up between nights. Medical supplies heal far more
       when a Medic uses them.
     HumanoidAvatar: {fileID: 9000000, guid: 1611e8e854f3486458d0bdb95b2bbb26, type: 3}
-    BodyScale: 1
+    BodyScale: 0.79
     Variants:
     - DisplayName: Style 1
       Prefab: {fileID: 6690401590486810092, guid: 3713a6f3d90137a47bab2d20197b5565, type: 3}
@@ -54,9 +58,13 @@ MonoBehaviour:
       Healing: 1.5
       RunSpeed: 1
       ExtraInventorySlots: 0
+      ReviveSpeed: 2
+      ReviveHealth: 2
+    Ability: 2
     StartingItems:
     - Title: First AID KIT
       ItemGuid: 79d887af99bb41599d26603efb8d704f
+      Icon: {fileID: 21300000, guid: ad2689bf3d9781c4d987816a8af5b48a, type: 3}
       Quantity: 1
   - Id: scout
     DisplayName: Head Hunter
@@ -73,11 +81,15 @@ MonoBehaviour:
     Perks:
       BarricadeRepair: 1
       Healing: 1
-      RunSpeed: 1.15
+      RunSpeed: 1.2
       ExtraInventorySlots: 0
+      ReviveSpeed: 1
+      ReviveHealth: 1
+    Ability: 3
     StartingItems:
     - Title: Lockpick
       ItemGuid: 9c45e9931ae9492dba1cf41854f95de0
+      Icon: {fileID: 21300000, guid: 03830137119a4c74bb36000faee0dfeb, type: 3}
       Quantity: 1
   - Id: scavenger
     DisplayName: Seller
@@ -85,7 +97,7 @@ MonoBehaviour:
     Description: Brings back what the others leave behind. Starts with an extra row
       of inventory space.
     HumanoidAvatar: {fileID: 9000000, guid: 0279effe1f218d944bc06fcfd2721bb6, type: 3}
-    BodyScale: 1
+    BodyScale: 0.84
     Variants:
     - DisplayName: Backpack
       Prefab: {fileID: 4991622153715467940, guid: 22ee5f567719dba4ab2a967825808767, type: 3}
@@ -100,4 +112,7 @@ MonoBehaviour:
       Healing: 1
       RunSpeed: 1
       ExtraInventorySlots: 9
+      ReviveSpeed: 1
+      ReviveHealth: 1
+    Ability: 4
     StartingItems: []

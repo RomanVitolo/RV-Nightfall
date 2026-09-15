@@ -121,6 +121,23 @@ namespace QuietVillage.Multiplayer.Characters
             return m_choices.TryGetValue(clientId, out var chosen) ? chosen : Resolve(CharacterChoice.None);
         }
 
+        /// <summary>
+        /// The character a room member plays, as the room knows it: their saved one when the room resumes a save, their own
+        /// pick otherwise. Resolved against the catalog.
+        /// </summary>
+        /// <remarks>
+        /// For display, in the lobby and the in-game room panel. Built from room properties, which every member can read;
+        /// the host's spawn record (<see cref="ChoiceFor"/>) is keyed by Netcode client and cannot be matched to a member.
+        /// </remarks>
+        public CharacterChoice RoomChoiceOf(RoomMember member)
+        {
+            var saved = m_sessions != null ? CharacterChoice.Parse(m_sessions.SavedCharacterOf(member.Id)) : CharacterChoice.None;
+            return Resolve(saved.IsEmpty ? CharacterChoice.Parse(member.Character) : saved);
+        }
+
+        /// <summary>The role a room member plays, e.g. "Medic"; empty without a catalog.</summary>
+        public string RoomRoleOf(RoomMember member) => m_catalog != null ? m_catalog.RoleOf(RoomChoiceOf(member)) : string.Empty;
+
         private CharacterChoice Resolve(CharacterChoice choice) =>
             m_catalog != null ? m_catalog.Resolve(choice) : choice;
 

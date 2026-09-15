@@ -1,0 +1,198 @@
+/* The loading screen (LoadingScreen.uxml). Fonts and control colours come from MultiplayerRuntimeTheme.tss. */
+
+.qv-loading {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 72px 96px 64px 96px;
+    background-color: rgb(6, 7, 9);
+    color: rgb(230, 231, 235);
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.45s;
+    transition-timing-function: ease-in-out;
+}
+
+.qv-loading--visible {
+    opacity: 1;
+}
+
+.qv-loading--hidden {
+    display: none;
+}
+
+/* A level's loading picture, when its catalog entry has one; otherwise the plain dark page. */
+.qv-loading-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+.qv-loading-shade {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(4, 5, 7, 0.55);
+    border-left-width: 6px;
+    border-left-color: rgb(120, 30, 30);
+}
+
+.qv-loading-rule {
+    width: 140px;
+    height: 3px;
+    margin: 18px 0;
+    background-color: rgb(178, 46, 46);
+}
+
+.qv-loading-heading {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: rgb(150, 155, 165);
+    margin-bottom: 6px;
+}
+
+.qv-loading-muted {
+    color: rgb(160, 164, 174);
+}
+
+/* ---- Splash ------------------------------------------------------------------------------------ */
+
+.qv-loading-splash {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.qv-loading-splash-title {
+    font-size: 96px;
+    letter-spacing: 8px;
+    white-space: normal;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/Normal/NotoSerif-Bold.ttf");
+    color: rgb(238, 236, 232);
+}
+
+.qv-loading-splash-tagline {
+    font-size: 24px;
+    color: rgb(170, 174, 184);
+}
+
+/* ---- Level ------------------------------------------------------------------------------------- */
+
+.qv-loading-level {
+    flex-grow: 1;
+    flex-direction: row;
+    align-items: center;
+}
+
+.qv-loading-level-main {
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding-right: 48px;
+}
+
+.qv-loading-kicker {
+    font-size: 18px;
+    letter-spacing: 6px;
+    color: rgb(214, 106, 84);
+}
+
+.qv-loading-level-name {
+    font-size: 84px;
+    white-space: normal;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/Normal/NotoSerif-Bold.ttf");
+    color: rgb(240, 238, 234);
+}
+
+.qv-loading-level-description {
+    max-width: 900px;
+    font-size: 24px;
+    white-space: normal;
+    color: rgb(200, 202, 208);
+}
+
+.qv-loading-card {
+    width: 460px;
+    flex-shrink: 0;
+    padding: 24px 28px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-left-width: 3px;
+    border-color: rgba(80, 84, 94, 0.6);
+    border-left-color: rgb(178, 46, 46);
+    background-color: rgba(14, 15, 19, 0.88);
+}
+
+.qv-loading-role-name {
+    font-size: 40px;
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/NotoSerif/Normal/NotoSerif-Bold.ttf");
+    color: rgb(255, 255, 255);
+}
+
+.qv-loading-role-ability {
+    margin-top: 14px;
+    font-size: 19px;
+    white-space: normal;
+    color: rgb(236, 220, 196);
+}
+
+.qv-loading-role-perks {
+    margin-top: 8px;
+    font-size: 17px;
+    white-space: normal;
+    color: rgb(150, 196, 150);
+}
+
+/* ---- Footer ------------------------------------------------------------------------------------ */
+
+.qv-loading-footer {
+    flex-shrink: 0;
+}
+
+.qv-loading-tip-block {
+    max-width: 1100px;
+    margin-bottom: 28px;
+}
+
+.qv-loading-tip {
+    font-size: 22px;
+    white-space: normal;
+    color: rgb(222, 224, 228);
+}
+
+.qv-loading-progress-row {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.qv-loading-status {
+    font-size: 18px;
+    color: rgb(190, 194, 202);
+}
+
+.qv-loading-percent {
+    font-size: 18px;
+    color: rgb(150, 155, 165);
+}
+
+.qv-loading-progress-track {
+    height: 6px;
+    border-radius: 3px;
+    background-color: rgb(34, 36, 42);
+    overflow: hidden;
+}
+
+.qv-loading-progress-fill {
+    width: 0;
+    height: 100%;
+    border-radius: 3px;
+    background-color: rgb(196, 56, 56);
+    transition-property: width;
+    transition-duration: 0.25s;
+}

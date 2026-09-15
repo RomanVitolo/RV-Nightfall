@@ -17,13 +17,29 @@ namespace QuietVillage.Gameplay.Survival
         OnlyOne
     }
 
+    /// <summary>How a creature hunts, on top of the shared rules. Stored by number in the catalog, so add new ones at the end.</summary>
+    public enum CreatureBehaviour
+    {
+        /// <summary>Chases the nearest player it can reach, breaks barricades in the way.</summary>
+        Standard,
+
+        /// <summary>Slow and hard to stop: triple damage to barricades, heavier blows, stuns last half as long.</summary>
+        Brute,
+
+        /// <summary>Fast, goes for whoever is furthest from help, and circles back from light sooner.</summary>
+        Stalker,
+
+        /// <summary>Weaker blows, but when it finds a player it calls the creatures nearby to them.</summary>
+        Screamer
+    }
+
     /// <summary>
-    /// The bodies a night creature can wear: which model, which clips, and how it moves and strikes.
+    /// The bodies a night creature can wear: which model, which clips, how it moves and strikes, and how it hunts.
     /// </summary>
     /// <remarks>
-    /// The creature's behaviour stays one thing, <see cref="NightCreature"/>: chase what it can reach, break what is in
-    /// the way. A body only changes how that looks and how fast and how far it hits, so the catalog can hold models from
-    /// any pack, Generic or Humanoid, side by side.
+    /// The creature's rules stay one thing, <see cref="NightCreature"/>: chase what it can reach, break what is in the
+    /// way. A body changes how that looks, how fast and how far it hits, and which <see cref="CreatureBehaviour"/> it
+    /// hunts with, so the catalog can hold models from any pack, Generic or Humanoid, side by side.
     ///
     /// Every body plays the same state machine (<c>CreatureBase.controller</c>) through its own
     /// <see cref="AnimatorOverrideController"/>, which swaps in the pack's clips. <c>Tools > Quiet Village > Creatures >
@@ -88,6 +104,13 @@ namespace QuietVillage.Gameplay.Survival
             public float YawOffset;
 
             public List<MaterialSwap> MaterialSwaps = new();
+
+            [Tooltip("Sounds for this body alone. Empty uses the creature prefab's shared set.")]
+            public CreatureSounds Sounds;
+
+            [Tooltip("How it hunts: Standard, Brute (slow, wrecks barricades), Stalker (fast, hunts the isolated), " +
+                     "Screamer (calls the others).")]
+            public CreatureBehaviour Behaviour;
 
             [Header("Movement")]
             [Tooltip("NavMeshAgent speed (m/s) while hunting.")]

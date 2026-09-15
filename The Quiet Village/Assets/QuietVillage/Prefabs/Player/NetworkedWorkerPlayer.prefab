@@ -2243,7 +2243,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7227441431523678684}
         m_TargetAssemblyTypeName: UHFPS.Runtime.GameManager, Assembly-CSharp
         m_MethodName: MainMenu
         m_Mode: 1
@@ -19820,7 +19820,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7227441431523678684}
         m_TargetAssemblyTypeName: UHFPS.Runtime.GameManager, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
@@ -23854,7 +23854,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7227441431523678684}
         m_TargetAssemblyTypeName: UHFPS.Runtime.GameManager, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
@@ -26013,7 +26013,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3508460620213808057}
         m_TargetAssemblyTypeName: UHFPS.Runtime.OptionsManager, Assembly-CSharp
         m_MethodName: ApplyOptions
         m_Mode: 1
@@ -34155,7 +34155,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6288296089602320643}
         m_TargetAssemblyTypeName: UHFPS.Runtime.SaveGameManager, Assembly-CSharp
         m_MethodName: SaveGame
         m_Mode: 6
@@ -43165,7 +43165,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 4415473877368037106}
           m_TargetAssemblyTypeName: UHFPS.Runtime.Inventory, Assembly-CSharp
           m_MethodName: OnBlockerClicked
           m_Mode: 1
@@ -43936,7 +43936,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7227441431523678684}
         m_TargetAssemblyTypeName: UHFPS.Runtime.GameManager, Assembly-CSharp
         m_MethodName: MainMenu
         m_Mode: 1
@@ -48245,6 +48245,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Modules.Multiplayer.Bridge.PlayerHealthSync
   ShowTopMostFoldoutHeaderGroup: 1
   m_playerHealth: {fileID: 1155412012957688422}
+  m_downedEnabled: 1
+  m_bleedOutSeconds: 30
+  m_reviveHealth: 30
+  m_reviveReach: 3.5
+  m_returnHealth: 40
 --- !u!114 &1698572504775330590
 MonoBehaviour:
   m_ObjectHideFlags: 0

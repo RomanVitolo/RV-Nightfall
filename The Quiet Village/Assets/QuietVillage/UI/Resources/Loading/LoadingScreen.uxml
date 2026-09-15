@@ -1,0 +1,52 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="Loading.uss" />
+    <!--
+        The loading screen: the startup splash, and the screen shown while a level loads until your player is in it.
+        Built to grow: each block below is a named section LoadingScreen fills or hides, so new sections (controls,
+        lore, teammates' progress) can be added here and filled from code without touching the rest.
+    -->
+    <ui:VisualElement name="loading-root" class="qv-loading">
+        <ui:VisualElement name="loading-background" class="qv-loading-background" />
+        <ui:VisualElement class="qv-loading-shade" />
+
+        <!-- Startup splash. -->
+        <ui:VisualElement name="loading-splash" class="qv-loading-splash">
+            <ui:Label text="THE QUIET VILLAGE" class="qv-loading-splash-title" />
+            <ui:VisualElement class="qv-loading-rule" />
+            <ui:Label name="loading-splash-tagline" class="qv-loading-splash-tagline" />
+        </ui:VisualElement>
+
+        <!-- Entering a level. -->
+        <ui:VisualElement name="loading-level" class="qv-loading-level">
+            <ui:VisualElement class="qv-loading-level-main">
+                <ui:Label name="loading-kicker" text="ENTERING" class="qv-loading-kicker" />
+                <ui:Label name="loading-level-name" class="qv-loading-level-name" />
+                <ui:VisualElement class="qv-loading-rule" />
+                <ui:Label name="loading-level-description" class="qv-loading-level-description" />
+            </ui:VisualElement>
+
+            <ui:VisualElement name="loading-role" class="qv-loading-card">
+                <ui:Label text="YOU ARE" class="qv-loading-heading" />
+                <ui:Label name="loading-role-name" class="qv-loading-role-name" />
+                <ui:Label name="loading-role-character" class="qv-loading-muted" />
+                <ui:Label name="loading-role-ability" class="qv-loading-role-ability" />
+                <ui:Label name="loading-role-perks" class="qv-loading-role-perks" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- Always at the bottom: a tip, then progress. -->
+        <ui:VisualElement class="qv-loading-footer">
+            <ui:VisualElement name="loading-tip-block" class="qv-loading-tip-block">
+                <ui:Label text="TIP" class="qv-loading-heading" />
+                <ui:Label name="loading-tip" class="qv-loading-tip" />
+            </ui:VisualElement>
+            <ui:VisualElement class="qv-loading-progress-row">
+                <ui:Label name="loading-status" class="qv-loading-status" />
+                <ui:Label name="loading-percent" class="qv-loading-percent" />
+            </ui:VisualElement>
+            <ui:VisualElement class="qv-loading-progress-track">
+                <ui:VisualElement name="loading-progress-fill" class="qv-loading-progress-fill" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -108,6 +108,17 @@ namespace QuietVillage.Gameplay.Survival
             if (m_animator != null) m_animator.SetBool(DeadHash, dead);
         }
 
+        private const float StunnedPlayback = 0.25f;
+
+        /// <summary>A stunned body all but freezes mid-motion: a flinch every body can show, with no clip of its own.</summary>
+        public void SetStunned(bool stunned)
+        {
+            if (m_animator == null) return;
+
+            var speed = stunned ? StunnedPlayback : 1f;
+            if (!Mathf.Approximately(m_animator.speed, speed)) m_animator.speed = speed;
+        }
+
         private void Update()
         {
             if (m_animator == null || m_body == null) return;

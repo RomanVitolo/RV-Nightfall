@@ -163,8 +163,14 @@ namespace QuietVillage.Multiplayer.Bridge
             }
         }
 
-        private static bool Calls<T>(Object target, string method, string expected) =>
-            target is T && method == expected;
+        /// <summary>Whether a button's listener calls a UHFPS method, by the method and, when it has one, its target.</summary>
+        /// <remarks>
+        /// A missing target still counts: the HUD's move onto the player prefab emptied some targets and kept the method
+        /// names (Tools > Quiet Village > Multiplayer > Repair Player UI Events puts them back), and a button that is
+        /// adapted here must be recognised either way. The method names matched are UHFPS's own and unambiguous.
+        /// </remarks>
+        internal static bool Calls<T>(Object target, string method, string expected) =>
+            (target is T || target == null) && method == expected;
 
         /// <summary>Gives a button a new label, tooltip and action, in place of the UHFPS one it called.</summary>
         private static void TakeOverButton(Button button, string label, string tooltip, UnityAction onClick)

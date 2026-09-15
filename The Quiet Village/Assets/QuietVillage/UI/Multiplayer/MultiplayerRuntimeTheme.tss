@@ -1,1 +1,182 @@
 @import url("unity-theme://default");
+
+/*
+ * The Quiet Village's look for every UI Toolkit panel: the menus, the in-game room panel and the loading screen.
+ *
+ * A theme rather than the layouts' own stylesheet, because some controls draw outside a layout's tree: a dropdown's
+ * open list is added to the panel's root, where a stylesheet attached to the layout never reaches. Colours and fonts
+ * for controls live here; layout-specific classes stay in Multiplayer.uss and Loading.uss.
+ *
+ * Unity's default runtime theme draws inputs light on dark text that our light page colour then washes out, which is
+ * what made typed names hard to read. Every input below sets its own background, text, caret and selection colours.
+ */
+
+:root {
+    -unity-font-definition: url("/Assets/ThunderWire Studio/UHFPS/Content/Fonts/Roboto Condensed/Normal/RobotoCondensed-Regular.ttf");
+    --qv-page: rgb(9, 10, 13);
+    --qv-card: rgb(20, 22, 27);
+    --qv-input: rgb(8, 9, 12);
+    --qv-input-border: rgb(78, 83, 94);
+    --qv-text: rgb(236, 237, 240);
+    --qv-muted: rgb(150, 155, 165);
+    --qv-accent: rgb(178, 46, 46);
+    --qv-accent-bright: rgb(222, 72, 72);
+}
+
+/* ---- Field labels ------------------------------------------------------------------------------ */
+
+.unity-base-field__label {
+    color: rgb(196, 200, 208);
+    font-size: 17px;
+    -unity-text-align: middle-left;
+}
+
+/* ---- Text inputs (TextField, and the number box beside sliders) -------------------------------- */
+
+.unity-base-text-field__input {
+    min-height: 42px;
+    padding: 4px 12px;
+    border-width: 1px;
+    border-radius: 6px;
+    border-color: var(--qv-input-border);
+    background-color: var(--qv-input);
+    color: var(--qv-text);
+    font-size: 20px;
+    --unity-cursor-color: rgb(255, 255, 255);
+    --unity-selection-color: rgba(178, 46, 46, 0.65);
+}
+
+.unity-base-text-field__input > .unity-text-element,
+.unity-base-text-field__input TextElement {
+    color: var(--qv-text);
+    font-size: 20px;
+    -unity-text-align: middle-left;
+}
+
+.unity-base-text-field:hover > .unity-base-text-field__input {
+    border-color: rgb(110, 116, 128);
+}
+
+.unity-base-text-field:focus > .unity-base-text-field__input,
+.unity-base-text-field__input:focus {
+    border-color: var(--qv-accent-bright);
+    background-color: rgb(14, 12, 14);
+}
+
+.unity-base-text-field:disabled > .unity-base-text-field__input {
+    opacity: 0.55;
+}
+
+/* Placeholder text, when a field shows one. */
+.unity-text-element--placeholder {
+    color: rgb(110, 115, 125);
+}
+
+/* ---- Dropdowns --------------------------------------------------------------------------------- */
+
+.unity-base-popup-field__input {
+    min-height: 42px;
+    padding: 4px 12px;
+    border-width: 1px;
+    border-radius: 6px;
+    border-color: var(--qv-input-border);
+    background-color: var(--qv-input);
+    color: var(--qv-text);
+}
+
+.unity-base-popup-field__input:hover {
+    border-color: rgb(110, 116, 128);
+}
+
+.unity-base-popup-field__text {
+    color: var(--qv-text);
+    font-size: 19px;
+}
+
+.unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: rgb(200, 204, 212);
+}
+
+.unity-base-popup-field:disabled > .unity-base-popup-field__input {
+    opacity: 0.55;
+}
+
+/* The open list, which lives at the panel root. */
+.unity-base-dropdown__container-outer {
+    border-width: 1px;
+    border-radius: 6px;
+    border-color: var(--qv-input-border);
+    background-color: rgb(22, 24, 30);
+}
+
+.unity-base-dropdown__container-inner {
+    background-color: rgb(22, 24, 30);
+}
+
+.unity-base-dropdown__item {
+    min-height: 36px;
+    background-color: rgb(22, 24, 30);
+}
+
+.unity-base-dropdown__item:hover {
+    background-color: rgb(58, 30, 32);
+}
+
+.unity-base-dropdown__label {
+    color: var(--qv-text);
+    font-size: 18px;
+}
+
+.unity-base-dropdown__checkmark {
+    -unity-background-image-tint-color: var(--qv-accent-bright);
+}
+
+/* ---- Sliders ----------------------------------------------------------------------------------- */
+
+.unity-base-slider__tracker {
+    border-width: 0;
+    border-radius: 3px;
+    background-color: rgb(52, 56, 64);
+}
+
+.unity-base-slider__dragger {
+    border-width: 0;
+    border-radius: 8px;
+    background-color: rgb(222, 224, 230);
+}
+
+.unity-base-slider:focus .unity-base-slider__dragger,
+.unity-base-slider__dragger:hover {
+    background-color: var(--qv-accent-bright);
+}
+
+.unity-base-slider__input {
+    min-width: 60px;
+}
+
+/* ---- Toggles ----------------------------------------------------------------------------------- */
+
+.unity-toggle__checkmark {
+    width: 22px;
+    height: 22px;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: var(--qv-input-border);
+    background-color: var(--qv-input);
+    -unity-background-image-tint-color: var(--qv-accent-bright);
+}
+
+/* ---- Scroll bars ------------------------------------------------------------------------------- */
+
+.unity-scroller {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.unity-base-slider--vertical .unity-base-slider__tracker {
+    background-color: rgb(28, 30, 36);
+}
+
+.unity-scroller .unity-base-slider__dragger {
+    border-radius: 4px;
+    background-color: rgb(72, 76, 86);
+}

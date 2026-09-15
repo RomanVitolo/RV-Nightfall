@@ -4,6 +4,25 @@ using UnityEngine;
 
 namespace QuietVillage.Multiplayer.Characters
 {
+    /// <summary>The one thing a role can do on demand (the ability key), besides its perks. Carried out by gameplay.</summary>
+    /// <remarks>Stored by number in the catalog asset, so add new abilities at the end.</remarks>
+    public enum RoleAbility
+    {
+        None,
+
+        /// <summary>Braces one barricade well beyond full, once per day and night.</summary>
+        Reinforce,
+
+        /// <summary>Heals every teammate close by, on a cooldown.</summary>
+        HealingArea,
+
+        /// <summary>Shows where every creature is, through walls, for a few seconds, on a cooldown.</summary>
+        SenseCreatures,
+
+        /// <summary>Turns up a piece of scrap anywhere, once per day and night.</summary>
+        Scrounge
+    }
+
     /// <summary>
     /// The characters a player can be: each one a role, with its bodies, perks and the items it starts with.
     /// </summary>
@@ -41,6 +60,9 @@ namespace QuietVillage.Multiplayer.Characters
             [Tooltip("UHFPS item GUID. Filled from the title by the setup tool when empty.")]
             public string ItemGuid;
 
+            [Tooltip("Inventory icon shown on the Character screen. Copied from the item by the setup tool when empty.")]
+            public Sprite Icon;
+
             [Min(1)] public int Quantity = 1;
         }
 
@@ -59,6 +81,12 @@ namespace QuietVillage.Multiplayer.Characters
 
             [Tooltip("Locked inventory slots unlocked on a fresh start. UHFPS's expandable rows cap how many exist.")]
             [Min(0)] public int ExtraInventorySlots;
+
+            [Tooltip("Multiplies how fast this player revives a downed teammate: 2 takes half the hold.")]
+            [Min(0.1f)] public float ReviveSpeed = 1f;
+
+            [Tooltip("Multiplies the health a teammate this player revives gets back up with.")]
+            [Min(0.1f)] public float ReviveHealth = 1f;
         }
 
         [Serializable]
@@ -83,6 +111,9 @@ namespace QuietVillage.Multiplayer.Characters
 
             public List<Variant> Variants = new();
             public Perks Perks = new();
+
+            [Tooltip("What this role does on the ability key.")]
+            public RoleAbility Ability;
             public List<StartingItem> StartingItems = new();
 
             /// <summary>The variant at an index, clamped into range; <c>null</c> if there are none.</summary>
@@ -173,11 +204,40 @@ namespace QuietVillage.Multiplayer.Characters
             AddMultiplier(lines, perks.BarricadeRepair, "barricade strength per item used");
             AddMultiplier(lines, perks.Healing, "healing from medical items");
             AddMultiplier(lines, perks.RunSpeed, "running speed");
+            AddMultiplier(lines, perks.ReviveSpeed, "reviving speed");
+            AddMultiplier(lines, perks.ReviveHealth, "health for teammates they revive");
 
             if (perks.ExtraInventorySlots > 0)
                 lines.Add($"+{perks.ExtraInventorySlots} inventory slots");
 
             return lines;
+        }
+
+        /// <summary>What an ability does, in a sentence for the Character screen; empty for none.</summary>
+        public static string DescribeAbility(RoleAbility ability) => ability switch
+        {
+            RoleAbility.Reinforce => "Ability (G): brace a barricade to 150%, once per day and night.",
+            RoleAbility.HealingArea => "Ability (G): heal every teammate within 5 m (90 s cooldown).",
+            RoleAbility.SenseCreatures => "Ability (G): see every creature through walls for 8 s (60 s cooldown).",
+            RoleAbility.Scrounge => "Ability (G): scrounge a piece of Scrap anywhere, once per day and night.",
+            _ => string.Empty
+        };
+
+        /// <summary>The perks in a few words, e.g. "+50% repair · +2 slots", for a roster card; empty if there are none.</summary>
+        /// <remarks>Short enough to compare roles at a glance down the list; <see cref="Describe"/> says what each means.</remarks>
+        public static string Summarise(Perks perks)
+        {
+            var parts = new List<string>();
+            if (perks == null) return string.Empty;
+
+            AddMultiplier(parts, perks.BarricadeRepair, "repair");
+            AddMultiplier(parts, perks.Healing, "healing");
+            AddMultiplier(parts, perks.RunSpeed, "speed");
+            AddMultiplier(parts, perks.ReviveSpeed, "revive");
+
+            if (perks.ExtraInventorySlots > 0) parts.Add($"+{perks.ExtraInventorySlots} slots");
+
+            return string.Join("  ·  ", parts);
         }
 
         private static void AddMultiplier(List<string> lines, float multiplier, string what)
